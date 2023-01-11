@@ -1,0 +1,29 @@
+{
+  "name": "theme-demo",
+  "private": true,
+  "description": "Theme demo for vitepress-theme-hope",
+  "license": "MIT",
+  "author": "Mr.Hope",
+  "scripts": {
+    "demo:serve": "http-server -s -h localhost -d dist",
+    "demo:build": "vitepress build src",
+    "demo:clean-dev": "vitepress dev src --clean-cache",
+    "demo:dev": "vitepress dev src"
+  },
+  "devDependencies": {
+    "vitepress-theme-hope": "workspace:*",
+    "vitepress": "1.0.0-alpha.35"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@algolia/client-search"
+      ]
+    },
+    "patchedDependencies": {
+      "@types/katex@0.16.0": "patches/@types__katex@0.16.0.patch",
+      "@vuepress/plugin-docsearch@2.0.0-beta.60": "patches/@vuepress__plugin-docsearch@2.0.0-beta.60.patch",
+      "mitt@3.0.0": "patches/mitt@3.0.0.patch"
+    }
+  }
+}
