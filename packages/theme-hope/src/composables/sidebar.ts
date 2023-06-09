@@ -1,14 +1,32 @@
 import {
+  type ComputedRef,
+  type Ref,
   computed,
   onMounted,
   onUnmounted,
-  type Ref,
   ref,
   watchEffect
 } from 'vue'
-import { useData, useRoute } from 'vitepress'
 import { useMediaQuery } from '@vueuse/core'
-import { getSidebar } from '../support/sidebar.js'
+import { useRoute } from 'vitepress'
+import type { DefaultTheme } from 'vitepress/theme'
+import { isActive } from '../shared'
+import {
+  hasActiveLink as containsActiveLink,
+  getSidebar,
+  getSidebarGroups
+} from '../support/sidebar'
+import { useData } from './data'
+
+export interface SidebarControl {
+  collapsed: Ref<boolean>
+  collapsible: ComputedRef<boolean>
+  isLink: ComputedRef<boolean>
+  isActiveLink: ComputedRef<boolean>
+  hasActiveLink: ComputedRef<boolean>
+  hasChildren: ComputedRef<boolean>
+  toggle(): void
+}
 
 export function useSidebar() {
   const route = useRoute()
@@ -31,13 +49,25 @@ export function useSidebar() {
     )
   })
 
+  const leftAside = computed(() => {
+    if (hasAside)
+      return frontmatter.value.aside == null
+        ? theme.value.aside === 'left'
+        : frontmatter.value.aside === 'left'
+    return false
+  })
+
   const hasAside = computed(() => {
-    return (
-      frontmatter.value.layout !== 'home' && frontmatter.value.aside !== false
-    )
+    if (frontmatter.value.layout === 'home') return false
+    if (frontmatter.value.aside != null) return !!frontmatter.value.aside
+    return theme.value.aside !== false
   })
 
   const isSidebarEnabled = computed(() => hasSidebar.value && is960.value)
+
+  const sidebarGroups = computed(() => {
+    return hasSidebar.value ? getSidebarGroups(sidebar.value) : []
+  })
 
   function open() {
     isOpen.value = true
@@ -54,8 +84,10 @@ export function useSidebar() {
   return {
     isOpen,
     sidebar,
+    sidebarGroups,
     hasSidebar,
     hasAside,
+    leftAside,
     isSidebarEnabled,
     open,
     close,
@@ -92,5 +124,63 @@ export function useCloseSidebarOnEscape(
       close()
       triggerElement?.focus()
     }
+  }
+}
+
+export function useSidebarControl(
+  item: ComputedRef<DefaultTheme.SidebarItem>
+): SidebarControl {
+  const { page } = useData()
+
+  const collapsed = ref(false)
+
+  const collapsible = computed(() => {
+    return item.value.collapsed != null
+  })
+
+  const isLink = computed(() => {
+    return !!item.value.link
+  })
+
+  const isActiveLink = computed(() => {
+    return isActive(page.value.relativePath, item.value.link)
+  })
+
+  const hasActiveLink = computed(() => {
+    if (isActiveLink.value) {
+      return true
+    }
+
+    return item.value.items
+      ? containsActiveLink(page.value.relativePath, item.value.items)
+      : false
+  })
+
+  const hasChildren = computed(() => {
+    return !!(item.value.items && item.value.items.length)
+  })
+
+  watchEffect(() => {
+    collapsed.value = !!(collapsible.value && item.value.collapsed)
+  })
+
+  watchEffect(() => {
+    ;(isActiveLink.value || hasActiveLink.value) && (collapsed.value = false)
+  })
+
+  function toggle() {
+    if (collapsible.value) {
+      collapsed.value = !collapsed.value
+    }
+  }
+
+  return {
+    collapsed,
+    collapsible,
+    isLink,
+    isActiveLink,
+    hasActiveLink,
+    hasChildren,
+    toggle
   }
 }

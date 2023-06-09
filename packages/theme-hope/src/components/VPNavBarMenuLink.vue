@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { DefaultTheme } from 'vitepress/theme'
-import { useData } from 'vitepress'
-import { isActive } from '../support/utils.js'
+import { useData } from '../composables/data'
+import { isActive } from '../shared'
 import VPLink from './VPLink.vue'
 
 defineProps<{
@@ -22,7 +22,9 @@ const { page } = useData()
       )
     }"
     :href="item.link"
-    :noIcon="true"
+    :target="item.target"
+    :rel="item.rel"
+    tabindex="0"
   >
     {{ item.text }}
   </VPLink>
@@ -33,7 +35,7 @@ const { page } = useData()
   display: flex;
   align-items: center;
   padding: 0 12px;
-  line-height: var(--vp-nav-height-mobile);
+  line-height: var(--vp-nav-height);
   font-size: 14px;
   font-weight: 500;
   color: var(--vp-c-text-1);
@@ -46,11 +48,5 @@ const { page } = useData()
 
 .VPNavBarMenuLink:hover {
   color: var(--vp-c-brand);
-}
-
-@media (min-width: 1280px) {
-  .VPNavBarMenuLink {
-    line-height: var(--vp-nav-height-desktop);
-  }
 }
 </style>

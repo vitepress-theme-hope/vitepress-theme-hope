@@ -1,26 +1,25 @@
 <script setup lang="ts">
 import { ref, computed, watchEffect, onMounted } from 'vue'
-import { useData } from 'vitepress'
+import { useData } from '../composables/data'
 
-const { theme, page } = useData()
+const { theme, page, lang } = useData()
 
 const date = computed(() => new Date(page.value.lastUpdated!))
 const isoDatetime = computed(() => date.value.toISOString())
 const datetime = ref('')
 
-// set time on mounted hook because the locale string might be different
-// based on end user and will lead to potential hydration mismatch if
-// calculated at build time
+// set time on mounted hook to avoid hydration mismatch due to
+// potential differences in timezones of the server and clients
 onMounted(() => {
   watchEffect(() => {
-    datetime.value = date.value.toLocaleString(window.navigator.language)
+    datetime.value = date.value.toLocaleString(lang.value)
   })
 })
 </script>
 
 <template>
   <p class="VPLastUpdated">
-    {{ theme.lastUpdatedText ?? 'Last updated' }}:
+    {{ theme.lastUpdatedText || 'Last updated' }}:
     <time :datetime="isoDatetime">{{ datetime }}</time>
   </p>
 </template>

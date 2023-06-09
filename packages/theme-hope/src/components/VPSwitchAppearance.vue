@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { ref, onMounted, watch } from 'vue'
-import { useData } from 'vitepress'
-import { APPEARANCE_KEY } from '../../shared.js'
+import { useData } from '../composables/data'
+import { inBrowser, APPEARANCE_KEY } from '../shared'
 import VPSwitch from './VPSwitch.vue'
 import VPIconSun from './icons/VPIconSun.vue'
 import VPIconMoon from './icons/VPIconMoon.vue'
 
 const { site, isDark } = useData()
 const checked = ref(false)
-const toggle = typeof localStorage !== 'undefined' ? useAppearance() : () => {}
+const toggle = inBrowser ? useAppearance() : () => {}
 
 onMounted(() => {
   checked.value = document.documentElement.classList.contains('dark')
@@ -36,8 +36,12 @@ function useAppearance() {
     setClass((isDark = !isDark))
 
     userPreference = isDark
-      ? query.matches ? 'auto' : 'dark'
-      : query.matches ? 'light' : 'auto'
+      ? query.matches
+        ? 'auto'
+        : 'dark'
+      : query.matches
+      ? 'light'
+      : 'auto'
 
     localStorage.setItem(APPEARANCE_KEY, userPreference)
   }
@@ -76,8 +80,8 @@ watch(checked, (newIsDark) => {
 
 <template>
   <VPSwitch
+    title="toggle dark mode"
     class="VPSwitchAppearance"
-    aria-label="toggle dark mode"
     :aria-checked="checked"
     @click="toggle"
   >
@@ -104,6 +108,7 @@ watch(checked, (newIsDark) => {
 }
 
 .dark .VPSwitchAppearance :deep(.check) {
+  /*rtl:ignore*/
   transform: translateX(18px);
 }
 </style>

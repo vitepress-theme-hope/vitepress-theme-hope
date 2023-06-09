@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { normalizeLink } from '../support/utils.js'
-import { EXTERNAL_URL_RE } from '../../shared.js'
+import { normalizeLink } from '../support/utils'
+import { EXTERNAL_URL_RE } from '../shared'
 
 const props = defineProps<{
   tag?: string
@@ -11,12 +11,11 @@ const props = defineProps<{
   href?: string
 }>()
 
-const classes = computed(() => [
-  props.size ?? 'medium',
-  props.theme ?? 'brand'
-])
+const classes = computed(() => [props.size ?? 'medium', props.theme ?? 'brand'])
 
-const isExternal = computed(() => props.href && EXTERNAL_URL_RE.test(props.href))
+const isExternal = computed(
+  () => props.href && EXTERNAL_URL_RE.test(props.href)
+)
 
 const component = computed(() => {
   if (props.tag) {
@@ -45,7 +44,7 @@ const component = computed(() => {
   display: inline-block;
   border: 1px solid transparent;
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
   white-space: nowrap;
   transition: color 0.25s, border-color 0.25s, background-color 0.25s;
 }

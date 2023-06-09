@@ -3,7 +3,7 @@
   border-radius: 8px;
   padding: 16px 16px 8px;
   line-height: 24px;
-  font-size: 14px;
+  font-size: var(--vp-custom-block-font-size);
   color: var(--vp-c-text-2);
 }
 
@@ -11,6 +11,12 @@
   border-color: var(--vp-custom-block-info-border);
   color: var(--vp-custom-block-info-text);
   background-color: var(--vp-custom-block-info-bg);
+}
+
+.custom-block.custom-block th,
+.custom-block.custom-block blockquote > p {
+  font-size: var(--vp-custom-block-font-size);
+  color: inherit;
 }
 
 .custom-block.info code {
@@ -58,7 +64,7 @@
 }
 
 .custom-block-title {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .custom-block p + p {
@@ -78,12 +84,10 @@
 .custom-block a {
   color: inherit;
   font-weight: 600;
-  text-decoration: underline;
-  transition: opacity 0.25s;
 }
 
 .custom-block a:hover {
-  opacity: 0.6;
+  text-decoration: underline;
 }
 
 .custom-block code {

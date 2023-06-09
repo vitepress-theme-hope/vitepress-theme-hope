@@ -3,17 +3,18 @@ import type { DefaultTheme } from 'vitepress/theme'
 import VPSocialLink from './VPSocialLink.vue'
 
 defineProps<{
-  links: DefaultTheme.SocialLink[]
+  links: (DefaultTheme.SocialLink & { ariaLabel?: string })[]
 }>()
 </script>
 
 <template>
   <div class="VPSocialLinks">
     <VPSocialLink
-      v-for="{ link, icon } in links"
+      v-for="{ link, icon, ariaLabel } in links"
       :key="link"
       :icon="icon"
       :link="link"
+      :ariaLabel="ariaLabel"
     />
   </div>
 </template>
@@ -21,7 +22,6 @@ defineProps<{
 <style scoped>
 .VPSocialLinks {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
 }
 </style>

@@ -31,9 +31,7 @@ defineProps<{
             {{ member.org }}
           </VPLink>
         </p>
-        <p v-if="member.desc" class="desc">
-          {{ member.desc }}
-        </p>
+        <p v-if="member.desc" class="desc" v-html="member.desc"/>
         <div v-if="member.links" class="links">
           <VPSocialLinks :links="member.links" />
         </div>
@@ -180,6 +178,13 @@ defineProps<{
   margin: 0 auto;
 }
 
+.desc :deep(a) {
+  font-weight: 500;
+  color: var(--vp-c-brand);
+  text-decoration-style: dotted;
+  transition: color 0.25s;
+}
+
 .links {
   display: flex;
   justify-content: center;
@@ -199,10 +204,10 @@ defineProps<{
   transition: color 0.25s, background-color 0.25s;
 }
 
-.sp-link:hover,
-.sp-link:focus {
+.sp .sp-link.link:hover,
+.sp .sp-link.link:focus {
   outline: none;
-  color: var(--vp-c-text-dark-1);
+  color: var(--vp-c-white);
   background-color: var(--vp-c-sponsor);
 }
 
