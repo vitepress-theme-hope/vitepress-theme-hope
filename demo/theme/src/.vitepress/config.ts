@@ -60,6 +60,23 @@ export default defineConfig({
       code: 'CEBDT27Y',
       placement: 'vuejsorg'
     }
+  },
+
+  vite: {
+    plugins: [
+      {
+        name: 'theme-resolver',
+        config: () => ({
+          resolve: {
+            alias: {
+              '@test-theme': process.env.DEFAULT
+                ? 'vitepress-theme-default'
+                : 'vitepress-theme-hope'
+            }
+          }
+        })
+      }
+    ]
   }
 })
 

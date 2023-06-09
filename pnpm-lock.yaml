@@ -72,9 +72,34 @@ importers:
 
   packages/theme-hope:
     dependencies:
+      '@docsearch/css':
+        specifier: ^3.4.0
+        version: 3.5.0
+      '@docsearch/js':
+        specifier: ^3.4.0
+        version: 3.5.0(@algolia/client-search@4.14.3)(search-insights@2.6.0)
+      '@vueuse/core':
+        specifier: ^10.1.2
+        version: 10.1.2(vue@3.3.4)
+      '@vueuse/integrations':
+        specifier: ^10.1.2
+        version: 10.1.2(focus-trap@7.4.3)(vue@3.3.4)
+      body-scroll-lock:
+        specifier: 4.0.0-beta.0
+        version: 4.0.0-beta.0
+      minisearch:
+        specifier: ^6.1.0
+        version: 6.1.0
       vitepress:
         specifier: 1.0.0-beta.1
         version: 1.0.0-beta.1(@algolia/client-search@4.14.3)(@types/node@20.2.5)(search-insights@2.6.0)
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.4
+    devDependencies:
+      '@types/body-scroll-lock':
+        specifier: ^3.1.0
+        version: 3.1.0
 
 packages:
 
