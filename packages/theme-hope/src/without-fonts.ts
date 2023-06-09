@@ -1,7 +1,7 @@
 import './styles/vars.css'
 import './styles/base.css'
 import './styles/utils.css'
-import './styles/components/custom-block.css'
+import './styles/components/custom-block/index.scss'
 import './styles/components/vp-code.css'
 import './styles/components/vp-code-group.css'
 import './styles/components/vp-doc.css'

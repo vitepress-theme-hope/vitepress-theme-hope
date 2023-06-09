@@ -15,8 +15,10 @@
     "build": "pnpm build:check && pnpm build:ts && pnpm copy",
     "build:check": "vue-tsc --noEmit -p .",
     "build:ts": "tsc -p .",
-    "copy": "cpx \"src/**/*.{css,woff2,vue}\" dist",
-    "dev": "tsc --sourcemap -w -p src"
+    "copy": "cpx \"src/**/*.{css,scss,woff2,vue}\" dist",
+    "dev": "concurrently \"pnpm dev:copy\" \"pnpm dev:ts\"",
+    "dev:copy": "pnpm copy -w",
+    "dev:ts": "tsc --sourcemap -w -p ."
   },
   "license": "MIT",
   "author": {
@@ -32,6 +34,7 @@
     "body-scroll-lock": "4.0.0-beta.0",
     "minisearch": "^6.1.0",
     "vitepress": "1.0.0-beta.1",
+    "vitepress-shared": "workspace:*",
     "vue": "^3.3.4"
   },
   "devDependencies": {

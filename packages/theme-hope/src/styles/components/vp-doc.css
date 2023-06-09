@@ -193,7 +193,8 @@
 /**
  * Custom Block
  * -------------------------------------------------------------------------- */
-
+/* conflict with own style */
+/* 
 .vp-doc .custom-block {
   margin: 16px 0;
 }
@@ -205,7 +206,7 @@
 
 .vp-doc .custom-block p:first-child {
   margin: 0;
-}
+} */
 
 .vp-doc .custom-block a {
   color: inherit;
