@@ -25,6 +25,13 @@ export default defineConfig({
     ]
   ],
 
+  markdown: {
+    theme: {
+      light: 'css-variables',
+      dark: 'one-dark-pro'
+    }
+  },
+
   themeConfig: {
     nav: nav(),
 
