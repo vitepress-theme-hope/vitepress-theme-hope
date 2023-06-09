@@ -8,7 +8,7 @@ import {
   onUnmounted,
   ref
 } from 'vue'
-import type { DefaultTheme } from '../../shared'
+import type { DefaultTheme } from 'vitepress'
 import { useData } from '../composables/data'
 import VPNavBarSearchButton from './VPNavBarSearchButton.vue'
 

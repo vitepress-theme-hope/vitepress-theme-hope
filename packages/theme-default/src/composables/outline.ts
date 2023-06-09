@@ -1,6 +1,6 @@
 import type { DefaultTheme } from 'vitepress/theme'
 import { onMounted, onUnmounted, onUpdated, type Ref } from 'vue'
-import type { Header } from '../../shared'
+import type { Header } from 'vitepress/client'
 import { useAside } from './aside'
 import { throttleAndDebounce } from '../support/utils'
 

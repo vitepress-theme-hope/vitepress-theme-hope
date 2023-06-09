@@ -1,149 +1,227 @@
-import { createRequire } from "module";
-import { defineConfig } from "vitepress";
+import { createRequire } from 'module'
+import { defineConfig } from 'vitepress'
 
-const require = createRequire(import.meta.url);
-const pkg = require("vitepress/package.json");
+const require = createRequire(import.meta.url)
+const pkg = require('vitepress/package.json')
 
 export default defineConfig({
-  lang: "en-US",
-  title: "VitePress",
-  description: "Vite & Vue powered static site generator.",
+  lang: 'en-US',
+  title: 'VitePress',
+  description: 'Vite & Vue powered static site generator.',
 
   lastUpdated: true,
-  cleanUrls: "without-subfolders",
+  cleanUrls: true,
 
-  head: [["meta", { name: "theme-color", content: "#3c8772" }]],
-
-  markdown: {
-    headers: {
-      level: [0, 0],
-    },
-  },
+  head: [
+    ['meta', { name: 'theme-color', content: '#3c8772' }],
+    [
+      'script',
+      {
+        src: 'https://cdn.usefathom.com/script.js',
+        'data-site': 'AZBRSFGG',
+        'data-spa': 'auto',
+        defer: ''
+      }
+    ]
+  ],
 
   themeConfig: {
     nav: nav(),
 
     sidebar: {
-      "/guide/": sidebarGuide(),
-      "/config/": sidebarConfig(),
+      '/guide/': sidebarGuide(),
+      '/reference/': sidebarReference()
     },
 
     editLink: {
-      pattern: "https://github.com/vuejs/vitepress/edit/main/docs/:path",
-      text: "Edit this page on GitHub",
+      pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path',
+      text: 'Edit this page on GitHub'
     },
 
     socialLinks: [
-      { icon: "github", link: "https://github.com/vuejs/vitepress" },
+      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
     ],
 
     footer: {
-      message: "Released under the MIT License.",
-      copyright: "Copyright © 2019-present Evan You",
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2019-present Evan You'
     },
 
-    algolia: {
-      appId: "8J64VVRP8K",
-      apiKey: "a18e2f4cc5665f6602c5631fd868adfd",
-      indexName: "vitepress",
+    search: {
+      provider: 'algolia',
+      options: {
+        appId: '8J64VVRP8K',
+        apiKey: 'a18e2f4cc5665f6602c5631fd868adfd',
+        indexName: 'vitepress'
+      }
     },
 
     carbonAds: {
-      code: "CEBDT27Y",
-      placement: "vuejsorg",
-    },
-  },
-});
+      code: 'CEBDT27Y',
+      placement: 'vuejsorg'
+    }
+  }
+})
 
 function nav() {
   return [
-    { text: "Guide", link: "/guide/what-is-vitepress", activeMatch: "/guide/" },
-    { text: "Configs", link: "/config/introduction", activeMatch: "/config/" },
+    { text: 'Guide', link: '/guide/what-is-vitepress', activeMatch: '/guide/' },
+    {
+      text: 'Reference',
+      link: '/reference/site-config',
+      activeMatch: '/reference/'
+    },
     {
       text: pkg.version,
       items: [
         {
-          text: "Changelog",
-          link: "https://github.com/vuejs/vitepress/blob/main/CHANGELOG.md",
+          text: 'Changelog',
+          link: 'https://github.com/vuejs/vitepress/blob/main/CHANGELOG.md'
         },
         {
-          text: "Contributing",
-          link: "https://github.com/vuejs/vitepress/blob/main/.github/contributing.md",
-        },
-      ],
-    },
-  ];
+          text: 'Contributing',
+          link: 'https://github.com/vuejs/vitepress/blob/main/.github/contributing.md'
+        }
+      ]
+    }
+  ]
 }
 
 function sidebarGuide() {
   return [
     {
-      text: "Introduction",
-      collapsible: true,
+      text: 'Introduction',
+      collapsed: false,
       items: [
-        { text: "What is VitePress?", link: "/guide/what-is-vitepress" },
-        { text: "Getting Started", link: "/guide/getting-started" },
-        { text: "Configuration", link: "/guide/configuration" },
-        { text: "Deploying", link: "/guide/deploying" },
-      ],
+        { text: 'What is VitePress?', link: '/guide/what-is-vitepress' },
+        { text: 'Getting Started', link: '/guide/getting-started' },
+        { text: 'Routing', link: '/guide/routing' },
+        { text: 'Deploy', link: '/guide/deploy' }
+      ]
     },
     {
-      text: "Writing",
-      collapsible: true,
+      text: 'Writing',
+      collapsed: false,
       items: [
-        { text: "Markdown", link: "/guide/markdown" },
-        { text: "Asset Handling", link: "/guide/asset-handling" },
-        { text: "Frontmatter", link: "/guide/frontmatter" },
-        { text: "Using Vue in Markdown", link: "/guide/using-vue" },
-        { text: "API Reference", link: "/guide/api" },
-      ],
+        { text: 'Markdown Extensions', link: '/guide/markdown' },
+        { text: 'Asset Handling', link: '/guide/asset-handling' },
+        { text: 'Frontmatter', link: '/guide/frontmatter' },
+        { text: 'Using Vue in Markdown', link: '/guide/using-vue' },
+        { text: 'Internationalization', link: '/guide/i18n' }
+      ]
     },
     {
-      text: "Theme",
-      collapsible: true,
+      text: 'Customization',
+      collapsed: false,
       items: [
-        { text: "Introduction", link: "/guide/theme-introduction" },
-        { text: "Nav", link: "/guide/theme-nav" },
-        { text: "Sidebar", link: "/guide/theme-sidebar" },
-        { text: "Prev Next Link", link: "/guide/theme-prev-next-link" },
-        { text: "Edit Link", link: "/guide/theme-edit-link" },
-        { text: "Last Updated", link: "/guide/theme-last-updated" },
-        { text: "Layout", link: "/guide/theme-layout" },
-        { text: "Home Page", link: "/guide/theme-home-page" },
-        { text: "Team Page", link: "/guide/theme-team-page" },
-        { text: "Badge", link: "/guide/theme-badge" },
-        { text: "Footer", link: "/guide/theme-footer" },
-        { text: "Search", link: "/guide/theme-search" },
-        { text: "Carbon Ads", link: "/guide/theme-carbon-ads" },
-      ],
+        { text: 'Using a Custom Theme', link: '/guide/custom-theme' },
+        {
+          text: 'Extending the Default Theme',
+          link: '/guide/extending-default-theme'
+        },
+        { text: 'Build-Time Data Loading', link: '/guide/data-loading' },
+        { text: 'SSR Compatibility', link: '/guide/ssr-compat' },
+        { text: 'Connecting to a CMS', link: '/guide/cms' }
+      ]
     },
     {
-      text: "Migrations",
-      collapsible: true,
+      text: 'Experimental',
+      collapsed: false,
       items: [
         {
-          text: "Migration from VuePress",
-          link: "/guide/migration-from-vuepress",
-        },
-        {
-          text: "Migration from VitePress 0.x",
-          link: "/guide/migration-from-vitepress-0",
-        },
-      ],
+          text: 'MPA Mode',
+          link: '/guide/mpa-mode'
+        }
+      ]
     },
-  ];
+    // {
+    //   text: 'Migrations',
+    //   collapsed: false,
+    //   items: [
+    //     {
+    //       text: 'Migration from VuePress',
+    //       link: '/guide/migration-from-vuepress'
+    //     },
+    //     {
+    //       text: 'Migration from VitePress 0.x',
+    //       link: '/guide/migration-from-vitepress-0'
+    //     }
+    //   ]
+    // },
+    {
+      text: 'Config & API Reference',
+      link: '/reference/site-config'
+    }
+  ]
 }
 
-function sidebarConfig() {
+function sidebarReference() {
   return [
     {
-      text: "Config",
+      text: 'Reference',
       items: [
-        { text: "Introduction", link: "/config/introduction" },
-        { text: "App Configs", link: "/config/app-configs" },
-        { text: "Theme Configs", link: "/config/theme-configs" },
-        { text: "Frontmatter Configs", link: "/config/frontmatter-configs" },
-      ],
-    },
-  ];
+        { text: 'Site Config', link: '/reference/site-config' },
+        { text: 'Frontmatter Config', link: '/reference/frontmatter-config' },
+        { text: 'Runtime API', link: '/reference/runtime-api' },
+        { text: 'CLI', link: '/reference/cli' },
+        {
+          text: 'Default Theme',
+          items: [
+            {
+              text: 'Overview',
+              link: '/reference/default-theme-config'
+            },
+            {
+              text: 'Nav',
+              link: '/reference/default-theme-nav'
+            },
+            {
+              text: 'Sidebar',
+              link: '/reference/default-theme-sidebar'
+            },
+            {
+              text: 'Home Page',
+              link: '/reference/default-theme-home-page'
+            },
+            {
+              text: 'Footer',
+              link: '/reference/default-theme-footer'
+            },
+            {
+              text: 'Layout',
+              link: '/reference/default-theme-layout'
+            },
+            {
+              text: 'Badge',
+              link: '/reference/default-theme-badge'
+            },
+            {
+              text: 'Team Page',
+              link: '/reference/default-theme-team-page'
+            },
+            {
+              text: 'Prev / Next Links',
+              link: '/reference/default-theme-prev-next-links'
+            },
+            {
+              text: 'Edit Link',
+              link: '/reference/default-theme-edit-link'
+            },
+            {
+              text: 'Last Updated Timestamp',
+              link: '/reference/default-theme-last-updated'
+            },
+            {
+              text: 'Search',
+              link: '/reference/default-theme-search'
+            },
+            {
+              text: 'Carbon Ads',
+              link: '/reference/default-theme-carbon-ads'
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

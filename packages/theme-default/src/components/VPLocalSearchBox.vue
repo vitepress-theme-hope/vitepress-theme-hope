@@ -12,6 +12,7 @@ import {
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
 import Mark from 'mark.js/src/vanilla.js'
 import MiniSearch, { type SearchResult } from 'minisearch'
+import { type DefaultTheme } from 'vitepress'
 import { useRouter } from 'vitepress'
 import {
   computed,
@@ -26,9 +27,10 @@ import {
   watchEffect,
   type Ref
 } from 'vue'
-import type { ModalTranslations } from '../../../../types/local-search'
-import { dataSymbol } from '../../app/data'
-import { pathToFile } from '../../app/utils'
+// @ts-ignore
+import { dataSymbol } from 'vitepress/dist/client/app/data.js'
+// @ts-ignore
+import { pathToFile } from 'vitepress/dist/client/app/utils.js'
 import { useData } from '../composables/data'
 import { createTranslate } from '../support/translation'
 
@@ -313,7 +315,12 @@ onKeyStroke('Escape', () => {
 })
 
 // Translations
-const defaultTranslations: { modal: ModalTranslations } = {
+const defaultTranslations: {
+  modal: Exclude<
+    DefaultTheme.LocalSearchOptions['translations'],
+    undefined
+  >['modal']
+} = {
   modal: {
     displayDetails: 'Display detailed list',
     resetButtonTitle: 'Reset search',

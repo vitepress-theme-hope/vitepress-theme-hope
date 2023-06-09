@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { normalizeLink } from '../support/utils'
 import VPIconExternalLink from './icons/VPIconExternalLink.vue'
-import { EXTERNAL_URL_RE } from '../../shared'
+import { EXTERNAL_URL_RE } from '../shared'
 
 const props = defineProps<{
   tag?: string
@@ -12,8 +12,10 @@ const props = defineProps<{
   rel?: string
 }>()
 
-const tag = computed(() => props.tag ?? props.href ? 'a' : 'span')
-const isExternal = computed(() => props.href && EXTERNAL_URL_RE.test(props.href))
+const tag = computed(() => (props.tag ?? props.href ? 'a' : 'span'))
+const isExternal = computed(
+  () => props.href && EXTERNAL_URL_RE.test(props.href)
+)
 </script>
 
 <template>

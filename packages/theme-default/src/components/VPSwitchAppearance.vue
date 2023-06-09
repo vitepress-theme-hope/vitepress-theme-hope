@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, watch } from 'vue'
 import { useData } from '../composables/data'
-import { inBrowser, APPEARANCE_KEY } from '../../shared'
+import { inBrowser, APPEARANCE_KEY } from '../shared'
 import VPSwitch from './VPSwitch.vue'
 import VPIconSun from './icons/VPIconSun.vue'
 import VPIconMoon from './icons/VPIconMoon.vue'
@@ -36,8 +36,12 @@ function useAppearance() {
     setClass((isDark = !isDark))
 
     userPreference = isDark
-      ? query.matches ? 'auto' : 'dark'
-      : query.matches ? 'light' : 'auto'
+      ? query.matches
+        ? 'auto'
+        : 'dark'
+      : query.matches
+      ? 'light'
+      : 'auto'
 
     localStorage.setItem(APPEARANCE_KEY, userPreference)
   }

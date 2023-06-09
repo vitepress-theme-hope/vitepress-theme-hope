@@ -1,0 +1,32 @@
+{
+  "name": "vitepress-theme-default",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [],
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "pnpm build:check && pnpm build:ts && pnpm copy",
+    "build:check": "vue-tsc --noEmit -p .",
+    "build:ts": "tsc -p .",
+    "copy": "cpx \"src/**/*.{css,woff2,vue}\" dist",
+    "dev": "tsc --sourcemap -w -p src"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@docsearch/css": "^3.4.0",
+    "@docsearch/js": "^3.4.0",
+    "@vueuse/core": "^10.1.2",
+    "@vueuse/integrations": "^10.1.2",
+    "body-scroll-lock": "4.0.0-beta.0",
+    "minisearch": "^6.1.0",
+    "vitepress": "1.0.0-beta.1",
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@types/body-scroll-lock": "^3.1.0"
+  }
+}

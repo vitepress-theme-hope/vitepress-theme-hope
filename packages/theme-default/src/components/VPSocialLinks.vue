@@ -3,7 +3,7 @@ import type { DefaultTheme } from 'vitepress/theme'
 import VPSocialLink from './VPSocialLink.vue'
 
 defineProps<{
-  links: DefaultTheme.SocialLink[]
+  links: (DefaultTheme.SocialLink & { ariaLabel?: string })[]
 }>()
 </script>
 

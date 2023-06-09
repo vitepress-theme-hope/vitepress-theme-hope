@@ -8,22 +8,14 @@
     "demo:serve": "http-server -s -h localhost -d dist",
     "demo:build": "vitepress build src",
     "demo:clean-dev": "vitepress dev src --clean-cache",
-    "demo:dev": "vitepress dev src"
+    "demo:dev": "vitepress dev src",
+    "demo:default-build": "cross-env DEFAULT=TRUE vitepress build src",
+    "demo:default-clean-dev": "cross-env DEFAULT=TRUE vitepress dev src --clean-cache",
+    "demo:default-dev": "cross-env DEFAULT=TRUE vitepress dev src"
   },
   "devDependencies": {
+    "vitepress-theme-default": "workspace:*",
     "vitepress-theme-hope": "workspace:*",
-    "vitepress": "1.0.0-alpha.35"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "@algolia/client-search"
-      ]
-    },
-    "patchedDependencies": {
-      "@types/katex@0.16.0": "patches/@types__katex@0.16.0.patch",
-      "@vuepress/plugin-docsearch@2.0.0-beta.60": "patches/@vuepress__plugin-docsearch@2.0.0-beta.60.patch",
-      "mitt@3.0.0": "patches/mitt@3.0.0.patch"
-    }
+    "vitepress": "1.0.0-beta.1"
   }
 }
