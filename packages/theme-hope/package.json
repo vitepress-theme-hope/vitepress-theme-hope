@@ -1,14 +1,40 @@
 {
   "name": "vitepress-theme-hope",
+  "description": "A powerful theme with blogging support",
   "version": "0.0.1",
-  "description": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "type": "module",
+  "keywords": [
+    "vitepress",
+    "hope"
+  ],
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "build": "pnpm build:check && pnpm build:ts && pnpm copy",
+    "build:check": "vue-tsc --noEmit -p .",
+    "build:ts": "tsc -p .",
+    "copy": "cpx \"src/**/*.{css,woff2,vue}\" dist",
+    "dev": "tsc --sourcemap -w -p src"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Mr.Hope",
+    "email": "mister-hope@outlook.com",
+    "url": "https://mrhope.site"
+  },
   "dependencies": {
-    "vitepress": "1.0.0-beta.1"
+    "@docsearch/css": "^3.4.0",
+    "@docsearch/js": "^3.4.0",
+    "@vueuse/core": "^10.1.2",
+    "@vueuse/integrations": "^10.1.2",
+    "body-scroll-lock": "4.0.0-beta.0",
+    "minisearch": "^6.1.0",
+    "vitepress": "1.0.0-beta.1",
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@types/body-scroll-lock": "^3.1.0"
   }
 }
