@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vitepress": "1.0.0-alpha.35"
+    "vitepress": "1.0.0-beta.1"
   }
 }
