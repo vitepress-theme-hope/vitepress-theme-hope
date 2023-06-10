@@ -2,8 +2,8 @@
 import VPIconLanguages from './icons/VPIconLanguages.vue'
 import VPFlyout from './VPFlyout.vue'
 import VPMenuLink from './VPMenuLink.vue'
-import { useData } from '../composables/data'
-import { useLangs } from '../composables/langs'
+import { useData } from '../composables/data.js'
+import { useLangs } from '../composables/langs.js'
 
 const { theme } = useData()
 const { localeLinks, currentLang } = useLangs({ correspondingLink: true })

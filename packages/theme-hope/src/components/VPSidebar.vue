@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, watchPostEffect } from 'vue'
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
-import { useSidebar } from '../composables/sidebar'
+import { useSidebar } from '../composables/sidebar.js'
 import VPSidebarItem from './VPSidebarItem.vue'
 
 const { sidebarGroups, hasSidebar } = useSidebar()
@@ -41,7 +41,12 @@ watchPostEffect(async () => {
   >
     <div class="curtain" />
 
-    <nav class="nav" id="VPSidebarNav" aria-labelledby="sidebar-aria-label" tabindex="-1">
+    <nav
+      class="nav"
+      id="VPSidebarNav"
+      aria-labelledby="sidebar-aria-label"
+      tabindex="-1"
+    >
       <span class="visually-hidden" id="sidebar-aria-label">
         Sidebar Navigation
       </span>
@@ -81,8 +86,7 @@ watchPostEffect(async () => {
   opacity: 1;
   visibility: visible;
   transform: translateX(0);
-  transition: opacity 0.25s,
-              transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: opacity 0.25s, transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .dark .VPSidebar {
@@ -106,8 +110,14 @@ watchPostEffect(async () => {
 
 @media (min-width: 1440px) {
   .VPSidebar {
-    padding-left: max(32px, calc((100% - (var(--vp-layout-max-width) - 64px)) / 2));
-    width: calc((100% - (var(--vp-layout-max-width) - 64px)) / 2 + var(--vp-sidebar-width) - 32px);
+    padding-left: max(
+      32px,
+      calc((100% - (var(--vp-layout-max-width) - 64px)) / 2)
+    );
+    width: calc(
+      (100% - (var(--vp-layout-max-width) - 64px)) / 2 + var(--vp-sidebar-width) -
+        32px
+    );
   }
 }
 

@@ -5,6 +5,7 @@
   "type": "module",
   "description": "",
   "scripts": {
+    "build:hope": "pnpm --filter vitepress-theme-hope build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

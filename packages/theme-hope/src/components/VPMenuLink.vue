@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { DefaultTheme } from 'vitepress/theme'
-import { useData } from '../composables/data'
-import { isActive } from '../shared'
+import { useData } from '../composables/data.js'
+import { isActive } from '../shared.js'
 import VPLink from './VPLink.vue'
 
 defineProps<{

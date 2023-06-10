@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watchEffect, onMounted } from 'vue'
-import { useData } from '../composables/data'
+import { useData } from '../composables/data.js'
 
 const { theme, page, lang } = useData()
 

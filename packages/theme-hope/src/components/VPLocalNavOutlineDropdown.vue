@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onContentUpdated } from 'vitepress'
 import { nextTick, ref } from 'vue'
-import { useData } from '../composables/data'
-import { resolveTitle, type MenuItem } from '../composables/outline'
+import { useData } from '../composables/data.js'
+import { resolveTitle, type MenuItem } from '../composables/outline.js'
 import VPDocOutlineItem from './VPDocOutlineItem.vue'
 import VPIconChevronRight from './icons/VPIconChevronRight.vue'
 
@@ -52,11 +52,7 @@ function scrollToTop() {
       {{ theme.returnToTopLabel || 'Return to top' }}
     </button>
     <Transition name="flyout">
-      <div v-if="open"
-        ref="items"
-        class="items"
-        @click="onItemClick"
-      >
+      <div v-if="open" ref="items" class="items" @click="onItemClick">
         <a class="top-link" href="#" @click="scrollToTop">
           {{ theme.returnToTopLabel || 'Return to top' }}
         </a>
@@ -132,11 +128,11 @@ function scrollToTop() {
 }
 
 .flyout-enter-active {
-  transition: all .2s ease-out;
+  transition: all 0.2s ease-out;
 }
 
 .flyout-leave-active {
-  transition: all .15s ease-in;
+  transition: all 0.15s ease-in;
 }
 
 .flyout-enter-from,

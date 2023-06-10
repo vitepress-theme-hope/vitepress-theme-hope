@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { DefaultTheme } from 'vitepress/theme'
 import { ref, watch, onMounted } from 'vue'
-import { useAside } from '../composables/aside'
-import { useData } from '../composables/data'
+import { useAside } from '../composables/aside.js'
+import { useData } from '../composables/data.js'
 
 const { page } = useData()
 const props = defineProps<{
@@ -27,11 +27,14 @@ function init() {
   }
 }
 
-watch(() => page.value.relativePath, () => {
-  if (isInitialized && isAsideEnabled.value) {
-    ;(window as any)._carbonads?.refresh()
+watch(
+  () => page.value.relativePath,
+  () => {
+    if (isInitialized && isAsideEnabled.value) {
+      ;(window as any)._carbonads?.refresh()
+    }
   }
-})
+)
 
 // no need to account for option changes during dev, we can just
 // refresh the page

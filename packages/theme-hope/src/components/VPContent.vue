@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useData } from '../composables/data'
-import { useSidebar } from '../composables/sidebar'
+import { useData } from '../composables/data.js'
+import { useSidebar } from '../composables/sidebar.js'
 import VPPage from './VPPage.vue'
 import VPHome from './VPHome.vue'
 import VPDoc from './VPDoc.vue'
@@ -31,8 +31,12 @@ const { hasSidebar } = useSidebar()
       <template #home-hero-info><slot name="home-hero-info" /></template>
       <template #home-hero-image><slot name="home-hero-image" /></template>
       <template #home-hero-after><slot name="home-hero-after" /></template>
-      <template #home-features-before><slot name="home-features-before" /></template>
-      <template #home-features-after><slot name="home-features-after" /></template>
+      <template #home-features-before
+        ><slot name="home-features-before"
+      /></template>
+      <template #home-features-after
+        ><slot name="home-features-after"
+      /></template>
     </VPHome>
 
     <VPDoc v-else>
@@ -44,8 +48,12 @@ const { hasSidebar } = useSidebar()
       <template #doc-after><slot name="doc-after" /></template>
 
       <template #aside-top><slot name="aside-top" /></template>
-      <template #aside-outline-before><slot name="aside-outline-before" /></template>
-      <template #aside-outline-after><slot name="aside-outline-after" /></template>
+      <template #aside-outline-before
+        ><slot name="aside-outline-before"
+      /></template>
+      <template #aside-outline-after
+        ><slot name="aside-outline-after"
+      /></template>
       <template #aside-ads-before><slot name="aside-ads-before" /></template>
       <template #aside-ads-after><slot name="aside-ads-after" /></template>
       <template #aside-bottom><slot name="aside-bottom" /></template>
@@ -84,7 +92,9 @@ const { hasSidebar } = useSidebar()
 @media (min-width: 1440px) {
   .VPContent.has-sidebar {
     padding-right: calc((100vw - var(--vp-layout-max-width)) / 2);
-    padding-left: calc((100vw - var(--vp-layout-max-width)) / 2 + var(--vp-sidebar-width));
+    padding-left: calc(
+      (100vw - var(--vp-layout-max-width)) / 2 + var(--vp-sidebar-width)
+    );
   }
 }
 </style>

@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue'
-import { useData } from '../composables/data'
-import { getHeaders, resolveTitle, type MenuItem } from '../composables/outline'
+import { useData } from '../composables/data.js'
+import {
+  getHeaders,
+  resolveTitle,
+  type MenuItem
+} from '../composables/outline.js'
 import VPDocOutlineItem from './VPDocOutlineItem.vue'
 import { onContentUpdated } from 'vitepress'
 import VPIconChevronRight from './icons/VPIconChevronRight.vue'
@@ -16,9 +20,7 @@ onContentUpdated(() => {
 const headers = shallowRef<MenuItem[]>([])
 
 onContentUpdated(() => {
-  headers.value = getHeaders(
-    frontmatter.value.outline ?? theme.value.outline
-  )
+  headers.value = getHeaders(frontmatter.value.outline ?? theme.value.outline)
 })
 </script>
 

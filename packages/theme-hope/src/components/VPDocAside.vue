@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useData } from '../composables/data'
+import { useData } from '../composables/data.js'
 import VPDocAsideOutline from './VPDocAsideOutline.vue'
 import VPDocAsideCarbonAds from './VPDocAsideCarbonAds.vue'
 

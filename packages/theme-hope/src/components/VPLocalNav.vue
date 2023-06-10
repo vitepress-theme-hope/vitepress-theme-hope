@@ -2,9 +2,9 @@
 import { useWindowScroll } from '@vueuse/core'
 import { computed, shallowRef } from 'vue'
 import { onContentUpdated } from 'vitepress'
-import { useData } from '../composables/data'
-import { getHeaders, type MenuItem } from '../composables/outline'
-import { useSidebar } from '../composables/sidebar'
+import { useData } from '../composables/data.js'
+import { getHeaders, type MenuItem } from '../composables/outline.js'
+import { useSidebar } from '../composables/sidebar.js'
 import VPLocalNavOutlineDropdown from './VPLocalNavOutlineDropdown.vue'
 import VPIconAlignLeft from './icons/VPIconAlignLeft.vue'
 

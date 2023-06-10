@@ -4,8 +4,8 @@ import VPFlyout from './VPFlyout.vue'
 import VPMenuLink from './VPMenuLink.vue'
 import VPSwitchAppearance from './VPSwitchAppearance.vue'
 import VPSocialLinks from './VPSocialLinks.vue'
-import { useData } from '../composables/data'
-import { useLangs } from '../composables/langs'
+import { useData } from '../composables/data.js'
+import { useLangs } from '../composables/langs.js'
 
 const { site, theme } = useData()
 const { localeLinks, currentLang } = useLangs({ correspondingLink: true })
@@ -19,8 +19,15 @@ const hasExtraContent = computed(
 </script>
 
 <template>
-  <VPFlyout v-if="hasExtraContent" class="VPNavBarExtra" label="extra navigation">
-    <div v-if="localeLinks.length && currentLang.label" class="group translations">
+  <VPFlyout
+    v-if="hasExtraContent"
+    class="VPNavBarExtra"
+    label="extra navigation"
+  >
+    <div
+      v-if="localeLinks.length && currentLang.label"
+      class="group translations"
+    >
       <p class="trans-title">{{ currentLang.label }}</p>
 
       <template v-for="locale in localeLinks" :key="locale.link">

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { withBase } from 'vitepress'
-import { useData } from './composables/data'
-import { useLangs } from './composables/langs'
+import { useData } from './composables/data.js'
+import { useLangs } from './composables/langs.js'
 
 const { site } = useData()
 const { localeLinks } = useLangs({ removeCurrent: false })
@@ -26,7 +26,8 @@ onMounted(() => {
     <h1 class="title">PAGE NOT FOUND</h1>
     <div class="divider" />
     <blockquote class="quote">
-      But if you don't change your direction, and if you keep looking, you may end up where you are heading.
+      But if you don't change your direction, and if you keep looking, you may
+      end up where you are heading.
     </blockquote>
 
     <div class="action">

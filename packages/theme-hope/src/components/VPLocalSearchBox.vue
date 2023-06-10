@@ -31,8 +31,8 @@ import {
 import { dataSymbol } from 'vitepress/dist/client/app/data.js'
 // @ts-ignore
 import { pathToFile } from 'vitepress/dist/client/app/utils.js'
-import { useData } from '../composables/data'
-import { createTranslate } from '../support/translation'
+import { useData } from '../composables/data.js'
+import { createTranslate } from '../support/translation.js'
 
 defineProps<{
   placeholder: string

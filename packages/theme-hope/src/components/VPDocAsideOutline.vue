@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue'
-import { useData } from '../composables/data'
+import { useData } from '../composables/data.js'
 import {
   getHeaders,
   resolveTitle,
   useActiveAnchor,
   type MenuItem
-} from '../composables/outline'
+} from '../composables/outline.js'
 import VPDocOutlineItem from './VPDocOutlineItem.vue'
 import { onContentUpdated } from 'vitepress'
 
@@ -15,9 +15,7 @@ const { frontmatter, theme } = useData()
 const headers = shallowRef<MenuItem[]>([])
 
 onContentUpdated(() => {
-  headers.value = getHeaders(
-    frontmatter.value.outline ?? theme.value.outline
-  )
+  headers.value = getHeaders(frontmatter.value.outline ?? theme.value.outline)
 })
 
 const container = ref()
@@ -27,7 +25,11 @@ useActiveAnchor(container, marker)
 </script>
 
 <template>
-  <div class="VPDocAsideOutline" :class="{ 'has-outline': headers.length > 0 }" ref="container">
+  <div
+    class="VPDocAsideOutline"
+    :class="{ 'has-outline': headers.length > 0 }"
+    ref="container"
+  >
     <div class="content">
       <div class="outline-marker" ref="marker" />
 
@@ -69,7 +71,8 @@ useActiveAnchor(container, marker)
   width: 1px;
   height: 18px;
   background-color: var(--vp-c-brand);
-  transition: top 0.25s cubic-bezier(0, 1, 0.5, 1), background-color 0.5s, opacity 0.25s;
+  transition: top 0.25s cubic-bezier(0, 1, 0.5, 1), background-color 0.5s,
+    opacity 0.25s;
 }
 
 .outline-title {

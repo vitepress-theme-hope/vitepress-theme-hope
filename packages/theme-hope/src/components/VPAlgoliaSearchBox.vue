@@ -3,7 +3,7 @@ import type { DefaultTheme } from 'vitepress/theme'
 import docsearch from '@docsearch/js'
 import { onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vitepress'
-import { useData } from '../composables/data'
+import { useData } from '../composables/data.js'
 
 const props = defineProps<{
   algolia: DefaultTheme.AlgoliaSearchOptions
@@ -86,12 +86,7 @@ function initialize(userOptions: DefaultTheme.AlgoliaSearchOptions) {
 
 function getRelativePath(absoluteUrl: string) {
   const { pathname, hash } = new URL(absoluteUrl)
-  return (
-    pathname.replace(
-      /\.html$/,
-      site.value.cleanUrls ? '' : '.html'
-    ) + hash
-  )
+  return pathname.replace(/\.html$/, site.value.cleanUrls ? '' : '.html') + hash
 }
 </script>
 

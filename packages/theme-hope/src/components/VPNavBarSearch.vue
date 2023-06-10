@@ -9,7 +9,7 @@ import {
   ref
 } from 'vue'
 import type { DefaultTheme } from 'vitepress'
-import { useData } from '../composables/data'
+import { useData } from '../composables/data.js'
 import VPNavBarSearchButton from './VPNavBarSearchButton.vue'
 
 const VPLocalSearchBox = __VP_LOCAL_SEARCH__

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useData } from '../composables/data'
-import { useSidebar } from '../composables/sidebar'
-import { useLangs } from '../composables/langs'
-import { normalizeLink } from '../support/utils'
+import { useData } from '../composables/data.js'
+import { useSidebar } from '../composables/sidebar.js'
+import { useLangs } from '../composables/langs.js'
+import { normalizeLink } from '../support/utils.js'
 import VPImage from './VPImage.vue'
 
 const { site, theme } = useData()
@@ -16,7 +16,9 @@ const { currentLang } = useLangs()
       <slot name="nav-bar-title-before" />
       <VPImage v-if="theme.logo" class="logo" :image="theme.logo" />
       <template v-if="theme.siteTitle">{{ theme.siteTitle }}</template>
-      <template v-else-if="theme.siteTitle === undefined">{{ site.title }}</template>
+      <template v-else-if="theme.siteTitle === undefined">{{
+        site.title
+      }}</template>
       <slot name="nav-bar-title-after" />
     </a>
   </div>

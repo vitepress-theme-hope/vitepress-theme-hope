@@ -1,5 +1,13 @@
+<script lang="ts">
+export interface Sponsors {
+  tier?: string
+  size?: GridSize
+  items: Sponsor[]
+}
+</script>
+
 <script setup lang="ts">
-import type { GridSize } from '../composables/sponsor-grid'
+import type { GridSize } from '../composables/sponsor-grid.js'
 import type { Sponsor } from './VPSponsorsGrid.vue'
 import { computed } from 'vue'
 import VPSponsorsGrid from './VPSponsorsGrid.vue'

@@ -1,4 +1,4 @@
-import { inBrowser, sanitizeFileName } from './shared'
+import { inBrowser, sanitizeFileName } from './shared.js'
 
 /**
  * Converts a url path to the corresponding js chunk filename.

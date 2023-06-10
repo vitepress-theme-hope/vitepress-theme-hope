@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useWindowScroll } from '@vueuse/core'
-import { useSidebar } from '../composables/sidebar'
+import { useSidebar } from '../composables/sidebar.js'
 import VPNavBarTitle from './VPNavBarTitle.vue'
 import VPNavBarSearch from './VPNavBarSearch.vue'
 import VPNavBarMenu from './VPNavBarMenu.vue'
@@ -33,8 +33,12 @@ const classes = computed(() => ({
     <div class="container">
       <div class="title">
         <VPNavBarTitle>
-          <template #nav-bar-title-before><slot name="nav-bar-title-before" /></template>
-          <template #nav-bar-title-after><slot name="nav-bar-title-after" /></template>
+          <template #nav-bar-title-before
+            ><slot name="nav-bar-title-before"
+          /></template>
+          <template #nav-bar-title-after
+            ><slot name="nav-bar-title-after"
+          /></template>
         </VPNavBarTitle>
       </div>
 
@@ -49,7 +53,11 @@ const classes = computed(() => ({
           <VPNavBarSocialLinks class="social-links" />
           <VPNavBarExtra class="extra" />
           <slot name="nav-bar-content-after" />
-          <VPNavBarHamburger class="hamburger" :active="isScreenOpen" @click="$emit('toggle-screen')" />
+          <VPNavBarHamburger
+            class="hamburger"
+            :active="isScreenOpen"
+            @click="$emit('toggle-screen')"
+          />
         </div>
       </div>
     </div>
@@ -128,8 +136,14 @@ const classes = computed(() => ({
 
 @media (min-width: 1440px) {
   .VPNavBar.has-sidebar .title {
-    padding-left: max(32px, calc((100% - (var(--vp-layout-max-width) - 64px)) / 2));
-    width: calc((100% - (var(--vp-layout-max-width) - 64px)) / 2 + var(--vp-sidebar-width) - 32px);
+    padding-left: max(
+      32px,
+      calc((100% - (var(--vp-layout-max-width) - 64px)) / 2)
+    );
+    width: calc(
+      (100% - (var(--vp-layout-max-width) - 64px)) / 2 + var(--vp-sidebar-width) -
+        32px
+    );
   }
 }
 
@@ -149,7 +163,9 @@ const classes = computed(() => ({
 @media (min-width: 1440px) {
   .VPNavBar.has-sidebar .content {
     padding-right: calc((100vw - var(--vp-layout-max-width)) / 2 + 32px);
-    padding-left: calc((100vw - var(--vp-layout-max-width)) / 2 + var(--vp-sidebar-width));
+    padding-left: calc(
+      (100vw - var(--vp-layout-max-width)) / 2 + var(--vp-sidebar-width)
+    );
   }
 }
 
@@ -185,7 +201,7 @@ const classes = computed(() => ({
   width: 1px;
   height: 24px;
   background-color: var(--vp-c-divider);
-  content: "";
+  content: '';
 }
 
 .menu + .appearance::before,
@@ -215,13 +231,16 @@ const classes = computed(() => ({
     width: 100%;
     height: 32px;
     background: linear-gradient(var(--vp-c-bg), transparent 70%);
-    content: "";
+    content: '';
   }
 }
 
 @media (min-width: 1440px) {
   .VPNavBar.has-sidebar .curtain {
-    width: calc(100% - ((100vw - var(--vp-layout-max-width)) / 2 + var(--vp-sidebar-width)));
+    width: calc(
+      100% -
+        ((100vw - var(--vp-layout-max-width)) / 2 + var(--vp-sidebar-width))
+    );
   }
 }
 </style>

@@ -1,4 +1,4 @@
-import { useData } from '../composables/data'
+import { useData } from '../composables/data.js'
 
 /**
  * @param themeObject Can be an object with `translations` and `locales` properties
