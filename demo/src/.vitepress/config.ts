@@ -32,6 +32,8 @@ export default defineConfig({
     }
   },
 
+  ignoreDeadLinks: true,
+
   themeConfig: {
     nav: nav(),
 
