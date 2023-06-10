@@ -6,19 +6,19 @@ defineProps<{
   root?: boolean;
 }>();
 
-function onClick({ target: el }: Event) {
+const onClick = ({ target: el }: Event) => {
   const id = "#" + (el as HTMLAnchorElement).href.split("#")[1];
   const heading = document.querySelector<HTMLAnchorElement>(
     decodeURIComponent(id)
   );
 
   heading?.focus();
-}
+};
 </script>
 
 <template>
   <ul :class="root ? 'root' : 'nested'">
-    <li v-for="{ children, link, title } in headers">
+    <li v-for="{ children, link, title } in headers" :key="link">
       <a class="outline-link" :href="link" :title="title" @click="onClick">{{
         title
       }}</a>
@@ -30,7 +30,7 @@ function onClick({ target: el }: Event) {
   </ul>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .root {
   position: relative;
   z-index: 1;
@@ -49,15 +49,15 @@ function onClick({ target: el }: Event) {
   text-overflow: ellipsis;
   transition: color 0.5s;
   font-weight: 500;
-}
 
-.outline-link:hover,
-.outline-link.active {
-  color: var(--vp-c-text-1);
-  transition: color 0.25s;
-}
+  &:hover,
+  &.active {
+    color: var(--vp-c-text-1);
+    transition: color 0.25s;
+  }
 
-.outline-link.nested {
-  padding-left: 13px;
+  &.nested {
+    padding-left: 13px;
+  }
 }
 </style>

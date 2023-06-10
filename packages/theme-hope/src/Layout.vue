@@ -126,17 +126,9 @@ provide("hero-image-slot-exists", heroImageSlotExists);
 
       <template #aside-bottom><slot name="aside-bottom" /></template>
 
-      <template #aside-outline-before
-        ><slot name="aside-outline-before"
-      /></template>
-
-      <template #aside-outline-after
-        ><slot name="aside-outline-after"
-      /></template>
-
-      <template #aside-ads-before><slot name="aside-ads-before" /></template>
-
-      <template #aside-ads-after><slot name="aside-ads-after" /></template>
+      <template #aside-outline-after>
+        <slot name="aside-outline-after" />
+      </template>
     </VPContent>
 
     <VPFooter />

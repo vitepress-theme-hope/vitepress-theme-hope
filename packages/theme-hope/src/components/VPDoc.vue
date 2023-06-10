@@ -29,25 +29,17 @@ const pageName = computed(() =>
         <div class="aside-container">
           <div class="aside-content">
             <VPDocAside>
-              <template #aside-top><slot name="aside-top" /></template>
+              <template #aside-top>
+                <slot name="aside-top" />
+              </template>
 
-              <template #aside-bottom><slot name="aside-bottom" /></template>
+              <template #aside-bottom>
+                <slot name="aside-bottom" />
+              </template>
 
-              <template #aside-outline-before
-                ><slot name="aside-outline-before"
-              /></template>
-
-              <template #aside-outline-after
-                ><slot name="aside-outline-after"
-              /></template>
-
-              <template #aside-ads-before
-                ><slot name="aside-ads-before"
-              /></template>
-
-              <template #aside-ads-after
-                ><slot name="aside-ads-after"
-              /></template>
+              <template #aside-outline-after>
+                <slot name="aside-outline-after" />
+              </template>
             </VPDocAside>
           </div>
         </div>
@@ -78,62 +70,59 @@ const pageName = computed(() =>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPDoc {
   padding: 32px 24px 96px;
   width: 100%;
-}
 
-.VPDoc .VPDocOutlineDropdown {
-  display: none;
-}
-
-@media (min-width: 960px) and (max-width: 1280px) {
-  .VPDoc .VPDocOutlineDropdown {
-    display: block;
-  }
-}
-
-@media (min-width: 768px) {
-  .VPDoc {
+  @media (min-width: 768px) {
     padding: 48px 32px 128px;
   }
-}
-
-@media (min-width: 960px) {
-  .VPDoc {
+  @media (min-width: 960px) {
     padding: 32px 32px 0;
   }
 
-  .VPDoc:not(.has-sidebar) .container {
-    display: flex;
-    justify-content: center;
-    max-width: 992px;
+  &:not(.has-sidebar) {
+    .container {
+      @media (min-width: 960px) {
+        display: flex;
+        justify-content: center;
+        max-width: 992px;
+      }
+
+      @media (min-width: 1440px) {
+        max-width: 1104px;
+      }
+    }
+
+    .content {
+      @media (min-width: 960px) {
+        max-width: 752px;
+      }
+
+      @media (min-width: 1440px) {
+        max-width: 784px;
+      }
+    }
   }
 
-  .VPDoc:not(.has-sidebar) .content {
-    max-width: 752px;
-  }
-}
+  @media (min-width: 1280px) {
+    .container {
+      display: flex;
+      justify-content: center;
+    }
 
-@media (min-width: 1280px) {
-  .VPDoc .container {
-    display: flex;
-    justify-content: center;
-  }
-
-  .VPDoc .aside {
-    display: block;
-  }
-}
-
-@media (min-width: 1440px) {
-  .VPDoc:not(.has-sidebar) .content {
-    max-width: 784px;
+    .aside {
+      display: block;
+    }
   }
 
-  .VPDoc:not(.has-sidebar) .container {
-    max-width: 1104px;
+  .VPDocOutlineDropdown {
+    display: none;
+
+    @media (min-width: 960px) and (max-width: 1280px) {
+      display: block;
+    }
   }
 }
 
@@ -170,10 +159,10 @@ const pageName = computed(() =>
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: none;
-}
 
-.aside-container::-webkit-scrollbar {
-  display: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .aside-curtain {
@@ -198,16 +187,12 @@ const pageName = computed(() =>
   position: relative;
   margin: 0 auto;
   width: 100%;
-}
 
-@media (min-width: 960px) {
-  .content {
+  @media (min-width: 960px) {
     padding: 0 32px 128px;
   }
-}
 
-@media (min-width: 1280px) {
-  .content {
+  @media (min-width: 1280px) {
     order: 1;
     margin: 0;
     min-width: 640px;
@@ -216,9 +201,9 @@ const pageName = computed(() =>
 
 .content-container {
   margin: 0 auto;
-}
 
-.VPDoc.has-aside .content-container {
-  max-width: 688px;
+  .VPDoc.has-aside & {
+    max-width: 688px;
+  }
 }
 </style>

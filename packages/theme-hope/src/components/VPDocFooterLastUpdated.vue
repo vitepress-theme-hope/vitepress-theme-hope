@@ -25,16 +25,14 @@ onMounted(() => {
   </p>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPLastUpdated {
   line-height: 24px;
   font-size: 14px;
   font-weight: 500;
   color: var(--vp-c-text-2);
-}
 
-@media (min-width: 640px) {
-  .VPLastUpdated {
+  @media (min-width: 640px) {
     line-height: 32px;
     font-size: 14px;
     font-weight: 500;

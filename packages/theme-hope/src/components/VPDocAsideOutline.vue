@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onContentUpdated } from "vitepress";
-import { ref, shallowRef } from "vue";
+import { shallowRef } from "vue";
 
 import VPDocOutlineItem from "./VPDocOutlineItem.vue";
 import { useData } from "../composables/data.js";
@@ -13,16 +13,15 @@ import {
 
 const { frontmatter, theme } = useData();
 
+const container = shallowRef<HTMLElement>();
 const headers = shallowRef<MenuItem[]>([]);
+const marker = shallowRef<HTMLElement>();
+
+useActiveAnchor(container, marker);
 
 onContentUpdated(() => {
   headers.value = getHeaders(frontmatter.value.outline ?? theme.value.outline);
 });
-
-const container = ref();
-const marker = ref();
-
-useActiveAnchor(container, marker);
 </script>
 
 <template>
@@ -41,19 +40,19 @@ useActiveAnchor(container, marker);
           Table of Contents for current page
         </span>
 
-        <VPDocOutlineItem :headers="headers" :root="true" />
+        <VPDocOutlineItem :headers="headers" root />
       </nav>
     </div>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPDocAsideOutline {
   display: none;
-}
 
-.VPDocAsideOutline.has-outline {
-  display: block;
+  &.has-outline {
+    display: block;
+  }
 }
 
 .content {

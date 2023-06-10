@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 defineProps<{
+  /** Whether show backdrop */
   show: boolean;
 }>();
 </script>
@@ -10,7 +11,7 @@ defineProps<{
   </transition>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPBackdrop {
   position: fixed;
   top: 0;
@@ -22,19 +23,17 @@ defineProps<{
   z-index: var(--vp-z-index-backdrop);
   background: var(--vp-backdrop-bg-color);
   transition: opacity 0.5s;
-}
 
-.VPBackdrop.fade-enter-from,
-.VPBackdrop.fade-leave-to {
-  opacity: 0;
-}
+  &.fade-enter-from,
+  &.fade-leave-to {
+    opacity: 0;
+  }
 
-.VPBackdrop.fade-leave-active {
-  transition-duration: 0.25s;
-}
+  &.fade-leave-active {
+    transition-duration: 0.25s;
+  }
 
-@media (min-width: 1280px) {
-  .VPBackdrop {
+  @media (min-width: 1280px) {
     display: none;
   }
 }

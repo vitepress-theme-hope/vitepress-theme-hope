@@ -14,20 +14,20 @@ const { theme, page, frontmatter } = useData();
 const editLink = useEditLink();
 const control = usePrevNext();
 
-const hasEditLink = computed(() => {
-  return theme.value.editLink && frontmatter.value.editLink !== false;
-});
-const hasLastUpdated = computed(() => {
-  return page.value.lastUpdated && frontmatter.value.lastUpdated !== false;
-});
-const showFooter = computed(() => {
-  return (
+const hasEditLink = computed(
+  () => theme.value.editLink && frontmatter.value.editLink !== false
+);
+const hasLastUpdated = computed(
+  () => page.value.lastUpdated && frontmatter.value.lastUpdated !== false
+);
+
+const showFooter = computed(
+  () =>
     hasEditLink.value ||
     hasLastUpdated.value ||
     control.value.prev ||
     control.value.next
-  );
-});
+);
 </script>
 
 <template>
@@ -36,7 +36,7 @@ const showFooter = computed(() => {
 
     <div v-if="hasEditLink || hasLastUpdated" class="edit-info">
       <div v-if="hasEditLink" class="edit-link">
-        <VPLink class="edit-link-button" :href="editLink.url" :no-icon="true">
+        <VPLink class="edit-link-button" :href="editLink.url" no-icon>
           <VPIconEdit class="edit-link-icon" aria-label="edit icon" />
           {{ editLink.text }}
         </VPLink>
@@ -81,17 +81,15 @@ const showFooter = computed(() => {
   </footer>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPDocFooter {
   margin-top: 64px;
 }
 
 .edit-info {
   padding-bottom: 18px;
-}
 
-@media (min-width: 640px) {
-  .edit-info {
+  @media (min-width: 640px) {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -108,10 +106,10 @@ const showFooter = computed(() => {
   font-weight: 500;
   color: var(--vp-c-brand);
   transition: color 0.25s;
-}
 
-.edit-link-button:hover {
-  color: var(--vp-c-brand-dark);
+  &:hover {
+    color: var(--vp-c-brand-dark);
+  }
 }
 
 .edit-link-icon {
@@ -124,29 +122,27 @@ const showFooter = computed(() => {
 .prev-next {
   border-top: 1px solid var(--vp-c-divider);
   padding-top: 24px;
-}
 
-@media (min-width: 640px) {
-  .prev-next {
+  @media (min-width: 640px) {
     display: flex;
   }
 }
 
-.pager.has-prev {
-  padding-top: 8px;
-}
-
-@media (min-width: 640px) {
-  .pager {
+.pager {
+  @media (min-width: 640px) {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
     width: 50%;
   }
 
-  .pager.has-prev {
-    padding-top: 0;
-    padding-left: 16px;
+  &.has-prev {
+    padding-top: 8px;
+
+    @media (min-width: 640px) {
+      padding-top: 0;
+      padding-left: 16px;
+    }
   }
 }
 
@@ -158,15 +154,15 @@ const showFooter = computed(() => {
   width: 100%;
   height: 100%;
   transition: border-color 0.25s;
-}
 
-.pager-link:hover {
-  border-color: var(--vp-c-brand);
-}
+  &:hover {
+    border-color: var(--vp-c-brand);
+  }
 
-.pager-link.next {
-  margin-left: auto;
-  text-align: right;
+  &.next {
+    margin-left: auto;
+    text-align: right;
+  }
 }
 
 .desc {

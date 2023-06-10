@@ -5,12 +5,20 @@ import { EXTERNAL_URL_RE } from "../shared.js";
 import { normalizeLink } from "../support/utils.js";
 
 const props = defineProps<{
+  /** tag of the button */
   tag?: string;
+  /** size of the button */
   size?: "medium" | "big";
+  // TODO: Remove sponsor
+  /** theme of the button */
   theme?: "brand" | "alt" | "sponsor";
+  /** button text */
   text: string;
+  /** button link */
   href?: string;
 }>();
+
+const component = computed(() => (props.tag ?? props.href ? "a" : "button"));
 
 const classes = computed(() => [
   props.size ?? "medium",
@@ -20,12 +28,6 @@ const classes = computed(() => [
 const isExternal = computed(
   () => props.href && EXTERNAL_URL_RE.test(props.href)
 );
-
-const component = computed(() => {
-  if (props.tag) return props.tag;
-
-  return props.href ? "a" : "button";
-});
 </script>
 
 <template>
@@ -41,7 +43,7 @@ const component = computed(() => {
   </component>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPButton {
   display: inline-block;
   border: 1px solid transparent;
@@ -49,62 +51,63 @@ const component = computed(() => {
   font-weight: 600;
   white-space: nowrap;
   transition: color 0.25s, border-color 0.25s, background-color 0.25s;
+
+  &:active {
+    transition: color 0.1s, border-color 0.1s, background-color 0.1s;
+  }
+
+  &.medium {
+    border-radius: 20px;
+    padding: 0 20px;
+    line-height: 38px;
+    font-size: 14px;
+  }
+
+  &.big {
+    border-radius: 24px;
+    padding: 0 24px;
+    line-height: 46px;
+    font-size: 16px;
+  }
+
+  &.brand {
+    border-color: var(--vp-button-brand-border);
+    color: var(--vp-button-brand-text);
+    background-color: var(--vp-button-brand-bg);
+
+    &:hover {
+      border-color: var(--vp-button-brand-hover-border);
+      color: var(--vp-button-brand-hover-text);
+      background-color: var(--vp-button-brand-hover-bg);
+    }
+
+    &:active {
+      border-color: var(--vp-button-brand-active-border);
+      color: var(--vp-button-brand-active-text);
+      background-color: var(--vp-button-brand-active-bg);
+    }
+  }
+
+  &.alt {
+    border-color: var(--vp-button-alt-border);
+    color: var(--vp-button-alt-text);
+    background-color: var(--vp-button-alt-bg);
+
+    &:hover {
+      border-color: var(--vp-button-alt-hover-border);
+      color: var(--vp-button-alt-hover-text);
+      background-color: var(--vp-button-alt-hover-bg);
+    }
+
+    &:active {
+      border-color: var(--vp-button-alt-active-border);
+      color: var(--vp-button-alt-active-text);
+      background-color: var(--vp-button-alt-active-bg);
+    }
+  }
 }
 
-.VPButton:active {
-  transition: color 0.1s, border-color 0.1s, background-color 0.1s;
-}
-
-.VPButton.medium {
-  border-radius: 20px;
-  padding: 0 20px;
-  line-height: 38px;
-  font-size: 14px;
-}
-
-.VPButton.big {
-  border-radius: 24px;
-  padding: 0 24px;
-  line-height: 46px;
-  font-size: 16px;
-}
-
-.VPButton.brand {
-  border-color: var(--vp-button-brand-border);
-  color: var(--vp-button-brand-text);
-  background-color: var(--vp-button-brand-bg);
-}
-
-.VPButton.brand:hover {
-  border-color: var(--vp-button-brand-hover-border);
-  color: var(--vp-button-brand-hover-text);
-  background-color: var(--vp-button-brand-hover-bg);
-}
-
-.VPButton.brand:active {
-  border-color: var(--vp-button-brand-active-border);
-  color: var(--vp-button-brand-active-text);
-  background-color: var(--vp-button-brand-active-bg);
-}
-
-.VPButton.alt {
-  border-color: var(--vp-button-alt-border);
-  color: var(--vp-button-alt-text);
-  background-color: var(--vp-button-alt-bg);
-}
-
-.VPButton.alt:hover {
-  border-color: var(--vp-button-alt-hover-border);
-  color: var(--vp-button-alt-hover-text);
-  background-color: var(--vp-button-alt-hover-bg);
-}
-
-.VPButton.alt:active {
-  border-color: var(--vp-button-alt-active-border);
-  color: var(--vp-button-alt-active-text);
-  background-color: var(--vp-button-alt-active-bg);
-}
-
+// TODO: Remove
 .VPButton.sponsor {
   border-color: var(--vp-button-sponsor-border);
   color: var(--vp-button-sponsor-text);

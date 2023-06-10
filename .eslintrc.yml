@@ -334,7 +334,7 @@ rules:
     - error
 
   vue/static-class-names-order:
-    - error
+    - off
 
   vue/v-for-delimiter-style:
     - error

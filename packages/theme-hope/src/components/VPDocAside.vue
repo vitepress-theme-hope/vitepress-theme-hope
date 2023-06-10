@@ -1,28 +1,16 @@
 <script setup lang="ts">
-import VPDocAsideCarbonAds from "./VPDocAsideCarbonAds.vue";
 import VPDocAsideOutline from "./VPDocAsideOutline.vue";
-import { useData } from "../composables/data.js";
-
-const { theme } = useData();
 </script>
 
 <template>
   <div class="VPDocAside">
     <slot name="aside-top" />
 
-    <slot name="aside-outline-before" />
-
     <VPDocAsideOutline />
 
     <slot name="aside-outline-after" />
 
     <div class="spacer" />
-
-    <slot name="aside-ads-before" />
-
-    <VPDocAsideCarbonAds v-if="theme.carbonAds" :carbon-ads="theme.carbonAds" />
-
-    <slot name="aside-ads-after" />
 
     <slot name="aside-bottom" />
   </div>
@@ -37,14 +25,5 @@ const { theme } = useData();
 
 .spacer {
   flex-grow: 1;
-}
-
-.VPDocAside :deep(.spacer + .VPDocAsideSponsors),
-.VPDocAside :deep(.spacer + .VPDocAsideCarbonAds) {
-  margin-top: 24px;
-}
-
-.VPDocAside :deep(.VPDocAsideSponsors + .VPDocAsideCarbonAds) {
-  margin-top: 16px;
 }
 </style>

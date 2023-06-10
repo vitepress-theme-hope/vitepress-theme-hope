@@ -9,22 +9,20 @@ import type { MenuItem } from "../composables/outline.js";
 import { getHeaders, resolveTitle } from "../composables/outline.js";
 
 const { frontmatter, theme } = useData();
+
+const headers = shallowRef<MenuItem[]>([]);
+
 const open = ref(false);
 
 onContentUpdated(() => {
   open.value = false;
-});
-
-const headers = shallowRef<MenuItem[]>([]);
-
-onContentUpdated(() => {
   headers.value = getHeaders(frontmatter.value.outline ?? theme.value.outline);
 });
 </script>
 
 <template>
   <div v-if="headers.length > 0" class="VPDocOutlineDropdown">
-    <button :class="{ open }" @click="open = !open">
+    <button type="button" :class="{ open }" @click="open = !open">
       {{ resolveTitle(theme) }}
       <VPIconChevronRight class="icon" />
     </button>
@@ -35,30 +33,30 @@ onContentUpdated(() => {
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPDocOutlineDropdown {
   margin-bottom: 42px;
-}
 
-.VPDocOutlineDropdown button {
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 24px;
-  color: var(--vp-c-text-2);
-  transition: color 0.5s;
-  border: 1px solid var(--vp-c-border);
-  padding: 4px 12px;
-  border-radius: 8px;
-}
+  button {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--vp-c-text-2);
+    transition: color 0.5s;
+    border: 1px solid var(--vp-c-border);
+    padding: 4px 12px;
+    border-radius: 8px;
 
-.VPDocOutlineDropdown button:hover {
-  color: var(--vp-c-text-1);
-  transition: color 0.25s;
-}
+    &:hover {
+      color: var(--vp-c-text-1);
+      transition: color 0.25s;
+    }
 
-.VPDocOutlineDropdown button.open {
-  color: var(--vp-c-text-1);
+    &.open {
+      color: var(--vp-c-text-1);
+    }
+  }
 }
 
 .icon {

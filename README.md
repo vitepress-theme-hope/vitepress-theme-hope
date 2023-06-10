@@ -7,3 +7,7 @@ Faster, lighter, but weaker than [vuepress-theme-hope](https://theme-hope.vuejs.
 ## New Features
 
 - Edited custom block appearance
+
+## Removed Features
+
+- remove carbonAds support

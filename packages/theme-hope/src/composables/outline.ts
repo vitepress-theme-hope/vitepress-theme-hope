@@ -1,7 +1,7 @@
 import { useEventListener } from "@vueuse/core";
 import type { Header } from "vitepress/client";
 import type { DefaultTheme } from "vitepress/theme";
-import type { Ref } from "vue";
+import type { ShallowRef } from "vue";
 import { onMounted, onUpdated } from "vue";
 
 import { useAside } from "./aside.js";
@@ -122,8 +122,8 @@ const isAnchorActive = (
 };
 
 export const useActiveAnchor = (
-  container: Ref<HTMLElement>,
-  marker: Ref<HTMLElement>
+  container: ShallowRef<HTMLElement>,
+  marker: ShallowRef<HTMLElement>
 ): void => {
   const { isAsideEnabled } = useAside();
 
