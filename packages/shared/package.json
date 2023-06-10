@@ -14,31 +14,30 @@
   },
   "type": "module",
   "exports": {
-    ".": "./lib/node/index.js",
-    "./client": "./lib/client/index.js",
-    "./client/*": "./lib/client/*",
-    "./node": "./lib/node/index.js",
-    "./noopModule": "./lib/client/noopModule.js",
+    ".": "./dist/index.js",
+    "./noopModule": "./dist/noopModule.js",
     "./styles/*": "./styles/*",
     "./package.json": "./package.json"
   },
-  "main": "lib/node/index.js",
-  "types": "lib/node/index.d.ts",
   "files": [
-    "lib",
+    "dist",
     "styles"
   ],
   "scripts": {
     "build": "rollup -c rollup.config.ts --configPlugin esbuild",
-    "clean": "rimraf ./lib ./*.tsbuildinfo",
-    "copy": "cpx \"src/client/**/*.{vue,scss}\" lib/client",
+    "clean": "rimraf ./dist ./*.tsbuildinfo",
+    "copy": "cpx \"src/**/*.{vue,scss}\" dist",
     "dev": "concurrently \"pnpm dev:copy\" \"pnpm dev:ts\"",
     "dev:copy": "pnpm copy -w",
-    "dev:ts": "tsc -b tsconfig.build.json --watch"
+    "dev:ts": "tsc --watch"
   },
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=8",
     "pnpm": ">=7"
+  },
+  "dependencies": {
+    "@vueuse/core": "^10.1.2",
+    "@vue/shared": "^3.3.4"
   }
 }
