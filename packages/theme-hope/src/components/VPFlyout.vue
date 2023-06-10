@@ -1,31 +1,32 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { useFlyout } from '../composables/flyout.js'
-import VPIconChevronDown from './icons/VPIconChevronDown.vue'
-import VPIconMoreHorizontal from './icons/VPIconMoreHorizontal.vue'
-import VPMenu from './VPMenu.vue'
+import { ref } from "vue";
+
+import VPMenu from "./VPMenu.vue";
+import VPIconChevronDown from "./icons/VPIconChevronDown.vue";
+import VPIconMoreHorizontal from "./icons/VPIconMoreHorizontal.vue";
+import { useFlyout } from "../composables/flyout.js";
 
 defineProps<{
-  icon?: any
-  button?: string
-  label?: string
-  items?: any[]
-}>()
+  icon?: any;
+  button?: string;
+  label?: string;
+  items?: any[];
+}>();
 
-const open = ref(false)
-const el = ref<HTMLElement>()
+const open = ref(false);
+const el = ref<HTMLElement>();
 
-useFlyout({ el, onBlur })
+useFlyout({ el, onBlur });
 
 function onBlur() {
-  open.value = false
+  open.value = false;
 }
 </script>
 
 <template>
   <div
-    class="VPFlyout"
     ref="el"
+    class="VPFlyout"
     @mouseenter="open = true"
     @mouseleave="open = false"
   >
@@ -38,7 +39,7 @@ function onBlur() {
       @click="open = !open"
     >
       <span v-if="button || icon" class="text">
-        <component v-if="icon" :is="icon" class="option-icon" />
+        <component :is="icon" v-if="icon" class="option-icon" />
         {{ button }}
         <VPIconChevronDown class="text-icon" />
       </span>
@@ -81,7 +82,7 @@ function onBlur() {
 }
 
 .VPFlyout:hover .menu,
-.button[aria-expanded='true'] + .menu {
+.button[aria-expanded="true"] + .menu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);

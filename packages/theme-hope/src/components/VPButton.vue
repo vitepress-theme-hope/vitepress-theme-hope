@@ -1,29 +1,31 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { normalizeLink } from '../support/utils.js'
-import { EXTERNAL_URL_RE } from '../shared.js'
+import { computed } from "vue";
+
+import { EXTERNAL_URL_RE } from "../shared.js";
+import { normalizeLink } from "../support/utils.js";
 
 const props = defineProps<{
-  tag?: string
-  size?: 'medium' | 'big'
-  theme?: 'brand' | 'alt' | 'sponsor'
-  text: string
-  href?: string
-}>()
+  tag?: string;
+  size?: "medium" | "big";
+  theme?: "brand" | "alt" | "sponsor";
+  text: string;
+  href?: string;
+}>();
 
-const classes = computed(() => [props.size ?? 'medium', props.theme ?? 'brand'])
+const classes = computed(() => [
+  props.size ?? "medium",
+  props.theme ?? "brand",
+]);
 
 const isExternal = computed(
   () => props.href && EXTERNAL_URL_RE.test(props.href)
-)
+);
 
 const component = computed(() => {
-  if (props.tag) {
-    return props.tag
-  }
+  if (props.tag) return props.tag;
 
-  return props.href ? 'a' : 'button'
-})
+  return props.href ? "a" : "button";
+});
 </script>
 
 <template>

@@ -1,7 +1,7 @@
-@use 'sass:color';
-@use 'vitepress-shared/styles/svg';
-@use 'icons';
-@use '../../config' as hope-config;
+@use "sass:color";
+@use "vitepress-shared/styles/svg";
+@use "icons";
+@use "../../config" as hope-config;
 
 :root {
   // info
@@ -106,7 +106,7 @@ html.dark {
       }
 
       &::before {
-        content: ' ';
+        content: " ";
 
         position: absolute;
         top: calc(50% - 0.6125em);
@@ -291,7 +291,7 @@ html.dark {
 
     &::before,
     &::after {
-      content: ' ';
+      content: " ";
 
       position: absolute;
       top: calc(50% - 0.75rem);

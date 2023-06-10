@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import type { DefaultTheme } from 'vitepress/theme'
-import { useSidebarControl } from '../composables/sidebar.js'
-import VPIconChevronRight from './icons/VPIconChevronRight.vue'
-import VPLink from './VPLink.vue'
+import type { DefaultTheme } from "vitepress/theme";
+import { computed } from "vue";
+
+import VPLink from "./VPLink.vue";
+import VPIconChevronRight from "./icons/VPIconChevronRight.vue";
+import { useSidebarControl } from "../composables/sidebar.js";
 
 const props = defineProps<{
-  item: DefaultTheme.SidebarItem
-  depth: number
-}>()
+  item: DefaultTheme.SidebarItem;
+  depth: number;
+}>();
 
 const {
   collapsed,
@@ -17,41 +18,40 @@ const {
   isActiveLink,
   hasActiveLink,
   hasChildren,
-  toggle
-} = useSidebarControl(computed(() => props.item))
+  toggle,
+} = useSidebarControl(computed(() => props.item));
 
-const sectionTag = computed(() => (hasChildren.value ? 'section' : `div`))
+const sectionTag = computed(() => (hasChildren.value ? "section" : `div`));
 
-const linkTag = computed(() => (isLink.value ? 'a' : 'div'))
+const linkTag = computed(() => (isLink.value ? "a" : "div"));
 
 const textTag = computed(() => {
   return !hasChildren.value
-    ? 'p'
+    ? "p"
     : props.depth + 2 === 7
-    ? 'p'
-    : `h${props.depth + 2}`
-})
+    ? "p"
+    : `h${props.depth + 2}`;
+});
 
-const itemRole = computed(() => (isLink.value ? undefined : 'button'))
+const itemRole = computed(() => (isLink.value ? undefined : "button"));
 
 const classes = computed(() => [
   [`level-${props.depth}`],
   { collapsible: collapsible.value },
   { collapsed: collapsed.value },
-  { 'is-link': isLink.value },
-  { 'is-active': isActiveLink.value },
-  { 'has-active': hasActiveLink.value }
-])
+  { "is-link": isLink.value },
+  { "is-active": isActiveLink.value },
+  { "has-active": hasActiveLink.value },
+]);
 
 function onItemInteraction(e: MouseEvent | Event) {
-  if ('key' in e && e.key !== 'Enter') {
-    return
-  }
-  !props.item.link && toggle()
+  if ("key" in e && e.key !== "Enter") return;
+
+  !props.item.link && toggle();
 }
 
 function onCaretClick() {
-  props.item.link && toggle()
+  props.item.link && toggle();
 }
 </script>
 
@@ -61,28 +61,29 @@ function onCaretClick() {
       v-if="item.text"
       class="item"
       :role="itemRole"
+      :tabindex="item.items && 0"
       v-on="
         item.items
           ? { click: onItemInteraction, keydown: onItemInteraction }
           : {}
       "
-      :tabindex="item.items && 0"
     >
       <div class="indicator" />
 
       <VPLink v-if="item.link" :tag="linkTag" class="link" :href="item.link">
         <component :is="textTag" class="text" v-html="item.text" />
       </VPLink>
-      <component v-else :is="textTag" class="text" v-html="item.text" />
+
+      <component :is="textTag" v-else class="text" v-html="item.text" />
 
       <div
         v-if="item.collapsed != null"
         class="caret"
         role="button"
         aria-label="toggle section"
+        tabindex="0"
         @click="onCaretClick"
         @keydown.enter="onCaretClick"
-        tabindex="0"
       >
         <VPIconChevronRight class="caret-icon" />
       </div>

@@ -1,15 +1,18 @@
-import { type Ref, onMounted, onUnmounted } from 'vue'
-import { throttleAndDebounce } from '../support/utils.js'
+import { useEventListener } from "@vueuse/core";
+import type { Ref } from "vue";
+import { onMounted } from "vue";
+
+import { throttleAndDebounce } from "../support/utils.js";
 
 export interface GridSetting {
-  [size: string]: [number, number][]
+  [size: string]: [number, number][];
 }
 
-export type GridSize = 'xmini' | 'mini' | 'small' | 'medium' | 'big'
+export type GridSize = "xmini" | "mini" | "small" | "medium" | "big";
 
 export interface UseSponsorsGridOptions {
-  el: Ref<HTMLElement | null>
-  size?: GridSize
+  el: Ref<HTMLElement | null>;
+  size?: GridSize;
 }
 
 /**
@@ -32,104 +35,93 @@ const GridSettings: GridSetting = {
     [768, 5],
     [640, 4],
     [480, 3],
-    [0, 2]
+    [0, 2],
   ],
   medium: [
     [960, 5],
     [832, 4],
     [640, 3],
-    [480, 2]
+    [480, 2],
   ],
   big: [
     [832, 3],
-    [640, 2]
-  ]
-}
+    [640, 2],
+  ],
+};
 
-export function useSponsorsGrid({
-  el,
-  size = 'medium'
-}: UseSponsorsGridOptions) {
-  const onResize = throttleAndDebounce(manage, 100)
+const setGridData = (el: HTMLElement, value: number): void => {
+  el.dataset.vpGrid = String(value);
+};
 
-  onMounted(() => {
-    manage()
-    window.addEventListener('resize', onResize)
-  })
+const setGrid = (el: HTMLElement, size: GridSize, items: number): number => {
+  const settings = GridSettings[size];
+  const screen = window.innerWidth;
 
-  onUnmounted(() => {
-    window.removeEventListener('resize', onResize)
-  })
-
-  function manage() {
-    adjustSlots(el.value!, size)
-  }
-}
-
-function adjustSlots(el: HTMLElement, size: GridSize) {
-  const tsize = el.children.length
-  const asize = el.querySelectorAll('.vp-sponsor-grid-item:not(.empty)').length
-
-  const grid = setGrid(el, size, asize)
-
-  manageSlots(el, grid, tsize, asize)
-}
-
-function setGrid(el: HTMLElement, size: GridSize, items: number) {
-  const settings = GridSettings[size]
-  const screen = window.innerWidth
-
-  let grid = 1
+  let grid = 1;
 
   settings.some(([breakpoint, value]) => {
     if (screen >= breakpoint) {
-      grid = items < value ? items : value
-      return true
+      grid = items < value ? items : value;
+
+      return true;
     }
-  })
+  });
 
-  setGridData(el, grid)
+  setGridData(el, grid);
 
-  return grid
-}
+  return grid;
+};
 
-function setGridData(el: HTMLElement, value: number) {
-  el.dataset.vpGrid = String(value)
-}
+const addSlots = (el: HTMLElement, count: number): void => {
+  for (let i = 0; i < count; i++) {
+    const slot = document.createElement("div");
 
-function manageSlots(
+    slot.classList.add("vp-sponsor-grid-item", "empty");
+
+    el.append(slot);
+  }
+};
+
+const removeSlots = (el: HTMLElement, count: number): void => {
+  for (let i = 0; i < count; i++) el.removeChild(el.lastElementChild!);
+};
+
+const adjustSlots = (el: HTMLElement, size: GridSize): void => {
+  const tsize = el.children.length;
+  const asize = el.querySelectorAll(".vp-sponsor-grid-item:not(.empty)").length;
+
+  const grid = setGrid(el, size, asize);
+
+  manageSlots(el, grid, tsize, asize);
+};
+
+const neutralizeSlots = (el: HTMLElement, count: number): void => {
+  if (count > 0) addSlots(el, count);
+  else if (count < 0) removeSlots(el, count * -1);
+};
+
+const manageSlots = (
   el: HTMLElement,
   grid: number,
   tsize: number,
   asize: number
-) {
-  const diff = tsize - asize
-  const rem = asize % grid
-  const drem = rem === 0 ? rem : grid - rem
+): void => {
+  const diff = tsize - asize;
+  const rem = asize % grid;
+  const drem = rem === 0 ? rem : grid - rem;
 
-  neutralizeSlots(el, drem - diff)
-}
+  neutralizeSlots(el, drem - diff);
+};
 
-function neutralizeSlots(el: HTMLElement, count: number) {
-  if (count === 0) {
-    return
-  }
+export const useSponsorsGrid = ({
+  el,
+  size = "medium",
+}: UseSponsorsGridOptions): void => {
+  const manage = (): void => adjustSlots(el.value!, size);
 
-  count > 0 ? addSlots(el, count) : removeSlots(el, count * -1)
-}
+  useEventListener("resize", throttleAndDebounce(manage, 100));
 
-function addSlots(el: HTMLElement, count: number) {
-  for (let i = 0; i < count; i++) {
-    const slot = document.createElement('div')
-
-    slot.classList.add('vp-sponsor-grid-item', 'empty')
-
-    el.append(slot)
-  }
-}
-
-function removeSlots(el: HTMLElement, count: number) {
-  for (let i = 0; i < count; i++) {
-    el.removeChild(el.lastElementChild!)
-  }
-}
+  onMounted(() => {
+    manage();
+  });
+};

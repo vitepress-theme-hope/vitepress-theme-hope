@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import VPIconLanguages from './icons/VPIconLanguages.vue'
-import VPFlyout from './VPFlyout.vue'
-import VPMenuLink from './VPMenuLink.vue'
-import { useData } from '../composables/data.js'
-import { useLangs } from '../composables/langs.js'
+import VPFlyout from "./VPFlyout.vue";
+import VPMenuLink from "./VPMenuLink.vue";
+import VPIconLanguages from "./icons/VPIconLanguages.vue";
+import { useData } from "../composables/data.js";
+import { useLangs } from "../composables/langs.js";
 
-const { theme } = useData()
-const { localeLinks, currentLang } = useLangs({ correspondingLink: true })
+const { theme } = useData();
+const { localeLinks, currentLang } = useLangs({ correspondingLink: true });
 </script>
 
 <template>

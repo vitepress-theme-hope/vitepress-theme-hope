@@ -1,26 +1,28 @@
 <script setup lang="ts">
-import type { MenuItem } from '../composables/outline.js'
+import type { MenuItem } from "../composables/outline.js";
 
 defineProps<{
-  headers: MenuItem[]
-  root?: boolean
-}>()
+  headers: MenuItem[];
+  root?: boolean;
+}>();
 
 function onClick({ target: el }: Event) {
-  const id = '#' + (el as HTMLAnchorElement).href!.split('#')[1]
+  const id = "#" + (el as HTMLAnchorElement).href.split("#")[1];
   const heading = document.querySelector<HTMLAnchorElement>(
     decodeURIComponent(id)
-  )
-  heading?.focus()
+  );
+
+  heading?.focus();
 }
 </script>
 
 <template>
   <ul :class="root ? 'root' : 'nested'">
     <li v-for="{ children, link, title } in headers">
-      <a class="outline-link" :href="link" @click="onClick" :title="title">{{
+      <a class="outline-link" :href="link" :title="title" @click="onClick">{{
         title
       }}</a>
+
       <template v-if="children?.length">
         <VPDocOutlineItem :headers="children" />
       </template>

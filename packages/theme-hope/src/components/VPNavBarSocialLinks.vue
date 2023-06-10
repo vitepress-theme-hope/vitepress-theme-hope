@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useData } from '../composables/data.js'
-import VPSocialLinks from './VPSocialLinks.vue'
+import VPSocialLinks from "./VPSocialLinks.vue";
+import { useData } from "../composables/data.js";
 
-const { theme } = useData()
+const { theme } = useData();
 </script>
 
 <template>

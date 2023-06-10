@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useData } from '../composables/data.js'
-import { useSidebar } from '../composables/sidebar.js'
+import { useData } from "../composables/data.js";
+import { useSidebar } from "../composables/sidebar.js";
 
-const { theme } = useData()
-const { hasSidebar } = useSidebar()
+const { theme } = useData();
+const { hasSidebar } = useSidebar();
 </script>
 
 <template>
@@ -18,6 +18,7 @@ const { hasSidebar } = useSidebar()
         class="message"
         v-html="theme.footer.message"
       ></p>
+
       <p
         v-if="theme.footer.copyright"
         class="copyright"

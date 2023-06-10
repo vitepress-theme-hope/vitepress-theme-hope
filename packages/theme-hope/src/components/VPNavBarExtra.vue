@@ -1,21 +1,22 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
-import VPFlyout from './VPFlyout.vue'
-import VPMenuLink from './VPMenuLink.vue'
-import VPSwitchAppearance from './VPSwitchAppearance.vue'
-import VPSocialLinks from './VPSocialLinks.vue'
-import { useData } from '../composables/data.js'
-import { useLangs } from '../composables/langs.js'
+import { computed } from "vue";
 
-const { site, theme } = useData()
-const { localeLinks, currentLang } = useLangs({ correspondingLink: true })
+import VPFlyout from "./VPFlyout.vue";
+import VPMenuLink from "./VPMenuLink.vue";
+import VPSocialLinks from "./VPSocialLinks.vue";
+import VPSwitchAppearance from "./VPSwitchAppearance.vue";
+import { useData } from "../composables/data.js";
+import { useLangs } from "../composables/langs.js";
+
+const { site, theme } = useData();
+const { localeLinks, currentLang } = useLangs({ correspondingLink: true });
 
 const hasExtraContent = computed(
   () =>
     (localeLinks.value.length && currentLang.value.label) ||
     site.value.appearance ||
     theme.value.socialLinks
-)
+);
 </script>
 
 <template>
@@ -36,10 +37,11 @@ const hasExtraContent = computed(
     </div>
 
     <div v-if="site.appearance" class="group">
-      <div class="item appearance">
+      <div class="appearance item">
         <p class="label">
-          {{ theme.darkModeSwitchLabel || 'Appearance' }}
+          {{ theme.darkModeSwitchLabel || "Appearance" }}
         </p>
+
         <div class="appearance-action">
           <VPSwitchAppearance />
         </div>

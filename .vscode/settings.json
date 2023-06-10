@@ -1,5 +1,14 @@
 {
   "cSpell.words": [
+    // words
+    "composables",
+    "frontmatter",
+    "fullscreen",
+
+    
+    // name
+    "vitepress",
+
     // html attributes
     "crossorigin",
     "noopener",
@@ -40,5 +49,5 @@
     "**/dist/**": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "vitest.commandLine": "pnpm vitest",
+  "vitest.commandLine": "pnpm vitest"
 }

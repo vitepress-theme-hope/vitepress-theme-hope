@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import localSearchIndex from '@localSearchIndex'
+import localSearchIndex from "@localSearchIndex";
 import {
   computedAsync,
   debouncedWatch,
@@ -7,13 +7,19 @@ import {
   useEventListener,
   useLocalStorage,
   useScrollLock,
-  useSessionStorage
-} from '@vueuse/core'
-import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
-import Mark from 'mark.js/src/vanilla.js'
-import MiniSearch, { type SearchResult } from 'minisearch'
-import { type DefaultTheme } from 'vitepress'
-import { useRouter } from 'vitepress'
+  useSessionStorage,
+} from "@vueuse/core";
+import { useFocusTrap } from "@vueuse/integrations/useFocusTrap";
+import Mark from "mark.js/src/vanilla.js";
+import type { SearchResult } from "minisearch";
+import MiniSearch from "minisearch";
+import type { DefaultTheme } from "vitepress";
+import { useRouter } from "vitepress";
+// @ts-ignore
+import { dataSymbol } from "vitepress/dist/client/app/data.js";
+// @ts-ignore
+import { pathToFile } from "vitepress/dist/client/app/utils.js";
+import type { Ref } from "vue";
 import {
   computed,
   createApp,
@@ -25,347 +31,349 @@ import {
   shallowRef,
   watch,
   watchEffect,
-  type Ref
-} from 'vue'
-// @ts-ignore
-import { dataSymbol } from 'vitepress/dist/client/app/data.js'
-// @ts-ignore
-import { pathToFile } from 'vitepress/dist/client/app/utils.js'
-import { useData } from '../composables/data.js'
-import { createTranslate } from '../support/translation.js'
+} from "vue";
+
+import { useData } from "../composables/data.js";
+import { createTranslate } from "../support/translation.js";
 
 defineProps<{
-  placeholder: string
-}>()
+  placeholder: string;
+}>();
 
 const emit = defineEmits<{
-  (e: 'close'): void
-}>()
+  (e: "close"): void;
+}>();
 
-const el = shallowRef<HTMLElement>()
-const resultsEl = shallowRef<HTMLElement>()
-const body = shallowRef<HTMLElement>()
+const el = shallowRef<HTMLElement>();
+const resultsEl = shallowRef<HTMLElement>();
+const body = shallowRef<HTMLElement>();
 
 /* Search */
 
-const searchIndexData = shallowRef(localSearchIndex)
+const searchIndexData = shallowRef(localSearchIndex);
 
 // hmr
-if (import.meta.hot) {
-  import.meta.hot.accept('/@localSearchIndex', (m) => {
-    if (m) {
-      searchIndexData.value = m.default
-    }
-  })
-}
+if (import.meta.hot)
+  import.meta.hot.accept("/@localSearchIndex", (m) => {
+    if (m) searchIndexData.value = m.default;
+  });
 
 interface Result {
-  title: string
-  titles: string[]
-  text?: string
+  title: string;
+  titles: string[];
+  text?: string;
 }
 
-const vitePressData = useData()
+const vitePressData = useData();
 const { activate } = useFocusTrap(el, {
   immediate: true,
   allowOutsideClick: true,
   clickOutsideDeactivates: true,
-  escapeDeactivates: true
-})
-const { localeIndex, theme } = vitePressData
+  escapeDeactivates: true,
+});
+const { localeIndex, theme } = vitePressData;
 const searchIndex = computedAsync(async () =>
   markRaw(
     MiniSearch.loadJSON<Result>(
       (await searchIndexData.value[localeIndex.value]?.())?.default,
       {
-        fields: ['title', 'titles', 'text'],
-        storeFields: ['title', 'titles'],
+        fields: ["title", "titles", "text"],
+        storeFields: ["title", "titles"],
         searchOptions: {
           fuzzy: 0.2,
           prefix: true,
-          boost: { title: 4, text: 2, titles: 1 }
-        }
+          boost: { title: 4, text: 2, titles: 1 },
+        },
       }
     )
   )
-)
+);
 
 const disableQueryPersistence = computed(() => {
   return (
-    theme.value.search?.provider === 'local' &&
+    theme.value.search?.provider === "local" &&
     theme.value.search.options?.disableQueryPersistence === true
-  )
-})
+  );
+});
 
 const filterText = disableQueryPersistence.value
-  ? ref('')
-  : useSessionStorage('vitepress:local-search-filter', '')
+  ? ref("")
+  : useSessionStorage("vitepress:local-search-filter", "");
 
 const showDetailedList = useLocalStorage(
-  'vitepress:local-search-detailed-list',
+  "vitepress:local-search-detailed-list",
   false
-)
+);
 
 const disableDetailedView = computed(() => {
   return (
-    theme.value.search?.provider === 'local' &&
+    theme.value.search?.provider === "local" &&
     theme.value.search.options?.disableDetailedView === true
-  )
-})
+  );
+});
 
 watchEffect(() => {
-  if (disableDetailedView.value) {
-    showDetailedList.value = false
-  }
-})
+  if (disableDetailedView.value) showDetailedList.value = false;
+});
 
-const results: Ref<(SearchResult & Result)[]> = shallowRef([])
+const results: Ref<(SearchResult & Result)[]> = shallowRef([]);
 
-const enableNoResults = ref(false)
+const enableNoResults = ref(false);
 
 watch(filterText, () => {
-  enableNoResults.value = false
-})
+  enableNoResults.value = false;
+});
 
 const mark = computedAsync(async () => {
-  if (!resultsEl.value) return
-  return markRaw(new Mark(resultsEl.value))
-}, null)
+  if (!resultsEl.value) return;
+
+  return markRaw(new Mark(resultsEl.value));
+}, null);
 
 debouncedWatch(
   () => [searchIndex.value, filterText.value, showDetailedList.value] as const,
   async ([index, filterTextValue, showDetailedListValue], old, onCleanup) => {
-    let canceled = false
-    onCleanup(() => {
-      canceled = true
-    })
+    let canceled = false;
 
-    if (!index) return
+    onCleanup(() => {
+      canceled = true;
+    });
+
+    if (!index) return;
 
     // Search
     results.value = index
       .search(filterTextValue)
-      .slice(0, 16) as (SearchResult & Result)[]
-    enableNoResults.value = true
+      .slice(0, 16) as (SearchResult & Result)[];
+    enableNoResults.value = true;
 
     // Highlighting
     const mods = showDetailedListValue
       ? await Promise.all(results.value.map((r) => fetchExcerpt(r.id)))
-      : []
-    if (canceled) return
-    const c = new Map<string, Map<string, string>>()
+      : [];
+
+    if (canceled) return;
+    const c = new Map<string, Map<string, string>>();
+
     for (const { id, mod } of mods) {
-      const mapId = id.slice(0, id.indexOf('#'))
-      let map = c.get(mapId)
-      if (map) continue
-      map = new Map()
-      c.set(mapId, map)
-      const comp = mod.default ?? mod
+      const mapId = id.slice(0, id.indexOf("#"));
+      let map = c.get(mapId);
+
+      if (map) continue;
+      map = new Map();
+      c.set(mapId, map);
+      const comp = mod.default ?? mod;
+
       if (comp?.render || comp?.setup) {
-        const app = createApp(comp)
+        const app = createApp(comp);
+
         // Silence warnings about missing components
-        app.config.warnHandler = () => {}
-        app.provide(dataSymbol, vitePressData)
+        app.config.warnHandler = () => {};
+        app.provide(dataSymbol, vitePressData);
         Object.defineProperties(app.config.globalProperties, {
           $frontmatter: {
             get() {
-              return vitePressData.frontmatter.value
-            }
+              return vitePressData.frontmatter.value;
+            },
           },
           $params: {
             get() {
-              return vitePressData.page.value.params
-            }
-          }
-        })
-        const div = document.createElement('div')
-        app.mount(div)
-        const headings = div.querySelectorAll('h1, h2, h3, h4, h5, h6')
+              return vitePressData.page.value.params;
+            },
+          },
+        });
+        const div = document.createElement("div");
+
+        app.mount(div);
+        const headings = div.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
         headings.forEach((el) => {
-          const href = el.querySelector('a')?.getAttribute('href')
-          const anchor = href?.startsWith('#') && href.slice(1)
-          if (!anchor) return
-          let html = ''
+          const href = el.querySelector("a")?.getAttribute("href");
+          const anchor = href?.startsWith("#") && href.slice(1);
+
+          if (!anchor) return;
+          let html = "";
+
           while ((el = el.nextElementSibling!) && !/^h[1-6]$/i.test(el.tagName))
-            html += el.outerHTML
-          map!.set(anchor, html)
-        })
-        app.unmount()
+            html += el.outerHTML;
+          map!.set(anchor, html);
+        });
+        app.unmount();
       }
-      if (canceled) return
+      if (canceled) return;
     }
 
-    const terms = new Set<string>()
+    const terms = new Set<string>();
 
     results.value = results.value.map((r) => {
-      const [id, anchor] = r.id.split('#')
-      const map = c.get(id)
-      const text = map?.get(anchor) ?? ''
-      for (const term in r.match) {
-        terms.add(term)
-      }
-      return { ...r, text }
-    })
+      const [id, anchor] = r.id.split("#");
+      const map = c.get(id);
+      const text = map?.get(anchor) ?? "";
 
-    await nextTick()
-    if (canceled) return
+      for (const term in r.match) terms.add(term);
+
+      return { ...r, text };
+    });
+
+    await nextTick();
+    if (canceled) return;
 
     await new Promise((r) => {
       mark.value?.unmark({
         done: () => {
-          mark.value?.markRegExp(formMarkRegex(terms), { done: r })
-        }
-      })
-    })
+          mark.value?.markRegExp(formMarkRegex(terms), { done: r });
+        },
+      });
+    });
 
-    const excerpts = el.value?.querySelectorAll('.result .excerpt') ?? []
-    for (const excerpt of excerpts) {
+    const excerpts = el.value?.querySelectorAll(".result .excerpt") ?? [];
+
+    for (const excerpt of excerpts)
       excerpt
         .querySelector('mark[data-markjs="true"]')
-        ?.scrollIntoView({ block: 'center' })
-    }
+        ?.scrollIntoView({ block: "center" });
+
     // FIXME: without this whole page scrolls to the bottom
-    resultsEl.value?.firstElementChild?.scrollIntoView({ block: 'start' })
+    resultsEl.value?.firstElementChild?.scrollIntoView({ block: "start" });
   },
   { debounce: 200, immediate: true }
-)
+);
 
 async function fetchExcerpt(id: string) {
-  const file = pathToFile(id.slice(0, id.indexOf('#')))
+  const file = pathToFile(id.slice(0, id.indexOf("#")));
+
   try {
-    return { id, mod: await import(/*@vite-ignore*/ file) }
+    return { id, mod: await import(/*@vite-ignore*/ file) };
   } catch (e) {
-    console.error(e)
-    return { id, mod: {} }
+    console.error(e);
+
+    return { id, mod: {} };
   }
 }
 
 /* Search input focus */
 
-const searchInput = ref<HTMLInputElement>()
+const searchInput = ref<HTMLInputElement>();
 
 function focusSearchInput() {
-  searchInput.value?.focus()
-  searchInput.value?.select()
+  searchInput.value?.focus();
+  searchInput.value?.select();
 }
 
 onMounted(() => {
-  focusSearchInput()
-})
+  focusSearchInput();
+});
 
 function onSearchBarClick(event: PointerEvent) {
-  if (event.pointerType === 'mouse') {
-    focusSearchInput()
-  }
+  if (event.pointerType === "mouse") focusSearchInput();
 }
 
 /* Search keyboard selection */
 
-const selectedIndex = ref(0)
-const disableMouseOver = ref(false)
+const selectedIndex = ref(0);
+const disableMouseOver = ref(false);
 
 watch(results, () => {
-  selectedIndex.value = 0
-  scrollToSelectedResult()
-})
+  selectedIndex.value = 0;
+  scrollToSelectedResult();
+});
 
 function scrollToSelectedResult() {
   nextTick(() => {
-    const selectedEl = document.querySelector('.result.selected')
-    if (selectedEl) {
+    const selectedEl = document.querySelector(".result.selected");
+
+    if (selectedEl)
       selectedEl.scrollIntoView({
-        block: 'nearest'
-      })
-    }
-  })
+        block: "nearest",
+      });
+  });
 }
 
-onKeyStroke('ArrowUp', (event) => {
-  event.preventDefault()
-  selectedIndex.value--
-  if (selectedIndex.value < 0) {
-    selectedIndex.value = results.value.length - 1
-  }
-  disableMouseOver.value = true
-  scrollToSelectedResult()
-})
+onKeyStroke("ArrowUp", (event) => {
+  event.preventDefault();
+  selectedIndex.value--;
+  if (selectedIndex.value < 0) selectedIndex.value = results.value.length - 1;
 
-onKeyStroke('ArrowDown', (event) => {
-  event.preventDefault()
-  selectedIndex.value++
-  if (selectedIndex.value >= results.value.length) {
-    selectedIndex.value = 0
-  }
-  disableMouseOver.value = true
-  scrollToSelectedResult()
-})
+  disableMouseOver.value = true;
+  scrollToSelectedResult();
+});
 
-const router = useRouter()
+onKeyStroke("ArrowDown", (event) => {
+  event.preventDefault();
+  selectedIndex.value++;
+  if (selectedIndex.value >= results.value.length) selectedIndex.value = 0;
 
-onKeyStroke('Enter', () => {
-  const selectedPackage = results.value[selectedIndex.value]
+  disableMouseOver.value = true;
+  scrollToSelectedResult();
+});
+
+const router = useRouter();
+
+onKeyStroke("Enter", () => {
+  const selectedPackage = results.value[selectedIndex.value];
+
   if (selectedPackage) {
-    router.go(selectedPackage.id)
-    emit('close')
+    router.go(selectedPackage.id);
+    emit("close");
   }
-})
+});
 
-onKeyStroke('Escape', () => {
-  emit('close')
-})
+onKeyStroke("Escape", () => {
+  emit("close");
+});
 
 // Translations
 const defaultTranslations: {
   modal: Exclude<
-    DefaultTheme.LocalSearchOptions['translations'],
+    DefaultTheme.LocalSearchOptions["translations"],
     undefined
-  >['modal']
+  >["modal"];
 } = {
   modal: {
-    displayDetails: 'Display detailed list',
-    resetButtonTitle: 'Reset search',
-    backButtonTitle: 'Close search',
-    noResultsText: 'No results for',
+    displayDetails: "Display detailed list",
+    resetButtonTitle: "Reset search",
+    backButtonTitle: "Close search",
+    noResultsText: "No results for",
     footer: {
-      selectText: 'to select',
-      selectKeyAriaLabel: 'enter',
-      navigateText: 'to navigate',
-      navigateUpKeyAriaLabel: 'up arrow',
-      navigateDownKeyAriaLabel: 'down arrow',
-      closeText: 'to close',
-      closeKeyAriaLabel: 'escape'
-    }
-  }
-}
+      selectText: "to select",
+      selectKeyAriaLabel: "enter",
+      navigateText: "to navigate",
+      navigateUpKeyAriaLabel: "up arrow",
+      navigateDownKeyAriaLabel: "down arrow",
+      closeText: "to close",
+      closeKeyAriaLabel: "escape",
+    },
+  },
+};
 
-const $t = createTranslate(theme.value.search?.options, defaultTranslations)
+const $t = createTranslate(theme.value.search?.options, defaultTranslations);
 
 // Back
 
 onMounted(() => {
   // Prevents going to previous site
-  window.history.pushState(null, '', null)
-})
+  window.history.pushState(null, "", null);
+});
 
-useEventListener('popstate', (event) => {
-  event.preventDefault()
-  emit('close')
-})
+useEventListener("popstate", (event) => {
+  event.preventDefault();
+  emit("close");
+});
 
 /** Lock body */
-const isLocked = useScrollLock(body)
+const isLocked = useScrollLock(body);
 
 onMounted(() => {
-  body.value = document.body
+  body.value = document.body;
   nextTick(() => {
-    isLocked.value = true
-    nextTick().then(() => activate())
-  })
-})
+    isLocked.value = true;
+    nextTick().then(() => activate());
+  });
+});
 
 onBeforeUnmount(() => {
-  isLocked.value = false
-})
+  isLocked.value = false;
+});
 
 function formMarkRegex(terms: Set<string>) {
   return new RegExp(
@@ -373,12 +381,12 @@ function formMarkRegex(terms: Set<string>) {
       .sort((a, b) => b.length - a.length)
       .map((term) => {
         return `(${term
-          .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
-          .replace(/-/g, '\\x2d')})`
+          .replace(/[|\\{}()[\]^$+*?.]/g, "\\$&")
+          .replace(/-/g, "\\x2d")})`;
       })
-      .join('|'),
-    'gi'
-  )
+      .join("|"),
+    "gi"
+  );
 }
 </script>
 
@@ -404,10 +412,12 @@ function formMarkRegex(terms: Set<string>) {
               stroke-width="2"
             >
               <circle cx="11" cy="11" r="8" />
+
               <path d="m21 21l-4.35-4.35" />
             </g>
           </svg>
-          <div class="search-actions before">
+
+          <div class="before search-actions">
             <button
               class="back-button"
               :title="$t('modal.backButtonTitle')"
@@ -430,12 +440,14 @@ function formMarkRegex(terms: Set<string>) {
               </svg>
             </button>
           </div>
+
           <input
             ref="searchInput"
             v-model="filterText"
             :placeholder="placeholder"
             class="search-input"
           />
+
           <div class="search-actions">
             <button
               v-if="!disableDetailedView"
@@ -496,7 +508,7 @@ function formMarkRegex(terms: Set<string>) {
             :href="p.id"
             class="result"
             :class="{
-              selected: selectedIndex === index
+              selected: selectedIndex === index,
             }"
             :aria-label="[...p.titles, p.title].join(' > ')"
             @mouseenter="!disableMouseOver && (selectedIndex = index)"
@@ -506,8 +518,10 @@ function formMarkRegex(terms: Set<string>) {
             <div>
               <div class="titles">
                 <span class="title-icon">#</span>
+
                 <span v-for="(t, index) in p.titles" :key="index" class="title">
                   <span class="text" v-html="t" />
+
                   <svg width="18" height="18" viewBox="0 0 24 24">
                     <path
                       fill="none"
@@ -519,7 +533,8 @@ function formMarkRegex(terms: Set<string>) {
                     />
                   </svg>
                 </span>
-                <span class="title main">
+
+                <span class="main title">
                   <span class="text" v-html="p.title" />
                 </span>
               </div>
@@ -528,7 +543,9 @@ function formMarkRegex(terms: Set<string>) {
                 <div v-if="p.text" class="excerpt" inert>
                   <div class="vp-doc" v-html="p.text" />
                 </div>
+
                 <div class="excerpt-gradient-bottom" />
+
                 <div class="excerpt-gradient-top" />
               </div>
             </div>
@@ -538,7 +555,7 @@ function formMarkRegex(terms: Set<string>) {
             v-if="filterText && !results.length && enableNoResults"
             class="no-results"
           >
-            {{ $t('modal.noResultsText') }} "<strong>{{ filterText }}</strong
+            {{ $t("modal.noResultsText") }} "<strong>{{ filterText }}</strong
             >"
           </div>
         </div>
@@ -557,6 +574,7 @@ function formMarkRegex(terms: Set<string>) {
                 />
               </svg>
             </kbd>
+
             <kbd :aria-label="$t('modal.footer.navigateDownKeyAriaLabel')">
               <svg width="14" height="14" viewBox="0 0 24 24">
                 <path
@@ -569,8 +587,9 @@ function formMarkRegex(terms: Set<string>) {
                 />
               </svg>
             </kbd>
-            {{ $t('modal.footer.navigateText') }}
+            {{ $t("modal.footer.navigateText") }}
           </span>
+
           <span>
             <kbd :aria-label="$t('modal.footer.selectKeyAriaLabel')">
               <svg width="14" height="14" viewBox="0 0 24 24">
@@ -582,15 +601,17 @@ function formMarkRegex(terms: Set<string>) {
                   stroke-width="2"
                 >
                   <path d="m9 10l-5 5l5 5" />
+
                   <path d="M20 4v7a4 4 0 0 1-4 4H4" />
                 </g>
               </svg>
             </kbd>
-            {{ $t('modal.footer.selectText') }}
+            {{ $t("modal.footer.selectText") }}
           </span>
+
           <span>
             <kbd :aria-label="$t('modal.footer.closeKeyAriaLabel')">esc</kbd>
-            {{ $t('modal.footer.closeText') }}
+            {{ $t("modal.footer.closeText") }}
           </span>
         </div>
       </div>
@@ -838,7 +859,7 @@ function formMarkRegex(terms: Set<string>) {
   display: none;
 }
 
-.excerpt :deep(.vp-code-group) div[class*='language-'] {
+.excerpt :deep(.vp-code-group) div[class*="language-"] {
   border-radius: 8px !important;
 }
 

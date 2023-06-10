@@ -1,61 +1,65 @@
 <script setup lang="ts">
-import { onContentUpdated } from 'vitepress'
-import { nextTick, ref } from 'vue'
-import { useData } from '../composables/data.js'
-import { resolveTitle, type MenuItem } from '../composables/outline.js'
-import VPDocOutlineItem from './VPDocOutlineItem.vue'
-import VPIconChevronRight from './icons/VPIconChevronRight.vue'
+import { onContentUpdated } from "vitepress";
+import { nextTick, ref } from "vue";
+
+import VPDocOutlineItem from "./VPDocOutlineItem.vue";
+import VPIconChevronRight from "./icons/VPIconChevronRight.vue";
+import { useData } from "../composables/data.js";
+import type { MenuItem } from "../composables/outline.js";
+import { resolveTitle } from "../composables/outline.js";
 
 defineProps<{
-  headers: MenuItem[]
-}>()
+  headers: MenuItem[];
+}>();
 
-const { theme } = useData()
-const open = ref(false)
-const vh = ref(0)
-const items = ref<HTMLDivElement>()
+const { theme } = useData();
+const open = ref(false);
+const vh = ref(0);
+const items = ref<HTMLDivElement>();
 
 onContentUpdated(() => {
-  open.value = false
-})
+  open.value = false;
+});
 
 function toggle() {
-  open.value = !open.value
-  vh.value = window.innerHeight + Math.min(window.scrollY - 64, 0)
+  open.value = !open.value;
+  vh.value = window.innerHeight + Math.min(window.scrollY - 64, 0);
 }
 
 function onItemClick(e: Event) {
-  if ((e.target as HTMLElement).classList.contains('outline-link')) {
+  if ((e.target as HTMLElement).classList.contains("outline-link")) {
     // disable animation on hash navigation when page jumps
-    if (items.value) {
-      items.value.style.transition = 'none'
-    }
+    if (items.value) items.value.style.transition = "none";
+
     nextTick(() => {
-      open.value = false
-    })
+      open.value = false;
+    });
   }
 }
 
 function scrollToTop() {
-  open.value = false
-  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  open.value = false;
+  window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 }
 </script>
 
 <template>
   <div class="VPLocalNavOutlineDropdown" :style="{ '--vp-vh': vh + 'px' }">
-    <button @click="toggle" :class="{ open }" v-if="headers.length > 0">
+    <button v-if="headers.length > 0" :class="{ open }" @click="toggle">
       {{ resolveTitle(theme) }}
       <VPIconChevronRight class="icon" />
     </button>
-    <button @click="scrollToTop" v-else>
-      {{ theme.returnToTopLabel || 'Return to top' }}
+
+    <button v-else @click="scrollToTop">
+      {{ theme.returnToTopLabel || "Return to top" }}
     </button>
+
     <Transition name="flyout">
       <div v-if="open" ref="items" class="items" @click="onItemClick">
         <a class="top-link" href="#" @click="scrollToTop">
-          {{ theme.returnToTopLabel || 'Return to top' }}
+          {{ theme.returnToTopLabel || "Return to top" }}
         </a>
+
         <VPDocOutlineItem :headers="headers" />
       </div>
     </Transition>

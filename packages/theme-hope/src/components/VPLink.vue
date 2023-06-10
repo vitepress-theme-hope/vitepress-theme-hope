@@ -1,21 +1,22 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
-import { normalizeLink } from '../support/utils.js'
-import VPIconExternalLink from './icons/VPIconExternalLink.vue'
-import { EXTERNAL_URL_RE } from '../shared.js'
+import { computed } from "vue";
+
+import VPIconExternalLink from "./icons/VPIconExternalLink.vue";
+import { EXTERNAL_URL_RE } from "../shared.js";
+import { normalizeLink } from "../support/utils.js";
 
 const props = defineProps<{
-  tag?: string
-  href?: string
-  noIcon?: boolean
-  target?: string
-  rel?: string
-}>()
+  tag?: string;
+  href?: string;
+  noIcon?: boolean;
+  target?: string;
+  rel?: string;
+}>();
 
-const tag = computed(() => (props.tag ?? props.href ? 'a' : 'span'))
+const tag = computed(() => (props.tag ?? props.href ? "a" : "span"));
 const isExternal = computed(
   () => props.href && EXTERNAL_URL_RE.test(props.href)
-)
+);
 </script>
 
 <template>
@@ -28,6 +29,7 @@ const isExternal = computed(
     :rel="rel || (isExternal ? 'noreferrer' : undefined)"
   >
     <slot />
+
     <VPIconExternalLink v-if="isExternal && !noIcon" class="icon" />
   </component>
 </template>

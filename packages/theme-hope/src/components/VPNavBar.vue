@@ -1,31 +1,32 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
-import { useWindowScroll } from '@vueuse/core'
-import { useSidebar } from '../composables/sidebar.js'
-import VPNavBarTitle from './VPNavBarTitle.vue'
-import VPNavBarSearch from './VPNavBarSearch.vue'
-import VPNavBarMenu from './VPNavBarMenu.vue'
-import VPNavBarTranslations from './VPNavBarTranslations.vue'
-import VPNavBarAppearance from './VPNavBarAppearance.vue'
-import VPNavBarSocialLinks from './VPNavBarSocialLinks.vue'
-import VPNavBarExtra from './VPNavBarExtra.vue'
-import VPNavBarHamburger from './VPNavBarHamburger.vue'
+import { useWindowScroll } from "@vueuse/core";
+import { computed } from "vue";
+
+import VPNavBarAppearance from "./VPNavBarAppearance.vue";
+import VPNavBarExtra from "./VPNavBarExtra.vue";
+import VPNavBarHamburger from "./VPNavBarHamburger.vue";
+import VPNavBarMenu from "./VPNavBarMenu.vue";
+import VPNavBarSearch from "./VPNavBarSearch.vue";
+import VPNavBarSocialLinks from "./VPNavBarSocialLinks.vue";
+import VPNavBarTitle from "./VPNavBarTitle.vue";
+import VPNavBarTranslations from "./VPNavBarTranslations.vue";
+import { useSidebar } from "../composables/sidebar.js";
 
 defineProps<{
-  isScreenOpen: boolean
-}>()
+  isScreenOpen: boolean;
+}>();
 
 defineEmits<{
-  (e: 'toggle-screen'): void
-}>()
+  (e: "toggle-screen"): void;
+}>();
 
-const { y } = useWindowScroll()
-const { hasSidebar } = useSidebar()
+const { y } = useWindowScroll();
+const { hasSidebar } = useSidebar();
 
 const classes = computed(() => ({
-  'has-sidebar': hasSidebar.value,
-  fill: y.value > 0
-}))
+  "has-sidebar": hasSidebar.value,
+  fill: y.value > 0,
+}));
 </script>
 
 <template>
@@ -36,6 +37,7 @@ const classes = computed(() => ({
           <template #nav-bar-title-before
             ><slot name="nav-bar-title-before"
           /></template>
+
           <template #nav-bar-title-after
             ><slot name="nav-bar-title-after"
           /></template>
@@ -44,15 +46,24 @@ const classes = computed(() => ({
 
       <div class="content">
         <div class="curtain" />
+
         <div class="content-body">
           <slot name="nav-bar-content-before" />
+
           <VPNavBarSearch class="search" />
+
           <VPNavBarMenu class="menu" />
+
           <VPNavBarTranslations class="translations" />
+
           <VPNavBarAppearance class="appearance" />
+
           <VPNavBarSocialLinks class="social-links" />
+
           <VPNavBarExtra class="extra" />
+
           <slot name="nav-bar-content-after" />
+
           <VPNavBarHamburger
             class="hamburger"
             :active="isScreenOpen"
@@ -201,7 +212,7 @@ const classes = computed(() => ({
   width: 1px;
   height: 24px;
   background-color: var(--vp-c-divider);
-  content: '';
+  content: "";
 }
 
 .menu + .appearance::before,
@@ -231,7 +242,7 @@ const classes = computed(() => ({
     width: 100%;
     height: 32px;
     background: linear-gradient(var(--vp-c-bg), transparent 70%);
-    content: '';
+    content: "";
   }
 }
 

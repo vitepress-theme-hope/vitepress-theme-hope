@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import VPMenuLink from './VPMenuLink.vue'
-import VPMenuGroup from './VPMenuGroup.vue'
+import VPMenuGroup from "./VPMenuGroup.vue";
+import VPMenuLink from "./VPMenuLink.vue";
 
 defineProps<{
-  items?: any[]
-}>()
+  items?: any[];
+}>();
 </script>
 
 <template>
@@ -12,6 +12,7 @@ defineProps<{
     <div v-if="items" class="items">
       <template v-for="item in items" :key="item.text">
         <VPMenuLink v-if="'link' in item" :item="item" />
+
         <VPMenuGroup v-else :text="item.text" :items="item.items" />
       </template>
     </div>
@@ -63,7 +64,7 @@ defineProps<{
   font-size: 12px;
   font-weight: 500;
   color: var(--vp-c-text-2);
-  transition: color .5s;
+  transition: color 0.5s;
 }
 
 .VPMenu :deep(.action) {

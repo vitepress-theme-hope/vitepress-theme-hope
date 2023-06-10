@@ -1,10 +1,11 @@
-import type { DefaultTheme } from 'vitepress/theme'
-import { ensureStartingSlash } from './utils.js'
-import { isActive } from '../shared.js'
+import type { DefaultTheme } from "vitepress/theme";
+
+import { ensureStartingSlash } from "./utils.js";
+import { isActive } from "../shared.js";
 
 export interface SidebarLink {
-  text: string
-  link: string
+  text: string;
+  link: string;
 }
 
 /**
@@ -13,96 +14,84 @@ export interface SidebarLink {
  * as matching `guide/` and `/guide/`. If no matching config was found, it will
  * return empty array.
  */
-export function getSidebar(
+export const getSidebar = (
   sidebar: DefaultTheme.Sidebar | undefined,
   path: string
-): DefaultTheme.SidebarItem[] {
-  if (Array.isArray(sidebar)) {
-    return sidebar
-  }
+): DefaultTheme.SidebarItem[] => {
+  if (Array.isArray(sidebar)) return sidebar;
 
-  if (sidebar == null) {
-    return []
-  }
+  if (sidebar == null) return [];
 
-  path = ensureStartingSlash(path)
+  path = ensureStartingSlash(path);
 
   const dir = Object.keys(sidebar)
     .sort((a, b) => {
-      return b.split('/').length - a.split('/').length
+      return b.split("/").length - a.split("/").length;
     })
     .find((dir) => {
       // make sure the multi sidebar key starts with slash too
-      return path.startsWith(ensureStartingSlash(dir))
-    })
+      return path.startsWith(ensureStartingSlash(dir));
+    });
 
-  return dir ? sidebar[dir] : []
-}
+  return dir ? sidebar[dir] : [];
+};
 
 /**
  * Get or generate sidebar group from the given sidebar items.
  */
-export function getSidebarGroups(
+export const getSidebarGroups = (
   sidebar: DefaultTheme.SidebarItem[]
-): DefaultTheme.SidebarItem[] {
-  const groups: DefaultTheme.SidebarItem[] = []
+): DefaultTheme.SidebarItem[] => {
+  const groups: DefaultTheme.SidebarItem[] = [];
 
-  let lastGroupIndex: number = 0
+  let lastGroupIndex = 0;
 
-  for (const index in sidebar) {
-    const item = sidebar[index]
-
+  for (const item of sidebar) {
     if (item.items) {
-      lastGroupIndex = groups.push(item)
-      continue
+      lastGroupIndex = groups.push(item);
+      continue;
     }
 
-    if (!groups[lastGroupIndex]) {
-      groups.push({ items: [] })
-    }
+    if (!groups[lastGroupIndex]) groups.push({ items: [] });
 
-    groups[lastGroupIndex]!.items!.push(item)
+    groups[lastGroupIndex]!.items!.push(item);
   }
 
-  return groups
-}
+  return groups;
+};
 
-export function getFlatSideBarLinks(
+export const getFlatSideBarLinks = (
   sidebar: DefaultTheme.SidebarItem[]
-): SidebarLink[] {
-  const links: SidebarLink[] = []
+): SidebarLink[] => {
+  const links: SidebarLink[] = [];
 
-  function recursivelyExtractLinks(items: DefaultTheme.SidebarItem[]) {
+  const recursivelyExtractLinks = (items: DefaultTheme.SidebarItem[]): void => {
     for (const item of items) {
-      if (item.text && item.link) {
-        links.push({ text: item.text, link: item.link })
-      }
+      if (item.text && item.link)
+        links.push({ text: item.text, link: item.link });
 
-      if (item.items) {
-        recursivelyExtractLinks(item.items)
-      }
+      if (item.items) recursivelyExtractLinks(item.items);
     }
-  }
+  };
 
-  recursivelyExtractLinks(sidebar)
+  recursivelyExtractLinks(sidebar);
 
-  return links
-}
+  return links;
+};
 
 /**
  * Check if the given sidebar item contains any active link.
  */
-export function hasActiveLink(
+export const hasActiveLink = (
   path: string,
   items: DefaultTheme.SidebarItem | DefaultTheme.SidebarItem[]
-): boolean {
-  if (Array.isArray(items)) {
-    return items.some((item) => hasActiveLink(path, item))
-  }
+): boolean => {
+  if (Array.isArray(items))
+    return items.some((item) => hasActiveLink(path, item));
 
   return isActive(path, items.link)
     ? true
     : items.items
     ? hasActiveLink(path, items.items)
-    : false
-}
+    : false;
+};

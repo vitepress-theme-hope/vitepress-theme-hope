@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-import { useData } from '../composables/data.js'
-import VPSwitchAppearance from './VPSwitchAppearance.vue'
+import VPSwitchAppearance from "./VPSwitchAppearance.vue";
+import { useData } from "../composables/data.js";
 
-const { site, theme } = useData()
+const { site, theme } = useData();
 </script>
 
 <template>
   <div v-if="site.appearance" class="VPNavScreenAppearance">
     <p class="text">
-      {{ theme.darkModeSwitchLabel || 'Appearance' }}
+      {{ theme.darkModeSwitchLabel || "Appearance" }}
     </p>
+
     <VPSwitchAppearance />
   </div>
 </template>

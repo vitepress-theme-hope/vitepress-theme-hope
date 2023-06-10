@@ -1,42 +1,44 @@
 <script lang="ts" setup>
-import { useWindowScroll } from '@vueuse/core'
-import { computed, shallowRef } from 'vue'
-import { onContentUpdated } from 'vitepress'
-import { useData } from '../composables/data.js'
-import { getHeaders, type MenuItem } from '../composables/outline.js'
-import { useSidebar } from '../composables/sidebar.js'
-import VPLocalNavOutlineDropdown from './VPLocalNavOutlineDropdown.vue'
-import VPIconAlignLeft from './icons/VPIconAlignLeft.vue'
+import { useWindowScroll } from "@vueuse/core";
+import { onContentUpdated } from "vitepress";
+import { computed, shallowRef } from "vue";
+
+import VPLocalNavOutlineDropdown from "./VPLocalNavOutlineDropdown.vue";
+import VPIconAlignLeft from "./icons/VPIconAlignLeft.vue";
+import { useData } from "../composables/data.js";
+import type { MenuItem } from "../composables/outline.js";
+import { getHeaders } from "../composables/outline.js";
+import { useSidebar } from "../composables/sidebar.js";
 
 defineProps<{
-  open: boolean
-}>()
+  open: boolean;
+}>();
 
 defineEmits<{
-  (e: 'open-menu'): void
-}>()
+  (e: "open-menu"): void;
+}>();
 
-const { theme, frontmatter } = useData()
-const { hasSidebar } = useSidebar()
-const { y } = useWindowScroll()
+const { theme, frontmatter } = useData();
+const { hasSidebar } = useSidebar();
+const { y } = useWindowScroll();
 
-const headers = shallowRef<MenuItem[]>([])
+const headers = shallowRef<MenuItem[]>([]);
 
 onContentUpdated(() => {
-  headers.value = getHeaders(frontmatter.value.outline ?? theme.value.outline)
-})
+  headers.value = getHeaders(frontmatter.value.outline ?? theme.value.outline);
+});
 
 const empty = computed(() => {
-  return headers.value.length === 0 && !hasSidebar.value
-})
+  return headers.value.length === 0 && !hasSidebar.value;
+});
 
 const classes = computed(() => {
   return {
     VPLocalNav: true,
     fixed: empty.value,
-    'reached-top': y.value >= 64
-  }
-})
+    "reached-top": y.value >= 64,
+  };
+});
 </script>
 
 <template>
@@ -52,8 +54,9 @@ const classes = computed(() => {
       @click="$emit('open-menu')"
     >
       <VPIconAlignLeft class="menu-icon" />
+
       <span class="menu-text">
-        {{ theme.sidebarMenuLabel || 'Menu' }}
+        {{ theme.sidebarMenuLabel || "Menu" }}
       </span>
     </button>
 

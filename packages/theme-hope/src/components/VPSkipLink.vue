@@ -1,33 +1,37 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
-import { useRoute } from 'vitepress'
+import { useRoute } from "vitepress";
+import { ref, watch } from "vue";
 
-const route = useRoute()
-const backToTop = ref()
+const route = useRoute();
+const backToTop = ref();
 
-watch(() => route.path, () => backToTop.value.focus())
+watch(
+  () => route.path,
+  () => backToTop.value.focus()
+);
 
 function focusOnTargetAnchor({ target }: Event) {
   const el = document.querySelector<HTMLAnchorElement>(
     decodeURIComponent((target as HTMLAnchorElement).hash)
-  )
+  );
 
   if (el) {
     const removeTabIndex = () => {
-      el.removeAttribute('tabindex')
-      el.removeEventListener('blur', removeTabIndex)
-    }
+      el.removeAttribute("tabindex");
+      el.removeEventListener("blur", removeTabIndex);
+    };
 
-    el.setAttribute('tabindex', '-1')
-    el.addEventListener('blur', removeTabIndex)
-    el.focus()
-    window.scrollTo(0, 0)
+    el.setAttribute("tabindex", "-1");
+    el.addEventListener("blur", removeTabIndex);
+    el.focus();
+    window.scrollTo(0, 0);
   }
 }
 </script>
 
 <template>
   <span ref="backToTop" tabindex="-1" />
+
   <a
     href="#VPContent"
     class="VPSkipLink visually-hidden"

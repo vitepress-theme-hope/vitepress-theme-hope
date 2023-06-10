@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 defineProps<{
-  placeholder: string
-}>()
+  placeholder: string;
+}>();
 </script>
 
 <template>
@@ -23,10 +23,13 @@ defineProps<{
           stroke-linejoin="round"
         />
       </svg>
+
       <span class="DocSearch-Button-Placeholder">{{ placeholder }}</span>
     </span>
+
     <span class="DocSearch-Button-Keys">
       <kbd class="DocSearch-Button-Key"></kbd>
+
       <kbd class="DocSearch-Button-Key">K</kbd>
     </span>
   </button>

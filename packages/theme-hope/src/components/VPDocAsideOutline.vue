@@ -1,44 +1,46 @@
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue'
-import { useData } from '../composables/data.js'
+import { onContentUpdated } from "vitepress";
+import { ref, shallowRef } from "vue";
+
+import VPDocOutlineItem from "./VPDocOutlineItem.vue";
+import { useData } from "../composables/data.js";
+import type { MenuItem } from "../composables/outline.js";
 import {
   getHeaders,
   resolveTitle,
   useActiveAnchor,
-  type MenuItem
-} from '../composables/outline.js'
-import VPDocOutlineItem from './VPDocOutlineItem.vue'
-import { onContentUpdated } from 'vitepress'
+} from "../composables/outline.js";
 
-const { frontmatter, theme } = useData()
+const { frontmatter, theme } = useData();
 
-const headers = shallowRef<MenuItem[]>([])
+const headers = shallowRef<MenuItem[]>([]);
 
 onContentUpdated(() => {
-  headers.value = getHeaders(frontmatter.value.outline ?? theme.value.outline)
-})
+  headers.value = getHeaders(frontmatter.value.outline ?? theme.value.outline);
+});
 
-const container = ref()
-const marker = ref()
+const container = ref();
+const marker = ref();
 
-useActiveAnchor(container, marker)
+useActiveAnchor(container, marker);
 </script>
 
 <template>
   <div
+    ref="container"
     class="VPDocAsideOutline"
     :class="{ 'has-outline': headers.length > 0 }"
-    ref="container"
   >
     <div class="content">
-      <div class="outline-marker" ref="marker" />
+      <div ref="marker" class="outline-marker" />
 
       <div class="outline-title">{{ resolveTitle(theme) }}</div>
 
       <nav aria-labelledby="doc-outline-aria-label">
-        <span class="visually-hidden" id="doc-outline-aria-label">
+        <span id="doc-outline-aria-label" class="visually-hidden">
           Table of Contents for current page
         </span>
+
         <VPDocOutlineItem :headers="headers" :root="true" />
       </nav>
     </div>

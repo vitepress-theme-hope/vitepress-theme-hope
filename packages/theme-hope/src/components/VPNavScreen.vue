@@ -1,23 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
-import VPNavScreenMenu from './VPNavScreenMenu.vue'
-import VPNavScreenAppearance from './VPNavScreenAppearance.vue'
-import VPNavScreenTranslations from './VPNavScreenTranslations.vue'
-import VPNavScreenSocialLinks from './VPNavScreenSocialLinks.vue'
+import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
+import { ref } from "vue";
+
+import VPNavScreenAppearance from "./VPNavScreenAppearance.vue";
+import VPNavScreenMenu from "./VPNavScreenMenu.vue";
+import VPNavScreenSocialLinks from "./VPNavScreenSocialLinks.vue";
+import VPNavScreenTranslations from "./VPNavScreenTranslations.vue";
 
 defineProps<{
-  open: boolean
-}>()
+  open: boolean;
+}>();
 
-const screen = ref<HTMLElement | null>(null)
+const screen = ref<HTMLElement | null>(null);
 
 function lockBodyScroll() {
-  disableBodyScroll(screen.value!, { reserveScrollBarGap: true })
+  disableBodyScroll(screen.value!, { reserveScrollBarGap: true });
 }
 
 function unlockBodyScroll() {
-  clearAllBodyScrollLocks()
+  clearAllBodyScrollLocks();
 }
 </script>
 
@@ -27,13 +28,18 @@ function unlockBodyScroll() {
     @enter="lockBodyScroll"
     @after-leave="unlockBodyScroll"
   >
-    <div v-if="open" class="VPNavScreen" ref="screen">
+    <div v-if="open" ref="screen" class="VPNavScreen">
       <div class="container">
         <slot name="nav-screen-content-before" />
+
         <VPNavScreenMenu class="menu" />
+
         <VPNavScreenTranslations class="translations" />
+
         <VPNavScreenAppearance class="appearance" />
+
         <VPNavScreenSocialLinks class="social-links" />
+
         <slot name="nav-screen-content-after" />
       </div>
     </div>

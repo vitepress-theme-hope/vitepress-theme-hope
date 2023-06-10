@@ -1,5 +1,5 @@
-import { bundle } from '../../scripts/rollup.js'
+import { bundle } from "../../scripts/rollup.js";
 
-export default bundle('index', {
-  resolve: true
-})
+export default bundle("index", {
+  resolve: true,
+});

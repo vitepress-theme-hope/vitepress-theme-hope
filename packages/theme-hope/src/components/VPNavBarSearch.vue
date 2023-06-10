@@ -1,151 +1,150 @@
 <script lang="ts" setup>
-import '@docsearch/css'
-import { onKeyStroke } from '@vueuse/core'
+import "@docsearch/css";
+import { onKeyStroke } from "@vueuse/core";
+import type { DefaultTheme } from "vitepress";
 import {
   computed,
   defineAsyncComponent,
   onMounted,
   onUnmounted,
-  ref
-} from 'vue'
-import type { DefaultTheme } from 'vitepress'
-import { useData } from '../composables/data.js'
-import VPNavBarSearchButton from './VPNavBarSearchButton.vue'
+  ref,
+} from "vue";
+
+import VPNavBarSearchButton from "./VPNavBarSearchButton.vue";
+import { useData } from "../composables/data.js";
 
 const VPLocalSearchBox = __VP_LOCAL_SEARCH__
-  ? defineAsyncComponent(() => import('./VPLocalSearchBox.vue'))
-  : () => null
+  ? defineAsyncComponent(() => import("./VPLocalSearchBox.vue"))
+  : () => null;
 
 const VPAlgoliaSearchBox = __ALGOLIA__
-  ? defineAsyncComponent(() => import('./VPAlgoliaSearchBox.vue'))
-  : () => null
+  ? defineAsyncComponent(() => import("./VPAlgoliaSearchBox.vue"))
+  : () => null;
 
-const { theme, localeIndex } = useData()
+const { theme, localeIndex } = useData();
 
 // to avoid loading the docsearch js upfront (which is more than 1/3 of the
 // payload), we delay initializing it until the user has actually clicked or
 // hit the hotkey to invoke it.
-const loaded = ref(false)
+const loaded = ref(false);
 
 const buttonText = computed(() => {
-  const options = theme.value.search?.options ?? theme.value.algolia
+  const options = theme.value.search?.options ?? theme.value.algolia;
 
   return (
     options?.locales?.[localeIndex.value]?.translations?.button?.buttonText ||
     options?.translations?.button?.buttonText ||
-    'Search'
-  )
-})
+    "Search"
+  );
+});
 
 const preconnect = () => {
-  const id = 'VPAlgoliaPreconnect'
+  const id = "VPAlgoliaPreconnect";
 
-  const rIC = window.requestIdleCallback || setTimeout
+  const rIC = window.requestIdleCallback || setTimeout;
+
   rIC(() => {
-    const preconnect = document.createElement('link')
-    preconnect.id = id
-    preconnect.rel = 'preconnect'
+    const preconnect = document.createElement("link");
+
+    preconnect.id = id;
+    preconnect.rel = "preconnect";
     preconnect.href = `https://${
       ((theme.value.search?.options as DefaultTheme.AlgoliaSearchOptions) ??
         theme.value.algolia)!.appId
-    }-dsn.algolia.net`
-    preconnect.crossOrigin = ''
-    document.head.appendChild(preconnect)
-  })
-}
+    }-dsn.algolia.net`;
+    preconnect.crossOrigin = "";
+    document.head.appendChild(preconnect);
+  });
+};
 
 onMounted(() => {
-  if (!__ALGOLIA__) {
-    return
-  }
+  if (!__ALGOLIA__) return;
 
-  preconnect()
+  preconnect();
 
   const handleSearchHotKey = (event: KeyboardEvent) => {
     if (
-      (event.key.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey)) ||
-      (!isEditingContent(event) && event.key === '/')
+      (event.key.toLowerCase() === "k" && (event.metaKey || event.ctrlKey)) ||
+      (!isEditingContent(event) && event.key === "/")
     ) {
-      event.preventDefault()
-      load()
-      remove()
+      event.preventDefault();
+      load();
+      remove();
     }
-  }
+  };
 
   const remove = () => {
-    window.removeEventListener('keydown', handleSearchHotKey)
-  }
+    window.removeEventListener("keydown", handleSearchHotKey);
+  };
 
-  window.addEventListener('keydown', handleSearchHotKey)
+  window.addEventListener("keydown", handleSearchHotKey);
 
-  onUnmounted(remove)
-})
+  onUnmounted(remove);
+});
 
 function load() {
   if (!loaded.value) {
-    loaded.value = true
-    setTimeout(poll, 16)
+    loaded.value = true;
+    setTimeout(poll, 16);
   }
 }
 
 function poll() {
   // programmatically open the search box after initialize
-  const e = new Event('keydown') as any
+  const e = new Event("keydown") as any;
 
-  e.key = 'k'
-  e.metaKey = true
+  e.key = "k";
+  e.metaKey = true;
 
-  window.dispatchEvent(e)
+  window.dispatchEvent(e);
 
   setTimeout(() => {
-    if (!document.querySelector('.DocSearch-Modal')) {
-      poll()
-    }
-  }, 16)
+    if (!document.querySelector(".DocSearch-Modal")) poll();
+  }, 16);
 }
 
 function isEditingContent(event: KeyboardEvent): boolean {
-  const element = event.target as HTMLElement
-  const tagName = element.tagName
+  const element = event.target as HTMLElement;
+  const tagName = element.tagName;
 
   return (
     element.isContentEditable ||
-    tagName === 'INPUT' ||
-    tagName === 'SELECT' ||
-    tagName === 'TEXTAREA'
-  )
+    tagName === "INPUT" ||
+    tagName === "SELECT" ||
+    tagName === "TEXTAREA"
+  );
 }
 
 // Local search
 
-const showSearch = ref(false)
+const showSearch = ref(false);
 
 if (__VP_LOCAL_SEARCH__) {
-  onKeyStroke('k', (event) => {
+  onKeyStroke("k", (event) => {
     if (event.ctrlKey || event.metaKey) {
-      event.preventDefault()
-      showSearch.value = true
+      event.preventDefault();
+      showSearch.value = true;
     }
-  })
+  });
 
-  onKeyStroke('/', (event) => {
+  onKeyStroke("/", (event) => {
     if (!isEditingContent(event)) {
-      event.preventDefault()
-      showSearch.value = true
+      event.preventDefault();
+      showSearch.value = true;
     }
-  })
+  });
 }
 
-const metaKey = ref(`'Meta'`)
+const metaKey = ref(`'Meta'`);
 
 onMounted(() => {
   // meta key detect (same logic as in @docsearch/js)
   metaKey.value = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)
     ? `'⌘'`
-    : `'Ctrl'`
-})
+    : `'Ctrl'`;
+});
 
-const provider = __ALGOLIA__ ? 'algolia' : __VP_LOCAL_SEARCH__ ? 'local' : ''
+const provider = __ALGOLIA__ ? "algolia" : __VP_LOCAL_SEARCH__ ? "local" : "";
 </script>
 
 <template>

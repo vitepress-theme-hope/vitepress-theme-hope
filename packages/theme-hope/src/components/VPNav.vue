@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { provide } from 'vue'
-import { useNav } from '../composables/nav.js'
-import VPNavBar from './VPNavBar.vue'
-import VPNavScreen from './VPNavScreen.vue'
+import { provide } from "vue";
 
-const { isScreenOpen, closeScreen, toggleScreen } = useNav()
+import VPNavBar from "./VPNavBar.vue";
+import VPNavScreen from "./VPNavScreen.vue";
+import { useNav } from "../composables/nav.js";
 
-provide('close-screen', closeScreen)
+const { isScreenOpen, closeScreen, toggleScreen } = useNav();
+
+provide("close-screen", closeScreen);
 </script>
 
 <template>
@@ -15,20 +16,25 @@ provide('close-screen', closeScreen)
       <template #nav-bar-title-before
         ><slot name="nav-bar-title-before"
       /></template>
+
       <template #nav-bar-title-after
         ><slot name="nav-bar-title-after"
       /></template>
+
       <template #nav-bar-content-before
         ><slot name="nav-bar-content-before"
       /></template>
+
       <template #nav-bar-content-after
         ><slot name="nav-bar-content-after"
       /></template>
     </VPNavBar>
+
     <VPNavScreen :open="isScreenOpen">
       <template #nav-screen-content-before
         ><slot name="nav-screen-content-before"
       /></template>
+
       <template #nav-screen-content-after
         ><slot name="nav-screen-content-after"
       /></template>

@@ -1,39 +1,45 @@
 <script setup lang="ts">
-import { useData } from '../composables/data.js'
-import { useSidebar } from '../composables/sidebar.js'
-import VPPage from './VPPage.vue'
-import VPHome from './VPHome.vue'
-import VPDoc from './VPDoc.vue'
-import NotFound from '../NotFound.vue'
+import VPDoc from "./VPDoc.vue";
+import VPHome from "./VPHome.vue";
+import VPPage from "./VPPage.vue";
+import NotFound from "../NotFound.vue";
+import { useData } from "../composables/data.js";
+import { useSidebar } from "../composables/sidebar.js";
 
-const { page, frontmatter } = useData()
-const { hasSidebar } = useSidebar()
+const { page, frontmatter } = useData();
+const { hasSidebar } = useSidebar();
 </script>
 
 <template>
   <div
-    class="VPContent"
     id="VPContent"
+    class="VPContent"
     :class="{
       'has-sidebar': hasSidebar,
-      'is-home': frontmatter.layout === 'home'
+      'is-home': frontmatter.layout === 'home',
     }"
   >
-    <slot name="not-found" v-if="page.isNotFound"><NotFound /></slot>
+    <slot v-if="page.isNotFound" name="not-found"><NotFound /></slot>
 
     <VPPage v-else-if="frontmatter.layout === 'page'">
       <template #page-top><slot name="page-top" /></template>
+
       <template #page-bottom><slot name="page-bottom" /></template>
     </VPPage>
 
     <VPHome v-else-if="frontmatter.layout === 'home'">
       <template #home-hero-before><slot name="home-hero-before" /></template>
+
       <template #home-hero-info><slot name="home-hero-info" /></template>
+
       <template #home-hero-image><slot name="home-hero-image" /></template>
+
       <template #home-hero-after><slot name="home-hero-after" /></template>
+
       <template #home-features-before
         ><slot name="home-features-before"
       /></template>
+
       <template #home-features-after
         ><slot name="home-features-after"
       /></template>
@@ -41,21 +47,29 @@ const { hasSidebar } = useSidebar()
 
     <VPDoc v-else>
       <template #doc-top><slot name="doc-top" /></template>
+
       <template #doc-bottom><slot name="doc-bottom" /></template>
 
       <template #doc-footer-before><slot name="doc-footer-before" /></template>
+
       <template #doc-before><slot name="doc-before" /></template>
+
       <template #doc-after><slot name="doc-after" /></template>
 
       <template #aside-top><slot name="aside-top" /></template>
+
       <template #aside-outline-before
         ><slot name="aside-outline-before"
       /></template>
+
       <template #aside-outline-after
         ><slot name="aside-outline-after"
       /></template>
+
       <template #aside-ads-before><slot name="aside-ads-before" /></template>
+
       <template #aside-ads-after><slot name="aside-ads-after" /></template>
+
       <template #aside-bottom><slot name="aside-bottom" /></template>
     </VPDoc>
   </div>

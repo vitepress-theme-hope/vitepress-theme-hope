@@ -1,32 +1,33 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useData } from '../composables/data.js'
-import { normalizeLink } from '../support/utils.js'
-import { useEditLink } from '../composables/edit-link.js'
-import { usePrevNext } from '../composables/prev-next.js'
-import VPIconEdit from './icons/VPIconEdit.vue'
-import VPLink from './VPLink.vue'
-import VPDocFooterLastUpdated from './VPDocFooterLastUpdated.vue'
+import { computed } from "vue";
 
-const { theme, page, frontmatter } = useData()
+import VPDocFooterLastUpdated from "./VPDocFooterLastUpdated.vue";
+import VPLink from "./VPLink.vue";
+import VPIconEdit from "./icons/VPIconEdit.vue";
+import { useData } from "../composables/data.js";
+import { useEditLink } from "../composables/edit-link.js";
+import { usePrevNext } from "../composables/prev-next.js";
+import { normalizeLink } from "../support/utils.js";
 
-const editLink = useEditLink()
-const control = usePrevNext()
+const { theme, page, frontmatter } = useData();
+
+const editLink = useEditLink();
+const control = usePrevNext();
 
 const hasEditLink = computed(() => {
-  return theme.value.editLink && frontmatter.value.editLink !== false
-})
+  return theme.value.editLink && frontmatter.value.editLink !== false;
+});
 const hasLastUpdated = computed(() => {
-  return page.value.lastUpdated && frontmatter.value.lastUpdated !== false
-})
+  return page.value.lastUpdated && frontmatter.value.lastUpdated !== false;
+});
 const showFooter = computed(() => {
   return (
     hasEditLink.value ||
     hasLastUpdated.value ||
     control.value.prev ||
     control.value.next
-  )
-})
+  );
+});
 </script>
 
 <template>
@@ -57,9 +58,11 @@ const showFooter = computed(() => {
             class="desc"
             v-html="theme.docFooter?.prev || 'Previous page'"
           ></span>
+
           <span class="title" v-html="control.prev.text"></span>
         </a>
       </div>
+
       <div class="pager" :class="{ 'has-prev': control.prev?.link }">
         <a
           v-if="control.next?.link"
@@ -70,6 +73,7 @@ const showFooter = computed(() => {
             class="desc"
             v-html="theme.docFooter?.next || 'Next page'"
           ></span>
+
           <span class="title" v-html="control.next.text"></span>
         </a>
       </div>

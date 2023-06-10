@@ -1,30 +1,35 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { withBase } from 'vitepress'
-import { useData } from './composables/data.js'
-import { useLangs } from './composables/langs.js'
+import { withBase } from "vitepress";
+import { onMounted, ref } from "vue";
 
-const { site } = useData()
-const { localeLinks } = useLangs({ removeCurrent: false })
+import { useData } from "./composables/data.js";
+import { useLangs } from "./composables/langs.js";
 
-const root = ref('/')
+const { site } = useData();
+const { localeLinks } = useLangs({ removeCurrent: false });
+
+const root = ref("/");
+
 onMounted(() => {
   const path = window.location.pathname
-    .replace(site.value.base, '')
-    .replace(/(^.*?\/).*$/, '/$1')
-  if (localeLinks.value.length) {
+    .replace(site.value.base, "")
+    .replace(/(^.*?\/).*$/, "/$1");
+
+  if (localeLinks.value.length)
     root.value =
       localeLinks.value.find(({ link }) => link.startsWith(path))?.link ||
-      localeLinks.value[0].link
-  }
-})
+      localeLinks.value[0].link;
+});
 </script>
 
 <template>
   <div class="NotFound">
     <p class="code">404</p>
+
     <h1 class="title">PAGE NOT FOUND</h1>
+
     <div class="divider" />
+
     <blockquote class="quote">
       But if you don't change your direction, and if you keep looking, you may
       end up where you are heading.

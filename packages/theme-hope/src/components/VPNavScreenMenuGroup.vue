@@ -1,22 +1,23 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import VPIconPlus from './icons/VPIconPlus.vue'
-import VPNavScreenMenuGroupLink from './VPNavScreenMenuGroupLink.vue'
-import VPNavScreenMenuGroupSection from './VPNavScreenMenuGroupSection.vue'
+import { computed, ref } from "vue";
+
+import VPNavScreenMenuGroupLink from "./VPNavScreenMenuGroupLink.vue";
+import VPNavScreenMenuGroupSection from "./VPNavScreenMenuGroupSection.vue";
+import VPIconPlus from "./icons/VPIconPlus.vue";
 
 const props = defineProps<{
-  text: string
-  items: any[]
-}>()
+  text: string;
+  items: any[];
+}>();
 
-const isOpen = ref(false)
+const isOpen = ref(false);
 
-const groupId = computed(() =>
-  `NavScreenGroup-${props.text.replace(' ', '-').toLowerCase()}`
-)
+const groupId = computed(
+  () => `NavScreenGroup-${props.text.replace(" ", "-").toLowerCase()}`
+);
 
 function toggle() {
-  isOpen.value = !isOpen.value
+  isOpen.value = !isOpen.value;
 }
 </script>
 
@@ -29,6 +30,7 @@ function toggle() {
       @click="toggle"
     >
       <span class="button-text">{{ text }}</span>
+
       <VPIconPlus class="button-icon" />
     </button>
 
@@ -39,10 +41,7 @@ function toggle() {
         </div>
 
         <div v-else class="group">
-          <VPNavScreenMenuGroupSection
-            :text="item.text"
-            :items="item.items"
-          />
+          <VPNavScreenMenuGroupSection :text="item.text" :items="item.items" />
         </div>
       </template>
     </div>

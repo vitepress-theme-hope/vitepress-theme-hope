@@ -37,13 +37,9 @@ ignorePatterns:
   - "**/dist/**"
   - "**/node_modules/**"
   - "coverage/**"
-  - "docs-shared/lib/**"
-  - "packages/*/assets/**"
-  - "packages/*/lib/**"
-  - "packages/create/template/**"
-  - "!**/.vuepress/**"
-  - "**/.vuepress/.cache/**"
-  - "**/.vuepress/.temp/**"
+  - "**/.vitepress/.cache/**"
+  - "**/.vitepress/.temp/**"
+  - "package/theme-default/src/**"
 
 rules:
   "@typescript-eslint/ban-ts-comment":
@@ -283,6 +279,8 @@ rules:
 
   vue/no-undef-components:
     - error
+    - ignorePatterns:
+      - Content
 
   vue/no-undef-properties:
     - warn

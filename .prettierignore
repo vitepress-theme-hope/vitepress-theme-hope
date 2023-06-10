@@ -1,0 +1,16 @@
+# vitepress Cache
+**/.vitepress/cache/**
+# vitepress Output
+dist/
+
+# Node modules
+node_modules/
+
+# Test Coverage
+coverage/
+
+# pnpm lock file
+pnpm-lock.yaml
+
+# Theme Default
+packages/theme-default/src/**

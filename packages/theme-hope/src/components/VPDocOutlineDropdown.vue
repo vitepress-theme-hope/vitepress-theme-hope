@@ -1,36 +1,35 @@
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue'
-import { useData } from '../composables/data.js'
-import {
-  getHeaders,
-  resolveTitle,
-  type MenuItem
-} from '../composables/outline.js'
-import VPDocOutlineItem from './VPDocOutlineItem.vue'
-import { onContentUpdated } from 'vitepress'
-import VPIconChevronRight from './icons/VPIconChevronRight.vue'
+import { onContentUpdated } from "vitepress";
+import { ref, shallowRef } from "vue";
 
-const { frontmatter, theme } = useData()
-const open = ref(false)
+import VPDocOutlineItem from "./VPDocOutlineItem.vue";
+import VPIconChevronRight from "./icons/VPIconChevronRight.vue";
+import { useData } from "../composables/data.js";
+import type { MenuItem } from "../composables/outline.js";
+import { getHeaders, resolveTitle } from "../composables/outline.js";
+
+const { frontmatter, theme } = useData();
+const open = ref(false);
 
 onContentUpdated(() => {
-  open.value = false
-})
+  open.value = false;
+});
 
-const headers = shallowRef<MenuItem[]>([])
+const headers = shallowRef<MenuItem[]>([]);
 
 onContentUpdated(() => {
-  headers.value = getHeaders(frontmatter.value.outline ?? theme.value.outline)
-})
+  headers.value = getHeaders(frontmatter.value.outline ?? theme.value.outline);
+});
 </script>
 
 <template>
-  <div class="VPDocOutlineDropdown" v-if="headers.length > 0">
-    <button @click="open = !open" :class="{ open }">
+  <div v-if="headers.length > 0" class="VPDocOutlineDropdown">
+    <button :class="{ open }" @click="open = !open">
       {{ resolveTitle(theme) }}
       <VPIconChevronRight class="icon" />
     </button>
-    <div class="items" v-if="open">
+
+    <div v-if="open" class="items">
       <VPDocOutlineItem :headers="headers" />
     </div>
   </div>

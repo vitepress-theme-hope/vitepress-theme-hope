@@ -1,25 +1,26 @@
 <script lang="ts" setup>
-import type { DefaultTheme } from 'vitepress/theme'
-import { useData } from '../composables/data.js'
-import { isActive } from '../shared.js'
-import VPLink from './VPLink.vue'
+import type { DefaultTheme } from "vitepress/theme";
+
+import VPLink from "./VPLink.vue";
+import { useData } from "../composables/data.js";
+import { isActive } from "../shared.js";
 
 defineProps<{
-  item: DefaultTheme.NavItemWithLink
-}>()
+  item: DefaultTheme.NavItemWithLink;
+}>();
 
-const { page } = useData()
+const { page } = useData();
 </script>
 
 <template>
   <VPLink
+    class="VPNavBarMenuLink"
     :class="{
-      VPNavBarMenuLink: true,
       active: isActive(
         page.relativePath,
         item.activeMatch || item.link,
         !!item.activeMatch
-      )
+      ),
     }"
     :href="item.link"
     :target="item.target"

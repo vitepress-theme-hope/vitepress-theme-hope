@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { useRoute } from 'vitepress'
-import { computed } from 'vue'
-import { useSidebar } from '../composables/sidebar.js'
-import VPDocAside from './VPDocAside.vue'
-import VPDocFooter from './VPDocFooter.vue'
-import VPDocOutlineDropdown from './VPDocOutlineDropdown.vue'
+import { useRoute } from "vitepress";
+import { computed } from "vue";
 
-const route = useRoute()
-const { hasSidebar, hasAside, leftAside } = useSidebar()
+import VPDocAside from "./VPDocAside.vue";
+import VPDocFooter from "./VPDocFooter.vue";
+import VPDocOutlineDropdown from "./VPDocOutlineDropdown.vue";
+import { useSidebar } from "../composables/sidebar.js";
+
+const route = useRoute();
+const { hasSidebar, hasAside, leftAside } = useSidebar();
 
 const pageName = computed(() =>
-  route.path.replace(/[./]+/g, '_').replace(/_html$/, '')
-)
+  route.path.replace(/[./]+/g, "_").replace(/_html$/, "")
+);
 </script>
 
 <template>
@@ -20,23 +21,30 @@ const pageName = computed(() =>
     :class="{ 'has-sidebar': hasSidebar, 'has-aside': hasAside }"
   >
     <slot name="doc-top" />
+
     <div class="container">
       <div v-if="hasAside" class="aside" :class="{ 'left-aside': leftAside }">
         <div class="aside-curtain" />
+
         <div class="aside-container">
           <div class="aside-content">
             <VPDocAside>
               <template #aside-top><slot name="aside-top" /></template>
+
               <template #aside-bottom><slot name="aside-bottom" /></template>
+
               <template #aside-outline-before
                 ><slot name="aside-outline-before"
               /></template>
+
               <template #aside-outline-after
                 ><slot name="aside-outline-after"
               /></template>
+
               <template #aside-ads-before
                 ><slot name="aside-ads-before"
               /></template>
+
               <template #aside-ads-after
                 ><slot name="aside-ads-after"
               /></template>
@@ -48,19 +56,24 @@ const pageName = computed(() =>
       <div class="content">
         <div class="content-container">
           <slot name="doc-before" />
+
           <VPDocOutlineDropdown />
+
           <main class="main">
             <Content class="vp-doc" :class="pageName" />
           </main>
+
           <VPDocFooter>
-            <template #doc-footer-before
-              ><slot name="doc-footer-before"
-            /></template>
+            <template #doc-footer-before>
+              <slot name="doc-footer-before" />
+            </template>
           </VPDocFooter>
+
           <slot name="doc-after" />
         </div>
       </div>
     </div>
+
     <slot name="doc-bottom" />
   </div>
 </template>

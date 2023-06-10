@@ -1,24 +1,26 @@
 <script setup lang="ts">
-import { type Ref, inject } from 'vue'
-import type { DefaultTheme } from 'vitepress/theme'
-import VPButton from './VPButton.vue'
-import VPImage from './VPImage.vue'
+import type { DefaultTheme } from "vitepress/theme";
+import type { Ref } from "vue";
+import { inject } from "vue";
+
+import VPButton from "./VPButton.vue";
+import VPImage from "./VPImage.vue";
 
 export interface HeroAction {
-  theme?: 'brand' | 'alt'
-  text: string
-  link: string
+  theme?: "brand" | "alt";
+  text: string;
+  link: string;
 }
 
 defineProps<{
-  name?: string
-  text?: string
-  tagline?: string
-  image?: DefaultTheme.ThemeableImage
-  actions?: HeroAction[]
-}>()
+  name?: string;
+  text?: string;
+  tagline?: string;
+  image?: DefaultTheme.ThemeableImage;
+  actions?: HeroAction[];
+}>();
 
-const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
+const heroImageSlotExists = inject("hero-image-slot-exists") as Ref<boolean>;
 </script>
 
 <template>
@@ -29,7 +31,9 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
           <h1 v-if="name" class="name">
             <span class="clip">{{ name }}</span>
           </h1>
+
           <p v-if="text" class="text">{{ text }}</p>
+
           <p v-if="tagline" class="tagline">{{ tagline }}</p>
         </slot>
 
@@ -49,6 +53,7 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
       <div v-if="image || heroImageSlotExists" class="image">
         <div class="image-container">
           <div class="image-bg" />
+
           <slot name="home-hero-image">
             <VPImage v-if="image" class="image-src" :image="image" />
           </slot>
@@ -60,19 +65,28 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
 
 <style scoped>
 .VPHero {
-  margin-top: calc((var(--vp-nav-height) + var(--vp-layout-top-height, 0px)) * -1);
-  padding: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 48px) 24px 48px;
+  margin-top: calc(
+    (var(--vp-nav-height) + var(--vp-layout-top-height, 0px)) * -1
+  );
+  padding: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 48px)
+    24px 48px;
 }
 
 @media (min-width: 640px) {
   .VPHero {
-    padding: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 80px) 48px 64px;
+    padding: calc(
+        var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 80px
+      )
+      48px 64px;
   }
 }
 
 @media (min-width: 960px) {
   .VPHero {
-    padding: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 80px) 64px 64px;
+    padding: calc(
+        var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 80px
+      )
+      64px 64px;
   }
 }
 

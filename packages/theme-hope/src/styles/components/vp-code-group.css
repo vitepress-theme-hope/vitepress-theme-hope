@@ -20,7 +20,7 @@
   left: 0;
   height: 1px;
   background-color: var(--vp-code-tab-divider);
-  content: '';
+  content: "";
 }
 
 @media (min-width: 640px) {
@@ -58,7 +58,7 @@
   left: 8px;
   z-index: 1;
   height: 1px;
-  content: '';
+  content: "";
   background-color: transparent;
   transition: background-color 0.25s;
 }
@@ -75,13 +75,13 @@
   background-color: var(--vp-code-tab-active-bar-color);
 }
 
-.vp-code-group div[class*='language-'] {
+.vp-code-group div[class*="language-"] {
   display: none;
   margin-top: 0 !important;
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
 }
 
-.vp-code-group div[class*='language-'].active {
+.vp-code-group div[class*="language-"].active {
   display: block;
 }

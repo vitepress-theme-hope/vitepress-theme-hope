@@ -223,11 +223,11 @@
   color: inherit;
 }
 
-.vp-doc .custom-block div[class*='language-'] {
+.vp-doc .custom-block div[class*="language-"] {
   margin: 8px 0;
 }
 
-.vp-doc .custom-block div[class*='language-'] code {
+.vp-doc .custom-block div[class*="language-"] code {
   font-weight: 400;
   background-color: transparent;
 }
@@ -264,7 +264,7 @@
   color: var(--vp-c-brand-dark);
 }
 
-.vp-doc div[class*='language-'] {
+.vp-doc div[class*="language-"] {
   position: relative;
   margin: 16px -24px;
   background-color: var(--vp-code-block-bg);
@@ -273,26 +273,26 @@
 }
 
 @media (min-width: 640px) {
-  .vp-doc div[class*='language-'] {
+  .vp-doc div[class*="language-"] {
     border-radius: 8px;
     margin: 16px 0;
   }
 }
 
 @media (max-width: 639px) {
-  .vp-doc li div[class*='language-'] {
+  .vp-doc li div[class*="language-"] {
     border-radius: 8px 0 0 8px;
   }
 }
 
-.vp-doc div[class*='language-'] + div[class*='language-'],
-.vp-doc div[class$='-api'] + div[class*='language-'],
-.vp-doc div[class*='language-'] + div[class$='-api'] > div[class*='language-'] {
+.vp-doc div[class*="language-"] + div[class*="language-"],
+.vp-doc div[class$="-api"] + div[class*="language-"],
+.vp-doc div[class*="language-"] + div[class$="-api"] > div[class*="language-"] {
   margin-top: -8px;
 }
 
-.vp-doc [class*='language-'] pre,
-.vp-doc [class*='language-'] code {
+.vp-doc [class*="language-"] pre,
+.vp-doc [class*="language-"] code {
   /*rtl:ignore*/
   direction: ltr;
   /*rtl:ignore*/
@@ -310,7 +310,7 @@
   hyphens: none;
 }
 
-.vp-doc [class*='language-'] pre {
+.vp-doc [class*="language-"] pre {
   position: relative;
   z-index: 1;
   margin: 0;
@@ -319,7 +319,7 @@
   overflow-x: auto;
 }
 
-.vp-doc [class*='language-'] code {
+.vp-doc [class*="language-"] code {
   display: block;
   padding: 0 24px;
   width: fit-content;
@@ -330,7 +330,7 @@
   transition: color 0.5s;
 }
 
-.vp-doc [class*='language-'] code .highlighted {
+.vp-doc [class*="language-"] code .highlighted {
   background-color: var(--vp-code-line-highlight-color);
   transition: background-color 0.5s;
   margin: 0 -24px;
@@ -339,15 +339,15 @@
   display: inline-block;
 }
 
-.vp-doc [class*='language-'] code .highlighted.error {
+.vp-doc [class*="language-"] code .highlighted.error {
   background-color: var(--vp-code-line-error-color);
 }
 
-.vp-doc [class*='language-'] code .highlighted.warning {
+.vp-doc [class*="language-"] code .highlighted.warning {
   background-color: var(--vp-code-line-warning-color);
 }
 
-.vp-doc [class*='language-'] code .diff {
+.vp-doc [class*="language-"] code .diff {
   transition: background-color 0.5s;
   margin: 0 -24px;
   padding: 0 24px;
@@ -355,47 +355,47 @@
   display: inline-block;
 }
 
-.vp-doc [class*='language-'] code .diff::before {
+.vp-doc [class*="language-"] code .diff::before {
   position: absolute;
   left: 10px;
 }
 
-.vp-doc [class*='language-'] .has-focused-lines .line:not(.has-focus) {
+.vp-doc [class*="language-"] .has-focused-lines .line:not(.has-focus) {
   filter: blur(0.095rem);
   opacity: 0.4;
   transition: filter 0.35s, opacity 0.35s;
 }
 
-.vp-doc [class*='language-'] .has-focused-lines .line:not(.has-focus) {
+.vp-doc [class*="language-"] .has-focused-lines .line:not(.has-focus) {
   opacity: 0.7;
   transition: filter 0.35s, opacity 0.35s;
 }
 
-.vp-doc [class*='language-']:hover .has-focused-lines .line:not(.has-focus) {
+.vp-doc [class*="language-"]:hover .has-focused-lines .line:not(.has-focus) {
   filter: blur(0);
   opacity: 1;
 }
 
-.vp-doc [class*='language-'] code .diff.remove {
+.vp-doc [class*="language-"] code .diff.remove {
   background-color: var(--vp-code-line-diff-remove-color);
   opacity: 0.7;
 }
 
-.vp-doc [class*='language-'] code .diff.remove::before {
-  content: '-';
+.vp-doc [class*="language-"] code .diff.remove::before {
+  content: "-";
   color: var(--vp-code-line-diff-remove-symbol-color);
 }
 
-.vp-doc [class*='language-'] code .diff.add {
+.vp-doc [class*="language-"] code .diff.add {
   background-color: var(--vp-code-line-diff-add-color);
 }
 
-.vp-doc [class*='language-'] code .diff.add::before {
-  content: '+';
+.vp-doc [class*="language-"] code .diff.add::before {
+  content: "+";
   color: var(--vp-code-line-diff-add-symbol-color);
 }
 
-.vp-doc div[class*='language-'].line-numbers-mode {
+.vp-doc div[class*="language-"].line-numbers-mode {
   /*rtl:ignore*/
   padding-left: 32px;
 }
@@ -419,7 +419,7 @@
   transition: border-color 0.5s, color 0.5s;
 }
 
-.vp-doc [class*='language-'] > button.copy {
+.vp-doc [class*="language-"] > button.copy {
   /*rtl:ignore*/
   direction: ltr;
   position: absolute;
@@ -441,27 +441,27 @@
   transition: border-color 0.25s, background-color 0.25s, opacity 0.25s;
 }
 
-.vp-doc [class*='language-']:hover > button.copy,
-.vp-doc [class*='language-'] > button.copy:focus {
+.vp-doc [class*="language-"]:hover > button.copy,
+.vp-doc [class*="language-"] > button.copy:focus {
   opacity: 1;
 }
 
-.vp-doc [class*='language-'] > button.copy:hover,
-.vp-doc [class*='language-'] > button.copy.copied {
+.vp-doc [class*="language-"] > button.copy:hover,
+.vp-doc [class*="language-"] > button.copy.copied {
   border-color: var(--vp-code-copy-code-hover-border-color);
   background-color: var(--vp-code-copy-code-hover-bg);
 }
 
-.vp-doc [class*='language-'] > button.copy.copied,
-.vp-doc [class*='language-'] > button.copy:hover.copied {
+.vp-doc [class*="language-"] > button.copy.copied,
+.vp-doc [class*="language-"] > button.copy:hover.copied {
   /*rtl:ignore*/
   border-radius: 0 4px 4px 0;
   background-color: var(--vp-code-copy-code-hover-bg);
   background-image: var(--vp-icon-copied);
 }
 
-.vp-doc [class*='language-'] > button.copy.copied::before,
-.vp-doc [class*='language-'] > button.copy:hover.copied::before {
+.vp-doc [class*="language-"] > button.copy.copied::before,
+.vp-doc [class*="language-"] > button.copy:hover.copied::before {
   position: relative;
   top: -1px;
   /*rtl:ignore*/
@@ -481,10 +481,10 @@
   color: var(--vp-code-copy-code-active-text);
   background-color: var(--vp-code-copy-code-hover-bg);
   white-space: nowrap;
-  content: 'Copied';
+  content: "Copied";
 }
 
-.vp-doc [class*='language-'] > span.lang {
+.vp-doc [class*="language-"] > span.lang {
   position: absolute;
   top: 2px;
   /*rtl:ignore*/
@@ -496,8 +496,8 @@
   transition: color 0.4s, opacity 0.4s;
 }
 
-.vp-doc [class*='language-']:hover > button.copy + span.lang,
-.vp-doc [class*='language-'] > button.copy:focus + span.lang {
+.vp-doc [class*="language-"]:hover > button.copy + span.lang,
+.vp-doc [class*="language-"] > button.copy:focus + span.lang {
   opacity: 0;
 }
 

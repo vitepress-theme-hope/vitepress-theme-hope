@@ -22,27 +22,19 @@ export const notFoundPageData: PageData = {
 export function isActive(
   currentPath: string,
   matchPath?: string,
-  asRegex: boolean = false
+  asRegex = false
 ): boolean {
-  if (matchPath === undefined) {
-    return false;
-  }
+  if (matchPath === undefined) return false;
 
   currentPath = normalize(`/${currentPath}`);
 
-  if (asRegex) {
-    return new RegExp(matchPath).test(currentPath);
-  }
+  if (asRegex) return new RegExp(matchPath).test(currentPath);
 
-  if (normalize(matchPath) !== currentPath) {
-    return false;
-  }
+  if (normalize(matchPath) !== currentPath) return false;
 
   const hashMatch = matchPath.match(HASH_RE);
 
-  if (hashMatch) {
-    return (inBrowser ? location.hash : "") === hashMatch[0];
-  }
+  if (hashMatch) return (inBrowser ? location.hash : "") === hashMatch[0];
 
   return true;
 }
@@ -94,9 +86,8 @@ export function createTitle(siteData: SiteData, pageData: PageData): string {
   const title = pageData.title || siteData.title;
   const template = pageData.titleTemplate ?? siteData.titleTemplate;
 
-  if (typeof template === "string" && template.includes(":title")) {
+  if (typeof template === "string" && template.includes(":title"))
     return template.replace(/:title/g, title);
-  }
 
   const templateString = createTitleTemplate(siteData.title, template);
 
@@ -107,37 +98,39 @@ function createTitleTemplate(
   siteTitle: string,
   template?: string | boolean
 ): string {
-  if (template === false) {
-    return "";
-  }
+  if (template === false) return "";
 
-  if (template === true || template === undefined) {
-    return ` | ${siteTitle}`;
-  }
+  if (template === true || template === undefined) return ` | ${siteTitle}`;
 
-  if (siteTitle === template) {
-    return "";
-  }
+  if (siteTitle === template) return "";
 
   return ` | ${template}`;
 }
 
-function hasTag(head: HeadConfig[], tag: HeadConfig) {
+const hasTag = (head: HeadConfig[], tag: HeadConfig): boolean => {
   const [tagType, tagAttrs] = tag;
+
   if (tagType !== "meta") return false;
   const keyAttr = Object.entries(tagAttrs)[0]; // First key
+
   if (keyAttr == null) return false;
+
   return head.some(
     ([type, attrs]) => type === tagType && attrs[keyAttr[0]] === keyAttr[1]
   );
-}
+};
 
-export function mergeHead(prev: HeadConfig[], curr: HeadConfig[]) {
-  return [...prev.filter((tagAttrs) => !hasTag(curr, tagAttrs)), ...curr];
-}
+export const mergeHead = (
+  prev: HeadConfig[],
+  curr: HeadConfig[]
+): HeadConfig[] => [
+  ...prev.filter((tagAttrs) => !hasTag(curr, tagAttrs)),
+  ...curr,
+];
 
 // https://github.com/rollup/rollup/blob/fec513270c6ac350072425cc045db367656c623b/src/utils/sanitizeFileName.ts
 
+// eslint-disable-next-line no-control-regex
 const INVALID_CHAR_REGEX = /[\u0000-\u001F"#$&*+,:;<=>?[\]^`{|}\u007F]/g;
 const DRIVE_LETTER_REGEX = /^[a-z]:/i;
 

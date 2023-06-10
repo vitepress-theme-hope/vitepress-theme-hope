@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import VPIconChevronDown from './icons/VPIconChevronDown.vue'
-import VPIconLanguages from './icons/VPIconLanguages.vue'
-import { useLangs } from '../composables/langs.js'
-import VPLink from './VPLink.vue'
+import { ref } from "vue";
 
-const { localeLinks, currentLang } = useLangs({ correspondingLink: true })
-const isOpen = ref(false)
+import VPLink from "./VPLink.vue";
+import VPIconChevronDown from "./icons/VPIconChevronDown.vue";
+import VPIconLanguages from "./icons/VPIconLanguages.vue";
+import { useLangs } from "../composables/langs.js";
+
+const { localeLinks, currentLang } = useLangs({ correspondingLink: true });
+const isOpen = ref(false);
 
 function toggle() {
-  isOpen.value = !isOpen.value
+  isOpen.value = !isOpen.value;
 }
 </script>
 
@@ -22,7 +23,7 @@ function toggle() {
     <button class="title" @click="toggle">
       <VPIconLanguages class="icon lang" />
       {{ currentLang.label }}
-      <VPIconChevronDown class="icon chevron" />
+      <VPIconChevronDown class="chevron icon" />
     </button>
 
     <ul class="list">

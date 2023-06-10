@@ -1,43 +1,40 @@
-<script lang="ts">
-export interface Sponsors {
-  tier?: string
-  size?: GridSize
-  items: Sponsor[]
-}
-</script>
-
 <script setup lang="ts">
-import type { GridSize } from '../composables/sponsor-grid.js'
-import type { Sponsor } from './VPSponsorsGrid.vue'
-import { computed } from 'vue'
-import VPSponsorsGrid from './VPSponsorsGrid.vue'
+import { computed } from "vue";
+
+import type { Sponsor } from "./VPSponsorsGrid.vue";
+import VPSponsorsGrid from "./VPSponsorsGrid.vue";
+import type { GridSize } from "../composables/sponsor-grid.js";
 
 export interface Sponsors {
-  tier?: string
-  size?: GridSize
-  items: Sponsor[]
+  tier?: string;
+  size?: GridSize;
+  items: Sponsor[];
+}
+
+export interface Sponsors {
+  tier?: string;
+  size?: GridSize;
+  items: Sponsor[];
 }
 
 const props = defineProps<{
-  mode?: 'normal' | 'aside'
-  tier?: string
-  size?: GridSize
-  data: Sponsors[] | Sponsor[]
-}>()
+  mode?: "normal" | "aside";
+  tier?: string;
+  size?: GridSize;
+  data: Sponsors[] | Sponsor[];
+}>();
 
 const sponsors = computed(() => {
   const isSponsors = props.data.some((s) => {
-    return 'items' in s
-  })
+    return "items" in s;
+  });
 
-  if (isSponsors) {
-    return props.data as Sponsors[]
-  }
+  if (isSponsors) return props.data as Sponsors[];
 
   return [
-    { tier: props.tier, size: props.size, items: props.data as Sponsor[] }
-  ]
-})
+    { tier: props.tier, size: props.size, items: props.data as Sponsor[] },
+  ];
+});
 </script>
 
 <template>
@@ -48,6 +45,7 @@ const sponsors = computed(() => {
       class="vp-sponsor-section"
     >
       <h3 v-if="sponsor.tier" class="vp-sponsor-tier">{{ sponsor.tier }}</h3>
+
       <VPSponsorsGrid :size="sponsor.size" :data="sponsor.items" />
     </section>
   </div>

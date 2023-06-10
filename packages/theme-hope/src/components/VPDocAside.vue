@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useData } from '../composables/data.js'
-import VPDocAsideOutline from './VPDocAsideOutline.vue'
-import VPDocAsideCarbonAds from './VPDocAsideCarbonAds.vue'
+import VPDocAsideCarbonAds from "./VPDocAsideCarbonAds.vue";
+import VPDocAsideOutline from "./VPDocAsideOutline.vue";
+import { useData } from "../composables/data.js";
 
-const { theme } = useData()
+const { theme } = useData();
 </script>
 
 <template>
@@ -11,13 +11,17 @@ const { theme } = useData()
     <slot name="aside-top" />
 
     <slot name="aside-outline-before" />
+
     <VPDocAsideOutline />
+
     <slot name="aside-outline-after" />
 
     <div class="spacer" />
 
     <slot name="aside-ads-before" />
+
     <VPDocAsideCarbonAds v-if="theme.carbonAds" :carbon-ads="theme.carbonAds" />
+
     <slot name="aside-ads-after" />
 
     <slot name="aside-bottom" />

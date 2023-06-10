@@ -1,53 +1,54 @@
 <script lang="ts" setup>
-import { ref, watchPostEffect } from 'vue'
-import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
-import { useSidebar } from '../composables/sidebar.js'
-import VPSidebarItem from './VPSidebarItem.vue'
+import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
+import { ref, watchPostEffect } from "vue";
 
-const { sidebarGroups, hasSidebar } = useSidebar()
+import VPSidebarItem from "./VPSidebarItem.vue";
+import { useSidebar } from "../composables/sidebar.js";
 
 const props = defineProps<{
-  open: boolean
-}>()
+  open: boolean;
+}>();
+
+const { sidebarGroups, hasSidebar } = useSidebar();
 
 // a11y: focus Nav element when menu has opened
-let navEl = ref<HTMLElement | null>(null)
+let navEl = ref<HTMLElement | null>(null);
 
 function lockBodyScroll() {
-  disableBodyScroll(navEl.value!, { reserveScrollBarGap: true })
+  disableBodyScroll(navEl.value!, { reserveScrollBarGap: true });
 }
 
 function unlockBodyScroll() {
-  clearAllBodyScrollLocks()
+  clearAllBodyScrollLocks();
 }
 
 watchPostEffect(async () => {
   if (props.open) {
-    lockBodyScroll()
-    navEl.value?.focus()
+    lockBodyScroll();
+    navEl.value?.focus();
   } else {
-    unlockBodyScroll()
+    unlockBodyScroll();
   }
-})
+});
 </script>
 
 <template>
   <aside
     v-if="hasSidebar"
+    ref="navEl"
     class="VPSidebar"
     :class="{ open }"
-    ref="navEl"
     @click.stop
   >
     <div class="curtain" />
 
     <nav
-      class="nav"
       id="VPSidebarNav"
+      class="nav"
       aria-labelledby="sidebar-aria-label"
       tabindex="-1"
     >
-      <span class="visually-hidden" id="sidebar-aria-label">
+      <span id="sidebar-aria-label" class="visually-hidden">
         Sidebar Navigation
       </span>
 

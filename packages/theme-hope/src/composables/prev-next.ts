@@ -1,18 +1,30 @@
-import { computed } from 'vue'
-import { useData } from './data.js'
-import { isActive } from '../shared.js'
-import { getSidebar, getFlatSideBarLinks } from '../support/sidebar.js'
+import type { ComputedRef } from "vue";
+import { computed } from "vue";
 
-export function usePrevNext() {
-  const { page, theme, frontmatter } = useData()
+import { useData } from "./data.js";
+import { isActive } from "../shared.js";
+import { getFlatSideBarLinks, getSidebar } from "../support/sidebar.js";
+
+export interface PageNavLink {
+  text?: string;
+  link?: string;
+}
+
+export type PageNavLinksRef = ComputedRef<{
+  prev?: PageNavLink;
+  next?: PageNavLink;
+}>;
+
+export const usePrevNext = (): PageNavLinksRef => {
+  const { page, theme, frontmatter } = useData();
 
   return computed(() => {
-    const sidebar = getSidebar(theme.value.sidebar, page.value.relativePath)
-    const candidates = getFlatSideBarLinks(sidebar)
+    const sidebar = getSidebar(theme.value.sidebar, page.value.relativePath);
+    const candidates = getFlatSideBarLinks(sidebar);
 
     const index = candidates.findIndex((link) => {
-      return isActive(page.value.relativePath, link.link)
-    })
+      return isActive(page.value.relativePath, link.link);
+    });
 
     return {
       prev:
@@ -20,34 +32,34 @@ export function usePrevNext() {
           ? undefined
           : {
               text:
-                (typeof frontmatter.value.prev === 'string'
+                (typeof frontmatter.value.prev === "string"
                   ? frontmatter.value.prev
-                  : typeof frontmatter.value.prev === 'object'
+                  : typeof frontmatter.value.prev === "object"
                   ? frontmatter.value.prev.text
                   : undefined) ?? candidates[index - 1]?.text,
               link:
-                (typeof frontmatter.value.prev === 'object'
+                (typeof frontmatter.value.prev === "object"
                   ? frontmatter.value.prev.link
-                  : undefined) ?? candidates[index - 1]?.link
+                  : undefined) ?? candidates[index - 1]?.link,
             },
       next:
         frontmatter.value.next === false
           ? undefined
           : {
               text:
-                (typeof frontmatter.value.next === 'string'
+                (typeof frontmatter.value.next === "string"
                   ? frontmatter.value.next
-                  : typeof frontmatter.value.next === 'object'
+                  : typeof frontmatter.value.next === "object"
                   ? frontmatter.value.next.text
                   : undefined) ?? candidates[index + 1]?.text,
               link:
-                (typeof frontmatter.value.next === 'object'
+                (typeof frontmatter.value.next === "object"
                   ? frontmatter.value.next.link
-                  : undefined) ?? candidates[index + 1]?.link
-            }
+                  : undefined) ?? candidates[index + 1]?.link,
+            },
     } as {
-      prev?: { text?: string; link?: string }
-      next?: { text?: string; link?: string }
-    }
-  })
-}
+      prev?: PageNavLink;
+      next?: PageNavLink;
+    };
+  });
+};

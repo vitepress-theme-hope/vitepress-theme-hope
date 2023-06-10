@@ -188,9 +188,11 @@ Danger zone, do not proceed
 :::
 
 ::: details Click me to view the code
+
 ```js
-console.log('Hello, VitePress!')
+console.log("Hello, VitePress!");
 ```
+
 :::
 ````
 
@@ -201,9 +203,11 @@ Danger zone, do not proceed
 :::
 
 ::: details Click me to view the code
+
 ```js
-console.log('Hello, VitePress!')
+console.log("Hello, VitePress!");
 ```
+
 :::
 
 ### `raw`
@@ -233,16 +237,16 @@ Wraps in a <div class="vp-raw">
   ```js
   module.exports = {
     plugins: {
-      'postcss-prefix-selector': {
-        prefix: ':not(:where(.vp-raw *))',
+      "postcss-prefix-selector": {
+        prefix: ":not(:where(.vp-raw *))",
         includeFiles: [/vp-doc\.css/],
         transform(prefix, _selector) {
-          const [selector, pseudo = ''] = _selector.split(/(:\S*)$/)
-          return selector + prefix + pseudo
-        }
-      }
-    }
-  }
+          const [selector, pseudo = ""] = _selector.split(/(:\S*)$/);
+          return selector + prefix + pseudo;
+        },
+      },
+    },
+  };
   ```
 
 :::
@@ -276,16 +280,14 @@ export default {
 
 ```js
 export default {
-  name: 'MyComponent'
+  name: "MyComponent",
   // ...
-}
+};
 ```
 
 ```html
 <ul>
-  <li v-for="todo in todos" :key="todo.id">
-    {{ todo.text }}
-  </li>
+  <li v-for="todo in todos" :key="todo.id">{{ todo.text }}</li>
 </ul>
 ```
 
@@ -383,10 +385,10 @@ export default {
 export default {
   data() {
     return {
-      msg: 'Highlighted!' // [!code hl]
-    }
-  }
-}
+      msg: "Highlighted!", // [!code hl]
+    };
+  },
+};
 ```
 
 ## Focus in Code Blocks
@@ -417,10 +419,10 @@ export default {
 export default {
   data() {
     return {
-      msg: 'Focused!' // [!code focus]
-    }
-  }
-}
+      msg: "Focused!", // [!code focus]
+    };
+  },
+};
 ```
 
 ## Colored Diffs in Code Blocks
@@ -484,11 +486,11 @@ export default {
 export default {
   data() {
     return {
-      msg: 'Error', // [!code error]
-      msg: 'Warning' // [!code warning]
-    }
-  }
-}
+      msg: "Error", // [!code error]
+      msg: "Warning", // [!code warning]
+    };
+  },
+};
 ```
 
 ## Line Numbers
@@ -498,9 +500,9 @@ You can enable line numbers for each code blocks via config:
 ```js
 export default {
   markdown: {
-    lineNumbers: true
-  }
-}
+    lineNumbers: true,
+  },
+};
 ```
 
 Please see [`markdown` options](../reference/site-config#markdown) for more details.
@@ -512,8 +514,8 @@ You can add `:line-numbers` / `:no-line-numbers` mark in your fenced code blocks
 ````md
 ```ts {1}
 // line-numbers is disabled by default
-const line2 = 'This is line 2'
-const line3 = 'This is line 3'
+const line2 = "This is line 2";
+const line3 = "This is line 3";
 ```
 
 ```ts:line-numbers {1}
@@ -527,8 +529,8 @@ const line3 = 'This is line 3'
 
 ```ts {1}
 // line-numbers is disabled by default
-const line2 = 'This is line 2'
-const line3 = 'This is line 3'
+const line2 = "This is line 2";
+const line3 = "This is line 3";
 ```
 
 ```ts:line-numbers {1}
@@ -616,19 +618,19 @@ You can group multiple code blocks like this:
  */
 const config = {
   // ...
-}
+};
 
-export default config
+export default config;
 ```
 
 ```ts [config.ts]
-import type { UserConfig } from 'vitepress'
+import type { UserConfig } from "vitepress";
 
 const config: UserConfig = {
   // ...
-}
+};
 
-export default config
+export default config;
 ```
 
 :::
@@ -644,19 +646,19 @@ export default config
  */
 const config = {
   // ...
-}
+};
 
-export default config
+export default config;
 ```
 
 ```ts [config.ts]
-import type { UserConfig } from 'vitepress'
+import type { UserConfig } from "vitepress";
 
 const config: UserConfig = {
   // ...
-}
+};
 
-export default config
+export default config;
 ```
 
 :::
@@ -742,14 +744,14 @@ Note that this does not throw errors if your file is not present. Hence, when us
 VitePress uses [markdown-it](https://github.com/markdown-it/markdown-it) as the Markdown renderer. A lot of the extensions above are implemented via custom plugins. You can further customize the `markdown-it` instance using the `markdown` option in `.vitepress/config.js`:
 
 ```js
-const anchor = require('markdown-it-anchor')
+const anchor = require("markdown-it-anchor");
 
 module.exports = {
   markdown: {
     // options for markdown-it-anchor
     // https://github.com/valeriangalliat/markdown-it-anchor#usage
     anchor: {
-      permalink: anchor.permalink.headerLink()
+      permalink: anchor.permalink.headerLink(),
     },
 
     // options for @mdit-vue/plugin-toc
@@ -758,10 +760,10 @@ module.exports = {
 
     config: (md) => {
       // use more markdown-it plugins!
-      md.use(require('markdown-it-xxx'))
-    }
-  }
-}
+      md.use(require("markdown-it-xxx"));
+    },
+  },
+};
 ```
 
 See full list of configurable properties in [Config Reference: App Config](../reference/site-config#markdown).

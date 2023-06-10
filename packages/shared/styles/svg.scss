@@ -1,31 +1,31 @@
 // stylelint-disable order/order
 // stylelint-disable scss/operator-no-newline-after
-@use 'sass:math';
-@use 'sass:string';
+@use "sass:math";
+@use "sass:string";
 
 @function encode-svg($svg) {
-  $encoded: '';
+  $encoded: "";
   $slice: 2000;
   $index: 0;
   $loops: math.ceil(math.div(string.length($svg), $slice));
 
   @if not string.index($svg, xmlns) {
-    $svg: str-replace($svg, '<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+    $svg: str-replace($svg, "<svg", '<svg xmlns="http://www.w3.org/2000/svg"');
   }
 
   @for $i from 1 through $loops {
     $chunk: string.slice($svg, $index, $index + $slice - 1);
     $chunk: str-replace($chunk, '"', "'");
-    $chunk: str-replace($chunk, '%', '%25');
-    $chunk: str-replace($chunk, '#', '%23');
-    $chunk: str-replace($chunk, '{', '%7B');
-    $chunk: str-replace($chunk, '}', '%7D');
-    $chunk: str-replace($chunk, '<', '%3C');
-    $chunk: str-replace($chunk, '>', '%3E');
+    $chunk: str-replace($chunk, "%", "%25");
+    $chunk: str-replace($chunk, "#", "%23");
+    $chunk: str-replace($chunk, "{", "%7B");
+    $chunk: str-replace($chunk, "}", "%7D");
+    $chunk: str-replace($chunk, "<", "%3C");
+    $chunk: str-replace($chunk, ">", "%3E");
     $encoded: #{$encoded}#{$chunk};
     $index: $index + $slice;
   }
-  @return url('data:image/svg+xml;utf8,#{$encoded}');
+  @return url("data:image/svg+xml;utf8,#{$encoded}");
 }
 
 @mixin background-svg($svg) {
@@ -45,7 +45,7 @@
   mask-size: 1em;
 }
 
-@function str-replace($string, $search, $replace: '') {
+@function str-replace($string, $search, $replace: "") {
   $index: string.index($string, $search);
   @return if(
     $index,

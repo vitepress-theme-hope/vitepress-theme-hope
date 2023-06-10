@@ -1,37 +1,46 @@
-import { ref, watch } from 'vue'
-import { useRoute } from 'vitepress'
+import { useRoute } from "vitepress";
+import type { Ref } from "vue";
+import { ref, watch } from "vue";
 
-export function useNav() {
-  const isScreenOpen = ref(false)
+export interface NavRef {
+  isScreenOpen: Ref<boolean>;
+  openScreen: () => void;
+  closeScreen: () => void;
+  toggleScreen: () => void;
+}
 
-  function openScreen() {
-    isScreenOpen.value = true
-    window.addEventListener('resize', closeScreenOnTabletWindow)
-  }
+export const useNav = (): NavRef => {
+  const isScreenOpen = ref(false);
 
-  function closeScreen() {
-    isScreenOpen.value = false
-    window.removeEventListener('resize', closeScreenOnTabletWindow)
-  }
+  const openScreen = (): void => {
+    isScreenOpen.value = true;
+    window.addEventListener("resize", closeScreenOnTabletWindow);
+  };
 
-  function toggleScreen() {
-    isScreenOpen.value ? closeScreen() : openScreen()
-  }
+  const closeScreen = (): void => {
+    isScreenOpen.value = false;
+    window.removeEventListener("resize", closeScreenOnTabletWindow);
+  };
+
+  const toggleScreen = (): void => {
+    isScreenOpen.value ? closeScreen() : openScreen();
+  };
 
   /**
    * Close screen when the user resizes the window wider than tablet size.
    */
-  function closeScreenOnTabletWindow() {
-    window.outerWidth >= 768 && closeScreen()
-  }
+  const closeScreenOnTabletWindow = (): void => {
+    if (window.outerWidth >= 768) closeScreen();
+  };
 
-  const route = useRoute()
-  watch(() => route.path, closeScreen)
+  const route = useRoute();
+
+  watch(() => route.path, closeScreen);
 
   return {
     isScreenOpen,
     openScreen,
     closeScreen,
-    toggleScreen
-  }
-}
+    toggleScreen,
+  };
+};

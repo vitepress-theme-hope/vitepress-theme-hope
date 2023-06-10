@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import VPMenuLink from './VPMenuLink.vue'
+import VPMenuLink from "./VPMenuLink.vue";
 
 defineProps<{
-  text?: string
-  items: any[]
-}>()
+  text?: string;
+  items: any[];
+}>();
 </script>
 
 <template>

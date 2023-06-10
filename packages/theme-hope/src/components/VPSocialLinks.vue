@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import type { DefaultTheme } from 'vitepress/theme'
-import VPSocialLink from './VPSocialLink.vue'
+import type { DefaultTheme } from "vitepress/theme";
+
+import VPSocialLink from "./VPSocialLink.vue";
 
 defineProps<{
-  links: (DefaultTheme.SocialLink & { ariaLabel?: string })[]
-}>()
+  links: (DefaultTheme.SocialLink & { ariaLabel?: string })[];
+}>();
 </script>
 
 <template>
@@ -14,7 +15,7 @@ defineProps<{
       :key="link"
       :icon="icon"
       :link="link"
-      :ariaLabel="ariaLabel"
+      :aria-label="ariaLabel"
     />
   </div>
 </template>
