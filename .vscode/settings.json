@@ -1,0 +1,44 @@
+{
+  "cSpell.words": [
+    // html attributes
+    "crossorigin",
+    "noopener",
+    "noreferrer",
+    "websub",
+    "tabindex",
+
+    // tex command
+    "alignedat",
+    "bigg",
+    "biggl",
+    "bigl",
+    "bigr",
+    "biggr",
+    "bmatrix",
+    "idotsint",
+    "iiint",
+    "landdownint",
+    "landupint",
+    "mathbb",
+    "mhchem",
+    "nolimits",
+    "smallmatrix",
+    "ointclockwise",
+    "ointctrclockwise",
+    "pmatrix",
+    "sqiint",
+    "varoiint",
+    "varointclockwise",
+    "varointctrclockwise",
+    "vmatrix"
+  ],
+  "markdown.validate.enabled": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.vuepress/.cache/**": true,
+    "**/.vuepress/.temp/**": true,
+    "**/dist/**": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "vitest.commandLine": "pnpm vitest",
+}
