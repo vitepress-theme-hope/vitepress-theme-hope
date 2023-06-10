@@ -32,12 +32,14 @@
     "@vueuse/core": "^10.1.2",
     "@vueuse/integrations": "^10.1.2",
     "body-scroll-lock": "4.0.0-beta.0",
+    "mark.js": "8.11.1",
     "minisearch": "^6.1.0",
     "vitepress": "1.0.0-beta.1",
     "vitepress-shared": "workspace:*",
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@types/body-scroll-lock": "^3.1.0"
+    "@types/body-scroll-lock": "^3.1.0",
+    "@types/mark.js": "^8.11.8"
   }
 }
