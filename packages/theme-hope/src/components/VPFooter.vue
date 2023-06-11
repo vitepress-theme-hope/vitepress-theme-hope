@@ -17,33 +17,31 @@ const { hasSidebar } = useSidebar();
         v-if="theme.footer.message"
         class="message"
         v-html="theme.footer.message"
-      ></p>
+      />
 
       <p
         v-if="theme.footer.copyright"
         class="copyright"
         v-html="theme.footer.copyright"
-      ></p>
+      />
     </div>
   </footer>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPFooter {
   position: relative;
   z-index: var(--vp-z-index-footer);
   border-top: 1px solid var(--vp-c-gutter);
   padding: 32px 24px;
   background-color: var(--vp-c-bg);
-}
 
-.VPFooter.has-sidebar {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .VPFooter {
+  @media (min-width: 768px) {
     padding: 32px;
+  }
+
+  &.has-sidebar {
+    display: none;
   }
 }
 

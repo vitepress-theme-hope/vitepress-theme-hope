@@ -25,19 +25,18 @@ import VPHomeHero from "./VPHomeHero.vue";
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPHome {
   padding-bottom: 96px;
-}
 
-.VPHome :deep(.VPHomeSponsors) {
-  margin-top: 112px;
-  margin-bottom: -128px;
-}
-
-@media (min-width: 768px) {
-  .VPHome {
+  @media (min-width: 768px) {
     padding-bottom: 128px;
+  }
+
+  // TODO: Remove
+  :deep(.VPHomeSponsors) {
+    margin-top: 112px;
+    margin-bottom: -128px;
   }
 }
 </style>

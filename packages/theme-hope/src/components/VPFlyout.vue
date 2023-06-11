@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useToggle } from "@vueuse/core";
 import { ref } from "vue";
 
 import VPMenu from "./VPMenu.vue";
@@ -13,14 +14,12 @@ defineProps<{
   items?: any[];
 }>();
 
-const open = ref(false);
+const [open, toggle] = useToggle(false);
 const el = ref<HTMLElement>();
 
 useFlyout({
   el,
-  onBlur: (): void => {
-    open.value = false;
-  },
+  onBlur: () => toggle(false),
 });
 </script>
 
@@ -28,8 +27,8 @@ useFlyout({
   <div
     ref="el"
     class="VPFlyout"
-    @mouseenter="open = true"
-    @mouseleave="open = false"
+    @mouseenter="toggle(true)"
+    @mouseleave="toggle(false)"
   >
     <button
       type="button"
@@ -37,7 +36,7 @@ useFlyout({
       aria-haspopup="true"
       :aria-expanded="open"
       :aria-label="label"
-      @click="open = !open"
+      @click="toggle()"
     >
       <span v-if="button || icon" class="text">
         <component :is="icon" v-if="icon" class="option-icon" />
@@ -56,30 +55,32 @@ useFlyout({
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPFlyout {
   position: relative;
-}
 
-.VPFlyout:hover {
-  color: var(--vp-c-brand);
-  transition: color 0.25s;
-}
+  &:hover {
+    color: var(--vp-c-brand);
+    transition: color 0.25s;
 
-.VPFlyout:hover .text {
-  color: var(--vp-c-text-2);
-}
+    .text {
+      color: var(--vp-c-text-2);
+    }
 
-.VPFlyout:hover .icon {
-  fill: var(--vp-c-text-2);
-}
+    .icon {
+      fill: var(--vp-c-text-2);
+    }
+  }
 
-.VPFlyout.active .text {
-  color: var(--vp-c-brand);
-}
+  &.active {
+    .text {
+      color: var(--vp-c-brand);
+    }
 
-.VPFlyout.active:hover .text {
-  color: var(--vp-c-brand-dark);
+    &:hover .text {
+      color: var(--vp-c-brand-dark);
+    }
+  }
 }
 
 .VPFlyout:hover .menu,

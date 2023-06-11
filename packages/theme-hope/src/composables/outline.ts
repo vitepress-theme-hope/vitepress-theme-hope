@@ -108,22 +108,22 @@ const isAnchorActive = (
   index: number,
   anchor: HTMLAnchorElement,
   nextAnchor: HTMLAnchorElement | undefined
-): [boolean, string | null] => {
+): [boolean] | [boolean, string] => {
   const scrollTop = window.scrollY;
 
-  if (index === 0 && scrollTop === 0) return [true, null];
+  if (index === 0 && scrollTop === 0) return [true];
 
-  if (scrollTop < getAnchorTop(anchor)) return [false, null];
+  if (scrollTop < getAnchorTop(anchor)) return [false];
 
   if (!nextAnchor || scrollTop < getAnchorTop(nextAnchor))
     return [true, anchor.hash];
 
-  return [false, null];
+  return [false];
 };
 
 export const useActiveAnchor = (
-  container: ShallowRef<HTMLElement>,
-  marker: ShallowRef<HTMLElement>
+  container: ShallowRef<HTMLElement | undefined>,
+  marker: ShallowRef<HTMLElement | undefined>
 ): void => {
   const { isAsideEnabled } = useAside();
 
@@ -133,16 +133,16 @@ export const useActiveAnchor = (
     if (!isAsideEnabled.value) return;
 
     const links = [].slice.call(
-      container.value.querySelectorAll(".outline-link")
+      container.value!.querySelectorAll(".outline-link")
     ) as HTMLAnchorElement[];
 
-    const anchors = [].slice
-      .call(document.querySelectorAll(".content .header-anchor"))
-      .filter((anchor: HTMLAnchorElement) => {
-        return links.some((link) => {
-          return link.hash === anchor.hash && anchor.offsetParent !== null;
-        });
-      }) as HTMLAnchorElement[];
+    const anchors = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>(".content .header-anchor")
+    ).filter((anchor: HTMLAnchorElement) =>
+      links.some(
+        (link) => link.hash === anchor.hash && anchor.offsetParent !== null
+      )
+    );
 
     const scrollY = window.scrollY;
     const innerHeight = window.innerHeight;
@@ -156,11 +156,11 @@ export const useActiveAnchor = (
       return;
     }
 
-    for (let i = 0; i < anchors.length; i++) {
-      const anchor = anchors[i];
-      const nextAnchor = anchors[i + 1];
+    for (let index = 0; index < anchors.length; index++) {
+      const anchor = anchors[index];
+      const nextAnchor = anchors[index + 1];
 
-      const [isActive, hash] = isAnchorActive(i, anchor, nextAnchor);
+      const [isActive, hash = null] = isAnchorActive(index, anchor, nextAnchor);
 
       if (isActive) {
         activateLink(hash);
@@ -176,7 +176,7 @@ export const useActiveAnchor = (
     if (prevActiveLink) prevActiveLink.classList.remove("active");
 
     if (hash !== null)
-      prevActiveLink = container.value.querySelector(
+      prevActiveLink = container.value!.querySelector(
         `a[href="${decodeURIComponent(hash)}"]`
       );
 
@@ -184,11 +184,11 @@ export const useActiveAnchor = (
 
     if (activeLink) {
       activeLink.classList.add("active");
-      marker.value.style.top = `${activeLink.offsetTop + 33}px`;
-      marker.value.style.opacity = "1";
+      marker.value!.style.top = `${activeLink.offsetTop + 33}px`;
+      marker.value!.style.opacity = "1";
     } else {
-      marker.value.style.top = "33px";
-      marker.value.style.opacity = "0";
+      marker.value!.style.top = "33px";
+      marker.value!.style.opacity = "0";
     }
   };
 
