@@ -17,22 +17,22 @@ defineProps<{
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPMenuGroup {
   margin: 12px -12px 0;
   border-top: 1px solid var(--vp-c-divider);
   padding: 12px 12px 0;
-}
 
-.VPMenuGroup:first-child {
-  margin-top: 0;
-  border-top: 0;
-  padding-top: 0;
-}
+  &:first-child {
+    margin-top: 0;
+    border-top: 0;
+    padding-top: 0;
+  }
 
-.VPMenuGroup + .VPMenuGroup {
-  margin-top: 12px;
-  border-top: 1px solid var(--vp-c-divider);
+  + & {
+    margin-top: 12px;
+    border-top: 1px solid var(--vp-c-divider);
+  }
 }
 
 .title {

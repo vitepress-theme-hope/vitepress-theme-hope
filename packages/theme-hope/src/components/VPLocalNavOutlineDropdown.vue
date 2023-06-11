@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { useToggle } from "@vueuse/core";
 import { onContentUpdated } from "vitepress";
-import { nextTick, ref } from "vue";
+import { nextTick, ref, shallowRef } from "vue";
 
 import VPDocOutlineItem from "./VPDocOutlineItem.vue";
 import VPIconChevronRight from "./icons/VPIconChevronRight.vue";
@@ -13,44 +14,49 @@ defineProps<{
 }>();
 
 const { theme } = useData();
-const open = ref(false);
+const [open, toggleOpen] = useToggle(false);
 const vh = ref(0);
-const items = ref<HTMLDivElement>();
+const items = shallowRef<HTMLDivElement>();
 
-onContentUpdated(() => {
-  open.value = false;
-});
-
-function toggle() {
-  open.value = !open.value;
+const toggleMenu = (): void => {
+  toggleOpen();
   vh.value = window.innerHeight + Math.min(window.scrollY - 64, 0);
-}
+};
 
-function onItemClick(e: Event) {
-  if ((e.target as HTMLElement).classList.contains("outline-link")) {
+const onItemClick = (event: Event): void => {
+  if ((event.target as HTMLElement).classList.contains("outline-link")) {
     // disable animation on hash navigation when page jumps
     if (items.value) items.value.style.transition = "none";
 
-    nextTick(() => {
-      open.value = false;
+    void nextTick(() => {
+      toggleOpen(false);
     });
   }
-}
+};
 
-function scrollToTop() {
-  open.value = false;
+const scrollToTop = (): void => {
+  toggleOpen(false);
   window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-}
+};
+
+onContentUpdated(() => {
+  toggleOpen(false);
+});
 </script>
 
 <template>
   <div class="VPLocalNavOutlineDropdown" :style="{ '--vp-vh': vh + 'px' }">
-    <button v-if="headers.length > 0" :class="{ open }" @click="toggle">
+    <button
+      v-if="headers.length > 0"
+      type="button"
+      :class="{ open }"
+      @click="toggleMenu"
+    >
       {{ resolveTitle(theme) }}
       <VPIconChevronRight class="icon" />
     </button>
 
-    <button v-else @click="scrollToTop">
+    <button v-else type="button" @click="scrollToTop">
       {{ theme.returnToTopLabel || "Return to top" }}
     </button>
 
@@ -66,27 +72,28 @@ function scrollToTop() {
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPLocalNavOutlineDropdown {
   padding: 12px 20px 11px;
-}
-.VPLocalNavOutlineDropdown button {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 24px;
-  color: var(--vp-c-text-2);
-  transition: color 0.5s;
-  position: relative;
-}
 
-.VPLocalNavOutlineDropdown button:hover {
-  color: var(--vp-c-text-1);
-  transition: color 0.25s;
-}
+  button {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--vp-c-text-2);
+    transition: color 0.5s;
+    position: relative;
 
-.VPLocalNavOutlineDropdown button.open {
-  color: var(--vp-c-text-1);
+    &:hover {
+      color: var(--vp-c-text-1);
+      transition: color 0.25s;
+    }
+
+    &.open {
+      color: var(--vp-c-text-1);
+    }
+  }
 }
 
 .icon {

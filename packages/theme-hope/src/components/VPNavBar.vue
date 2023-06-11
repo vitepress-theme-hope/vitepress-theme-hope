@@ -34,13 +34,13 @@ const classes = computed(() => ({
     <div class="container">
       <div class="title">
         <VPNavBarTitle>
-          <template #nav-bar-title-before
-            ><slot name="nav-bar-title-before"
-          /></template>
+          <template #nav-bar-title-before>
+            <slot name="nav-bar-title-before" />
+          </template>
 
-          <template #nav-bar-title-after
-            ><slot name="nav-bar-title-after"
-          /></template>
+          <template #nav-bar-title-after>
+            <slot name="nav-bar-title-after" />
+          </template>
         </VPNavBarTitle>
       </div>
 
@@ -75,7 +75,7 @@ const classes = computed(() => ({
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPNavBar {
   position: relative;
   border-bottom: 1px solid transparent;
@@ -83,10 +83,8 @@ const classes = computed(() => ({
   height: var(--vp-nav-height);
   pointer-events: none;
   white-space: nowrap;
-}
 
-@media (min-width: 768px) {
-  .VPNavBar {
+  @media (min-width: 768px) {
     padding: 0 32px;
   }
 }

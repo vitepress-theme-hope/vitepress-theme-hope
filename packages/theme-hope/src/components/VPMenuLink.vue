@@ -31,7 +31,7 @@ const { page } = useData();
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPMenuGroup + .VPMenuLink {
   margin: 12px -12px 0;
   border-top: 1px solid var(--vp-c-divider);
@@ -48,14 +48,14 @@ const { page } = useData();
   color: var(--vp-c-text-1);
   white-space: nowrap;
   transition: background-color 0.25s, color 0.25s;
-}
 
-.link:hover {
-  color: var(--vp-c-brand);
-  background-color: var(--vp-c-bg-elv-mute);
-}
+  &:hover {
+    color: var(--vp-c-brand);
+    background-color: var(--vp-c-bg-elv-mute);
+  }
 
-.link.active {
-  color: var(--vp-c-brand);
+  &.active {
+    color: var(--vp-c-brand);
+  }
 }
 </style>
