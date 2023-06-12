@@ -26,13 +26,11 @@ const { localeLinks, currentLang } = useLangs({ correspondingLink: true });
   </VPFlyout>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPNavBarTranslations {
   display: none;
-}
 
-@media (min-width: 1280px) {
-  .VPNavBarTranslations {
+  @media (min-width: 1280px) {
     display: flex;
     align-items: center;
   }

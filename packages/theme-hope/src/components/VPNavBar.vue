@@ -24,8 +24,8 @@ const { y } = useWindowScroll();
 const { hasSidebar } = useSidebar();
 
 const classes = computed(() => ({
-  "has-sidebar": hasSidebar.value,
   fill: y.value > 0,
+  "has-sidebar": hasSidebar.value,
 }));
 </script>
 
@@ -107,20 +107,20 @@ const classes = computed(() => ({
   max-width: calc(var(--vp-layout-max-width) - 64px);
   height: var(--vp-nav-height);
   pointer-events: none;
-}
 
-.container > .title,
-.container > .content {
-  pointer-events: none;
-}
+  .VPNavBar.has-sidebar& {
+    @media (min-width: 960px) {
+      max-width: 100%;
+    }
+  }
 
-.container :deep(*) {
-  pointer-events: auto;
-}
+  > .title,
+  > .content {
+    pointer-events: none;
+  }
 
-@media (min-width: 960px) {
-  .VPNavBar.has-sidebar .container {
-    max-width: 100%;
+  :deep(*) {
+    pointer-events: auto;
   }
 }
 
@@ -128,53 +128,49 @@ const classes = computed(() => ({
   flex-shrink: 0;
   height: calc(var(--vp-nav-height) - 1px);
   transition: background-color 0.5s;
-}
 
-@media (min-width: 960px) {
-  .VPNavBar.has-sidebar .title {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    padding: 0 32px;
-    width: var(--vp-sidebar-width);
-    height: var(--vp-nav-height);
-    background-color: transparent;
-  }
-}
+  .VPNavBar.has-sidebar & {
+    @media (min-width: 960px) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      padding: 0 32px;
+      width: var(--vp-sidebar-width);
+      height: var(--vp-nav-height);
+      background-color: transparent;
+    }
 
-@media (min-width: 1440px) {
-  .VPNavBar.has-sidebar .title {
-    padding-left: max(
-      32px,
-      calc((100% - (var(--vp-layout-max-width) - 64px)) / 2)
-    );
-    width: calc(
-      (100% - (var(--vp-layout-max-width) - 64px)) / 2 + var(--vp-sidebar-width) -
-        32px
-    );
+    @media (min-width: 1440px) {
+      padding-left: max(
+        32px,
+        calc((100% - (var(--vp-layout-max-width) - 64px)) / 2)
+      );
+      width: calc(
+        (100% - (var(--vp-layout-max-width) - 64px)) / 2 +
+          var(--vp-sidebar-width) - 32px
+      );
+    }
   }
 }
 
 .content {
   flex-grow: 1;
-}
 
-@media (min-width: 960px) {
-  .VPNavBar.has-sidebar .content {
-    position: relative;
-    z-index: 1;
-    padding-right: 32px;
-    padding-left: var(--vp-sidebar-width);
-  }
-}
+  .VPNavBar.has-sidebar & {
+    @media (min-width: 960px) {
+      position: relative;
+      z-index: 1;
+      padding-right: 32px;
+      padding-left: var(--vp-sidebar-width);
+    }
 
-@media (min-width: 1440px) {
-  .VPNavBar.has-sidebar .content {
-    padding-right: calc((100vw - var(--vp-layout-max-width)) / 2 + 32px);
-    padding-left: calc(
-      (100vw - var(--vp-layout-max-width)) / 2 + var(--vp-sidebar-width)
-    );
+    @media (min-width: 1440px) {
+      padding-right: calc((100vw - var(--vp-layout-max-width)) / 2 + 32px);
+      padding-left: calc(
+        (100vw - var(--vp-layout-max-width)) / 2 + var(--vp-sidebar-width)
+      );
+    }
   }
 }
 
@@ -184,19 +180,17 @@ const classes = computed(() => ({
   align-items: center;
   height: calc(var(--vp-nav-height) - 1px);
   transition: background-color 0.5s;
-}
 
-@media (min-width: 960px) {
-  .VPNavBar.has-sidebar .content-body,
-  .VPNavBar.fill .content-body {
-    position: relative;
-    background-color: var(--vp-nav-bg-color);
-  }
-}
-
-@media (max-width: 768px) {
-  .content-body {
+  @media (max-width: 768px) {
     column-gap: 0.5rem;
+  }
+
+  @media (min-width: 960px) {
+    .VPNavBar.has-sidebar &,
+    .VPNavBar.fill & {
+      position: relative;
+      background-color: var(--vp-nav-bg-color);
+    }
   }
 }
 
@@ -226,26 +220,24 @@ const classes = computed(() => ({
   margin-right: -8px;
 }
 
-@media (min-width: 960px) {
-  .VPNavBar.has-sidebar .curtain {
+.VPNavBar.has-sidebar .curtain {
+  @media (min-width: 960px) {
     position: absolute;
     right: 0;
     bottom: -31px;
     width: calc(100% - var(--vp-sidebar-width));
     height: 32px;
+
+    &::before {
+      display: block;
+      width: 100%;
+      height: 32px;
+      background: linear-gradient(var(--vp-c-bg), transparent 70%);
+      content: "";
+    }
   }
 
-  .VPNavBar.has-sidebar .curtain::before {
-    display: block;
-    width: 100%;
-    height: 32px;
-    background: linear-gradient(var(--vp-c-bg), transparent 70%);
-    content: "";
-  }
-}
-
-@media (min-width: 1440px) {
-  .VPNavBar.has-sidebar .curtain {
+  @media (min-width: 1440px) {
     width: calc(
       100% -
         ((100vw - var(--vp-layout-max-width)) / 2 + var(--vp-sidebar-width))

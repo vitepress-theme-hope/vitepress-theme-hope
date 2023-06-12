@@ -28,7 +28,7 @@ const { currentLang } = useLangs();
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .title {
   display: flex;
   align-items: center;
@@ -39,15 +39,13 @@ const { currentLang } = useLangs();
   font-weight: 600;
   color: var(--vp-c-text-1);
   transition: opacity 0.25s;
-}
 
-@media (min-width: 960px) {
-  .title {
+  @media (min-width: 960px) {
     flex-shrink: 0;
-  }
 
-  .VPNavBarTitle.has-sidebar .title {
-    border-bottom-color: var(--vp-c-divider);
+    .VPNavBarTitle.has-sidebar & {
+      border-bottom-color: var(--vp-c-divider);
+    }
   }
 }
 

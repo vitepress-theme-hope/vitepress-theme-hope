@@ -31,7 +31,7 @@ const { page } = useData();
   </VPLink>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPNavBarMenuLink {
   display: flex;
   align-items: center;
@@ -41,13 +41,13 @@ const { page } = useData();
   font-weight: 500;
   color: var(--vp-c-text-1);
   transition: color 0.25s;
-}
 
-.VPNavBarMenuLink.active {
-  color: var(--vp-c-brand);
-}
+  &.active {
+    color: var(--vp-c-brand);
+  }
 
-.VPNavBarMenuLink:hover {
-  color: var(--vp-c-brand);
+  &:hover {
+    color: var(--vp-c-brand);
+  }
 }
 </style>

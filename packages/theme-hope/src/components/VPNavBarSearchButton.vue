@@ -35,7 +35,7 @@ defineProps<{
   </button>
 </template>
 
-<style>
+<style lang="scss">
 .DocSearch {
   --docsearch-primary-color: var(--vp-c-brand);
   --docsearch-highlight-color: var(--docsearch-primary-color);
@@ -47,15 +47,15 @@ defineProps<{
   --docsearch-key-shadow: none;
   --docsearch-modal-background: var(--vp-c-bg-soft);
   --docsearch-footer-background: var(--vp-c-bg);
-}
 
-.dark .DocSearch {
-  --docsearch-modal-shadow: none;
-  --docsearch-footer-shadow: none;
-  --docsearch-logo-color: var(--vp-c-text-2);
-  --docsearch-hit-background: var(--vp-c-bg-soft-mute);
-  --docsearch-hit-color: var(--vp-c-text-2);
-  --docsearch-hit-shadow: none;
+  .dark & {
+    --docsearch-modal-shadow: none;
+    --docsearch-footer-shadow: none;
+    --docsearch-logo-color: var(--vp-c-text-2);
+    --docsearch-hit-background: var(--vp-c-bg-soft-mute);
+    --docsearch-hit-color: var(--vp-c-text-2);
+    --docsearch-hit-shadow: none;
+  }
 }
 
 .DocSearch-Button {
@@ -68,23 +68,8 @@ defineProps<{
   height: 55px;
   background: transparent;
   transition: border-color 0.25s;
-}
 
-.DocSearch-Button:hover {
-  background: transparent;
-}
-
-.DocSearch-Button:focus {
-  outline: 1px dotted;
-  outline: 5px auto -webkit-focus-ring-color;
-}
-
-.DocSearch-Button:focus:not(:focus-visible) {
-  outline: none !important;
-}
-
-@media (min-width: 768px) {
-  .DocSearch-Button {
+  @media (min-width: 768px) {
     justify-content: flex-start;
     border: 1px solid transparent;
     border-radius: 8px;
@@ -94,117 +79,123 @@ defineProps<{
     background-color: var(--vp-c-bg-alt);
   }
 
-  .DocSearch-Button:hover {
-    border-color: var(--vp-c-brand);
-    background: var(--vp-c-bg-alt);
+  &:hover {
+    background: transparent;
+
+    @media (min-width: 768px) {
+      border-color: var(--vp-c-brand);
+      background: var(--vp-c-bg-alt);
+    }
+
+    .DocSearch-Search-Icon {
+      color: var(--vp-c-text-1);
+    }
+
+    .DocSearch-Button-Placeholder {
+      color: var(--vp-c-text-1);
+    }
   }
-}
 
-.DocSearch-Button .DocSearch-Button-Container {
-  display: flex;
-  align-items: center;
-}
-
-.DocSearch-Button .DocSearch-Search-Icon {
-  position: relative;
-  width: 16px;
-  height: 16px;
-  color: var(--vp-c-text-1);
-  fill: currentColor;
-  transition: color 0.5s;
-}
-
-.DocSearch-Button:hover .DocSearch-Search-Icon {
-  color: var(--vp-c-text-1);
-}
-
-@media (min-width: 768px) {
-  .DocSearch-Button .DocSearch-Search-Icon {
-    top: 1px;
-    margin-right: 8px;
-    width: 14px;
-    height: 14px;
-    color: var(--vp-c-text-2);
+  &:focus {
+    outline: 1px dotted;
+    outline: 5px auto -webkit-focus-ring-color;
   }
-}
 
-.DocSearch-Button .DocSearch-Button-Placeholder {
-  display: none;
-  margin-top: 2px;
-  padding: 0 16px 0 0;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--vp-c-text-2);
-  transition: color 0.5s;
-}
-
-.DocSearch-Button:hover .DocSearch-Button-Placeholder {
-  color: var(--vp-c-text-1);
-}
-
-@media (min-width: 768px) {
-  .DocSearch-Button .DocSearch-Button-Placeholder {
-    display: inline-block;
+  &:focus:not(:focus-visible) {
+    outline: none !important;
   }
-}
 
-.DocSearch-Button .DocSearch-Button-Keys {
-  /*rtl:ignore*/
-  direction: ltr;
-  display: none;
-  min-width: auto;
-}
-
-@media (min-width: 768px) {
-  .DocSearch-Button .DocSearch-Button-Keys {
+  .DocSearch-Button-Container {
     display: flex;
     align-items: center;
   }
-}
 
-.DocSearch-Button .DocSearch-Button-Key {
-  display: block;
-  margin: 2px 0 0 0;
-  border: 1px solid var(--vp-c-divider);
-  /*rtl:begin:ignore*/
-  border-right: none;
-  border-radius: 4px 0 0 4px;
-  padding-left: 6px;
-  /*rtl:end:ignore*/
-  min-width: 0;
-  width: auto;
-  height: 22px;
-  line-height: 22px;
-  font-family: var(--vp-font-family-base);
-  font-size: 12px;
-  font-weight: 500;
-  transition: color 0.5s, border-color 0.5s;
-}
+  .DocSearch-Search-Icon {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    color: var(--vp-c-text-1);
+    fill: currentColor;
+    transition: color 0.5s;
 
-.DocSearch-Button .DocSearch-Button-Key + .DocSearch-Button-Key {
-  /*rtl:begin:ignore*/
-  border-right: 1px solid var(--vp-c-divider);
-  border-left: none;
-  border-radius: 0 4px 4px 0;
-  padding-left: 2px;
-  padding-right: 6px;
-  /*rtl:end:ignore*/
-}
+    @media (min-width: 768px) {
+      top: 1px;
+      margin-right: 8px;
+      width: 14px;
+      height: 14px;
+      color: var(--vp-c-text-2);
+    }
+  }
 
-.DocSearch-Button .DocSearch-Button-Key:first-child {
-  font-size: 1px;
-  letter-spacing: -12px;
-  color: transparent;
-}
+  .DocSearch-Button-Placeholder {
+    display: none;
+    margin-top: 2px;
+    padding: 0 16px 0 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--vp-c-text-2);
+    transition: color 0.5s;
 
-.DocSearch-Button .DocSearch-Button-Key:first-child:after {
-  content: var(--vp-meta-key);
-  font-size: 12px;
-  letter-spacing: normal;
-  color: var(--docsearch-muted-color);
-}
+    @media (min-width: 768px) {
+      display: inline-block;
+    }
+  }
 
-.DocSearch-Button .DocSearch-Button-Key:first-child > * {
-  display: none;
+  .DocSearch-Button-Keys {
+    /*rtl:ignore*/
+    direction: ltr;
+    display: none;
+    min-width: auto;
+
+    @media (min-width: 768px) {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .DocSearch-Button-Key {
+    display: block;
+    margin: 2px 0 0 0;
+    border: 1px solid var(--vp-c-divider);
+    /*rtl:begin:ignore*/
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    padding-left: 6px;
+    /*rtl:end:ignore*/
+    min-width: 0;
+    width: auto;
+    height: 22px;
+    line-height: 22px;
+    font-family: var(--vp-font-family-base);
+    font-size: 12px;
+    font-weight: 500;
+    transition: color 0.5s, border-color 0.5s;
+
+    &:first-child {
+      font-size: 1px;
+      letter-spacing: -12px;
+      color: transparent;
+
+      &:after {
+        content: var(--vp-meta-key);
+        font-size: 12px;
+        letter-spacing: normal;
+        color: var(--docsearch-muted-color);
+      }
+
+      > * {
+        display: none;
+      }
+    }
+
+    + & {
+      /*rtl:begin:ignore*/
+      border-right: 1px solid var(--vp-c-divider);
+      border-left: none;
+      border-radius: 0 4px 4px 0;
+      padding-left: 2px;
+      padding-right: 6px;
+      /*rtl:end:ignore*/
+    }
+  }
 }
 </style>

@@ -56,20 +56,16 @@ const hasExtraContent = computed(
   </VPFlyout>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPNavBarExtra {
   display: none;
   margin-right: -12px;
-}
 
-@media (min-width: 768px) {
-  .VPNavBarExtra {
+  @media (min-width: 768px) {
     display: block;
   }
-}
 
-@media (min-width: 1280px) {
-  .VPNavBarExtra {
+  @media (min-width: 1280px) {
     display: none;
   }
 }

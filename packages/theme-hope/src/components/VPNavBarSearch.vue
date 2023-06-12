@@ -15,11 +15,11 @@ import { useData } from "../composables/data.js";
 
 const VPLocalSearchBox = __VP_LOCAL_SEARCH__
   ? defineAsyncComponent(() => import("./VPLocalSearchBox.vue"))
-  : () => null;
+  : (): null => null;
 
 const VPAlgoliaSearchBox = __ALGOLIA__
   ? defineAsyncComponent(() => import("./VPAlgoliaSearchBox.vue"))
-  : () => null;
+  : (): null => null;
 
 const { theme, localeIndex } = useData();
 
@@ -38,7 +38,7 @@ const buttonText = computed(() => {
   );
 });
 
-const preconnect = () => {
+const preconnect = (): void => {
   const id = "VPAlgoliaPreconnect";
 
   const rIC = window.requestIdleCallback || setTimeout;
@@ -57,12 +57,35 @@ const preconnect = () => {
   });
 };
 
+const load = (): void => {
+  if (!loaded.value) {
+    loaded.value = true;
+    setTimeout(poll, 16);
+  }
+};
+
+const poll = (): void => {
+  // programmatically open the search box after initialize
+  const event = <KeyboardEvent>new Event("keydown");
+
+  // @ts-expect-error
+  event.key = "k";
+  // @ts-expect-error
+  event.metaKey = true;
+
+  window.dispatchEvent(event);
+
+  setTimeout(() => {
+    if (!document.querySelector(".DocSearch-Modal")) poll();
+  }, 16);
+};
+
 onMounted(() => {
   if (!__ALGOLIA__) return;
 
   preconnect();
 
-  const handleSearchHotKey = (event: KeyboardEvent) => {
+  const handleSearchHotKey = (event: KeyboardEvent): void => {
     if (
       (event.key.toLowerCase() === "k" && (event.metaKey || event.ctrlKey)) ||
       (!isEditingContent(event) && event.key === "/")
@@ -73,7 +96,7 @@ onMounted(() => {
     }
   };
 
-  const remove = () => {
+  const remove = (): void => {
     window.removeEventListener("keydown", handleSearchHotKey);
   };
 
@@ -82,28 +105,7 @@ onMounted(() => {
   onUnmounted(remove);
 });
 
-function load() {
-  if (!loaded.value) {
-    loaded.value = true;
-    setTimeout(poll, 16);
-  }
-}
-
-function poll() {
-  // programmatically open the search box after initialize
-  const e = new Event("keydown") as any;
-
-  e.key = "k";
-  e.metaKey = true;
-
-  window.dispatchEvent(e);
-
-  setTimeout(() => {
-    if (!document.querySelector(".DocSearch-Modal")) poll();
-  }, 16);
-}
-
-function isEditingContent(event: KeyboardEvent): boolean {
+const isEditingContent = (event: KeyboardEvent): boolean => {
   const element = event.target as HTMLElement;
   const tagName = element.tagName;
 
@@ -113,7 +115,7 @@ function isEditingContent(event: KeyboardEvent): boolean {
     tagName === "SELECT" ||
     tagName === "TEXTAREA"
   );
-}
+};
 
 // Local search
 

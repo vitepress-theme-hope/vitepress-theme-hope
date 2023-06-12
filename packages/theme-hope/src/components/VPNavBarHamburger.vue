@@ -28,18 +28,62 @@ defineEmits<{
   </button>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPNavBarHamburger {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 48px;
   height: var(--vp-nav-height);
-}
 
-@media (min-width: 768px) {
-  .VPNavBarHamburger {
+  @media (min-width: 768px) {
     display: none;
+  }
+
+  &:hover {
+    .top {
+      top: 0;
+      left: 0;
+      transform: translateX(4px);
+    }
+
+    .middle {
+      top: 6px;
+      left: 0;
+      transform: translateX(0);
+    }
+
+    .bottom {
+      top: 12px;
+      left: 0;
+      transform: translateX(8px);
+    }
+  }
+
+  &.active {
+    .top {
+      top: 6px;
+      transform: translateX(0) rotate(225deg);
+    }
+
+    .middle {
+      top: 6px;
+      transform: translateX(16px);
+    }
+
+    .bottom {
+      top: 6px;
+      transform: translateX(0) rotate(135deg);
+    }
+
+    &:hover {
+      .top,
+      .middle,
+      .bottom {
+        background-color: var(--vp-c-text-2);
+        transition: top 0.25s, background-color 0.25s, transform 0.25s;
+      }
+    }
   }
 }
 
@@ -48,42 +92,6 @@ defineEmits<{
   width: 16px;
   height: 14px;
   overflow: hidden;
-}
-
-.VPNavBarHamburger:hover .top {
-  top: 0;
-  left: 0;
-  transform: translateX(4px);
-}
-.VPNavBarHamburger:hover .middle {
-  top: 6px;
-  left: 0;
-  transform: translateX(0);
-}
-.VPNavBarHamburger:hover .bottom {
-  top: 12px;
-  left: 0;
-  transform: translateX(8px);
-}
-
-.VPNavBarHamburger.active .top {
-  top: 6px;
-  transform: translateX(0) rotate(225deg);
-}
-.VPNavBarHamburger.active .middle {
-  top: 6px;
-  transform: translateX(16px);
-}
-.VPNavBarHamburger.active .bottom {
-  top: 6px;
-  transform: translateX(0) rotate(135deg);
-}
-
-.VPNavBarHamburger.active:hover .top,
-.VPNavBarHamburger.active:hover .middle,
-.VPNavBarHamburger.active:hover .bottom {
-  background-color: var(--vp-c-text-2);
-  transition: top 0.25s, background-color 0.25s, transform 0.25s;
 }
 
 .top,
@@ -101,11 +109,13 @@ defineEmits<{
   left: 0;
   transform: translateX(0);
 }
+
 .middle {
   top: 6px;
   left: 0;
   transform: translateX(8px);
 }
+
 .bottom {
   top: 12px;
   left: 0;

@@ -46,7 +46,7 @@ function unlockBodyScroll() {
   </transition>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPNavScreen {
   position: fixed;
   top: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 1px);
@@ -61,31 +61,27 @@ function unlockBodyScroll() {
   overflow-y: auto;
   transition: background-color 0.5s;
   pointer-events: auto;
-}
 
-.VPNavScreen.fade-enter-active,
-.VPNavScreen.fade-leave-active {
-  transition: opacity 0.25s;
-}
-
-.VPNavScreen.fade-enter-active .container,
-.VPNavScreen.fade-leave-active .container {
-  transition: transform 0.25s ease;
-}
-
-.VPNavScreen.fade-enter-from,
-.VPNavScreen.fade-leave-to {
-  opacity: 0;
-}
-
-.VPNavScreen.fade-enter-from .container,
-.VPNavScreen.fade-leave-to .container {
-  transform: translateY(-8px);
-}
-
-@media (min-width: 768px) {
-  .VPNavScreen {
+  @media (min-width: 768px) {
     display: none;
+  }
+
+  &.fade-enter-active,
+  &.fade-leave-active {
+    transition: opacity 0.25s;
+
+    .container {
+      transition: transform 0.25s ease;
+    }
+  }
+
+  &.fade-enter-from,
+  &.fade-leave-to {
+    opacity: 0;
+
+    .container {
+      transform: translateY(-8px);
+    }
   }
 }
 

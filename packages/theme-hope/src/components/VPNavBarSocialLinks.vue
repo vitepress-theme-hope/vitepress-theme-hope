@@ -13,13 +13,11 @@ const { theme } = useData();
   />
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPNavBarSocialLinks {
   display: none;
-}
 
-@media (min-width: 1280px) {
-  .VPNavBarSocialLinks {
+  @media (min-width: 1280px) {
     display: flex;
     align-items: center;
   }
