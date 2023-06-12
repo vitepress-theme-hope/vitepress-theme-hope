@@ -39,7 +39,7 @@ ignorePatterns:
   - "coverage/**"
   - "**/.vitepress/.cache/**"
   - "**/.vitepress/.temp/**"
-  - "package/theme-default/src/**"
+  - "packages/theme-default/src/**"
 
 rules:
   "@typescript-eslint/ban-ts-comment":
@@ -280,7 +280,7 @@ rules:
   vue/no-undef-components:
     - error
     - ignorePatterns:
-      - Content
+        - Content
 
   vue/no-undef-properties:
     - warn
@@ -328,7 +328,7 @@ rules:
     - error
 
   vue/require-prop-comment:
-    - error
+    - warn
 
   vue/script-indent:
     - error

@@ -46,10 +46,13 @@ const isExternal = computed(
 <style lang="scss" scoped>
 .VPButton {
   display: inline-block;
+
   border: 1px solid transparent;
-  text-align: center;
+
   font-weight: 600;
+  text-align: center;
   white-space: nowrap;
+
   transition: color 0.25s, border-color 0.25s, background-color 0.25s;
 
   &:active {
@@ -57,52 +60,52 @@ const isExternal = computed(
   }
 
   &.medium {
-    border-radius: 20px;
     padding: 0 20px;
-    line-height: 38px;
+    border-radius: 20px;
     font-size: 14px;
+    line-height: 38px;
   }
 
   &.big {
-    border-radius: 24px;
     padding: 0 24px;
-    line-height: 46px;
+    border-radius: 24px;
     font-size: 16px;
+    line-height: 46px;
   }
 
   &.brand {
     border-color: var(--vp-button-brand-border);
-    color: var(--vp-button-brand-text);
     background-color: var(--vp-button-brand-bg);
+    color: var(--vp-button-brand-text);
 
     &:hover {
       border-color: var(--vp-button-brand-hover-border);
-      color: var(--vp-button-brand-hover-text);
       background-color: var(--vp-button-brand-hover-bg);
+      color: var(--vp-button-brand-hover-text);
     }
 
     &:active {
       border-color: var(--vp-button-brand-active-border);
-      color: var(--vp-button-brand-active-text);
       background-color: var(--vp-button-brand-active-bg);
+      color: var(--vp-button-brand-active-text);
     }
   }
 
   &.alt {
     border-color: var(--vp-button-alt-border);
-    color: var(--vp-button-alt-text);
     background-color: var(--vp-button-alt-bg);
+    color: var(--vp-button-alt-text);
 
     &:hover {
       border-color: var(--vp-button-alt-hover-border);
-      color: var(--vp-button-alt-hover-text);
       background-color: var(--vp-button-alt-hover-bg);
+      color: var(--vp-button-alt-hover-text);
     }
 
     &:active {
       border-color: var(--vp-button-alt-active-border);
-      color: var(--vp-button-alt-active-text);
       background-color: var(--vp-button-alt-active-bg);
+      color: var(--vp-button-alt-active-text);
     }
   }
 }
@@ -110,19 +113,19 @@ const isExternal = computed(
 // TODO: Remove
 .VPButton.sponsor {
   border-color: var(--vp-button-sponsor-border);
-  color: var(--vp-button-sponsor-text);
   background-color: var(--vp-button-sponsor-bg);
+  color: var(--vp-button-sponsor-text);
 }
 
 .VPButton.sponsor:hover {
   border-color: var(--vp-button-sponsor-hover-border);
-  color: var(--vp-button-sponsor-hover-text);
   background-color: var(--vp-button-sponsor-hover-bg);
+  color: var(--vp-button-sponsor-hover-text);
 }
 
 .VPButton.sponsor:active {
   border-color: var(--vp-button-sponsor-active-border);
-  color: var(--vp-button-sponsor-active-text);
   background-color: var(--vp-button-sponsor-active-bg);
+  color: var(--vp-button-sponsor-active-text);
 }
 </style>

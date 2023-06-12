@@ -51,53 +51,54 @@ defineProps<BadgeProps>();
 <style lang="scss" scoped>
 .VPBadge {
   display: inline-block;
+
   margin-left: 2px;
+  padding: 0 8px;
   border: 1px solid transparent;
   border-radius: 10px;
-  padding: 0 8px;
-  line-height: 18px;
-  font-size: 12px;
+
   font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+
   transform: translateY(-2px);
 
   &.info {
     border-color: var(--vp-badge-info-border);
-    color: var(--vp-badge-info-text);
     background-color: var(--vp-badge-info-bg);
+    color: var(--vp-badge-info-text);
   }
 
   &.tip {
     border-color: var(--vp-badge-tip-border);
-    color: var(--vp-badge-tip-text);
     background-color: var(--vp-badge-tip-bg);
+    color: var(--vp-badge-tip-text);
   }
 
   &.warning {
     border-color: var(--vp-badge-warning-border);
-    color: var(--vp-badge-warning-text);
     background-color: var(--vp-badge-warning-bg);
+    color: var(--vp-badge-warning-text);
   }
 
   &.danger {
     border-color: var(--vp-badge-danger-border);
-    color: var(--vp-badge-danger-text);
     background-color: var(--vp-badge-danger-bg);
+    color: var(--vp-badge-danger-text);
   }
-}
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  .VPBadge {
+  h1 &,
+  h2 &,
+  h3 &,
+  h4 &,
+  h5 &,
+  h6 & {
     vertical-align: top;
   }
-}
 
-h2 .VPBadge {
-  border-radius: 11px;
-  line-height: 20px;
+  h2 & {
+    border-radius: 11px;
+    line-height: 20px;
+  }
 }
 </style>

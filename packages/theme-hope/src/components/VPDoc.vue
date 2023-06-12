@@ -72,14 +72,28 @@ const pageName = computed(() =>
 
 <style lang="scss" scoped>
 .VPDoc {
-  padding: 32px 24px 96px;
   width: 100%;
+  padding: 32px 24px 96px;
 
   @media (min-width: 768px) {
     padding: 48px 32px 128px;
   }
+
   @media (min-width: 960px) {
     padding: 32px 32px 0;
+  }
+
+  .container {
+    @media (min-width: 1280px) {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .aside {
+    @media (min-width: 1280px) {
+      display: block;
+    }
   }
 
   &:not(.has-sidebar) {
@@ -106,17 +120,6 @@ const pageName = computed(() =>
     }
   }
 
-  @media (min-width: 1280px) {
-    .container {
-      display: flex;
-      justify-content: center;
-    }
-
-    .aside {
-      display: block;
-    }
-  }
-
   .VPDocOutlineDropdown {
     display: none;
 
@@ -127,37 +130,42 @@ const pageName = computed(() =>
 }
 
 .container {
-  margin: 0 auto;
   width: 100%;
+  margin: 0 auto;
 }
 
 .aside {
   position: relative;
+
   display: none;
-  order: 2;
   flex-grow: 1;
-  padding-left: 32px;
+  order: 2;
+
   width: 100%;
   max-width: 256px;
+  padding-left: 32px;
 }
 
 .left-aside {
   order: 1;
-  padding-left: unset;
   padding-right: 32px;
+  padding-left: unset;
 }
 
 .aside-container {
   position: fixed;
   top: 0;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  width: 224px;
+  height: 100vh;
   padding-top: calc(
     var(--vp-nav-height) + var(--vp-layout-top-height, 0px) +
       var(--vp-doc-top-height, 0px) + 32px
   );
-  width: 224px;
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
@@ -169,8 +177,10 @@ const pageName = computed(() =>
   position: fixed;
   bottom: 0;
   z-index: 10;
+
   width: 224px;
   height: 32px;
+
   background: linear-gradient(transparent, var(--vp-c-bg) 70%);
 }
 
@@ -185,8 +195,8 @@ const pageName = computed(() =>
 
 .content {
   position: relative;
-  margin: 0 auto;
   width: 100%;
+  margin: 0 auto;
 
   @media (min-width: 960px) {
     padding: 0 32px 128px;
@@ -194,8 +204,8 @@ const pageName = computed(() =>
 
   @media (min-width: 1280px) {
     order: 1;
-    margin: 0;
     min-width: 640px;
+    margin: 0;
   }
 }
 

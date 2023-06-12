@@ -97,8 +97,8 @@ const { hasSidebar } = useSidebar();
 .VPContent {
   flex-grow: 1;
   flex-shrink: 0;
-  margin: var(--vp-layout-top-height, 0px) auto 0;
   width: 100%;
+  margin: var(--vp-layout-top-height, 0) auto 0;
 
   @media (min-width: 960px) {
     padding-top: var(--vp-nav-height);
@@ -113,7 +113,7 @@ const { hasSidebar } = useSidebar();
     margin: 0;
 
     @media (min-width: 960px) {
-      margin: var(--vp-layout-top-height, 0px) 0 0;
+      margin: var(--vp-layout-top-height, 0) 0 0;
       padding-left: var(--vp-sidebar-width);
     }
 
