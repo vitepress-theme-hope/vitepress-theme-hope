@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { useToggle } from "@vueuse/core";
 
 import VPLink from "./VPLink.vue";
 import VPIconChevronDown from "./icons/VPIconChevronDown.vue";
@@ -7,11 +7,7 @@ import VPIconLanguages from "./icons/VPIconLanguages.vue";
 import { useLangs } from "../composables/langs.js";
 
 const { localeLinks, currentLang } = useLangs({ correspondingLink: true });
-const isOpen = ref(false);
-
-function toggle() {
-  isOpen.value = !isOpen.value;
-}
+const [isOpen, toggle] = useToggle(false);
 </script>
 
 <template>
@@ -20,7 +16,7 @@ function toggle() {
     class="VPNavScreenTranslations"
     :class="{ open: isOpen }"
   >
-    <button class="title" @click="toggle">
+    <button type="button" class="title" @click="toggle()">
       <VPIconLanguages class="icon lang" />
       {{ currentLang.label }}
       <VPIconChevronDown class="chevron icon" />
@@ -34,14 +30,14 @@ function toggle() {
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPNavScreenTranslations {
   height: 24px;
   overflow: hidden;
-}
 
-.VPNavScreenTranslations.open {
-  height: auto;
+  &.open {
+    height: auto;
+  }
 }
 
 .title {
@@ -56,14 +52,14 @@ function toggle() {
   width: 16px;
   height: 16px;
   fill: currentColor;
-}
 
-.icon.lang {
-  margin-right: 8px;
-}
+  &.lang {
+    margin-right: 8px;
+  }
 
-.icon.chevron {
-  margin-left: 4px;
+  &.chevron {
+    margin-left: 4px;
+  }
 }
 
 .list {

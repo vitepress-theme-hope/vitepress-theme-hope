@@ -1,14 +1,20 @@
+<script setup lang="ts">
+const slots = defineSlots<{
+  default?: () => any;
+}>();
+</script>
+
 <template>
   <button class="VPSwitch" type="button" role="switch">
     <span class="check">
-      <span v-if="$slots.default" class="icon">
+      <span v-if="slots.default" class="icon">
         <slot />
       </span>
     </span>
   </button>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPSwitch {
   position: relative;
   border-radius: 11px;
@@ -19,10 +25,10 @@
   border: 1px solid var(--vp-input-border-color);
   background-color: var(--vp-input-switch-bg-color);
   transition: border-color 0.25s;
-}
 
-.VPSwitch:hover {
-  border-color: var(--vp-input-hover-border-color);
+  &:hover {
+    border-color: var(--vp-input-hover-border-color);
+  }
 }
 
 .check {
@@ -45,19 +51,19 @@
   height: 18px;
   border-radius: 50%;
   overflow: hidden;
-}
 
-.icon :deep(svg) {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 12px;
-  height: 12px;
-  fill: var(--vp-c-text-2);
-}
+  :deep(svg) {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 12px;
+    height: 12px;
+    fill: var(--vp-c-text-2);
 
-.dark .icon :deep(svg) {
-  fill: var(--vp-c-text-1);
-  transition: opacity 0.25s;
+    .dark & {
+      fill: var(--vp-c-text-1);
+      transition: opacity 0.25s;
+    }
+  }
 }
 </style>

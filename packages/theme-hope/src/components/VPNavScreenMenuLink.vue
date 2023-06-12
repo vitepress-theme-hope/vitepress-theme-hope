@@ -23,7 +23,7 @@ const closeScreen = inject("close-screen") as () => void;
   </VPLink>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPNavScreenMenuLink {
   display: block;
   border-bottom: 1px solid var(--vp-c-divider);
@@ -33,9 +33,9 @@ const closeScreen = inject("close-screen") as () => void;
   font-weight: 500;
   color: var(--vp-c-text-1);
   transition: border-color 0.25s, color 0.25s;
-}
 
-.VPNavScreenMenuLink:hover {
-  color: var(--vp-c-brand);
+  &:hover {
+    color: var(--vp-c-brand);
+  }
 }
 </style>

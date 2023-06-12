@@ -3,20 +3,15 @@ import { useRoute } from "vitepress";
 import { ref, watch } from "vue";
 
 const route = useRoute();
-const backToTop = ref();
+const backToTop = ref<HTMLElement>();
 
-watch(
-  () => route.path,
-  () => backToTop.value.focus()
-);
-
-function focusOnTargetAnchor({ target }: Event) {
+const focusOnTargetAnchor = ({ target }: Event): void => {
   const el = document.querySelector<HTMLAnchorElement>(
     decodeURIComponent((target as HTMLAnchorElement).hash)
   );
 
   if (el) {
-    const removeTabIndex = () => {
+    const removeTabIndex = (): void => {
       el.removeAttribute("tabindex");
       el.removeEventListener("blur", removeTabIndex);
     };
@@ -26,7 +21,12 @@ function focusOnTargetAnchor({ target }: Event) {
     el.focus();
     window.scrollTo(0, 0);
   }
-}
+};
+
+watch(
+  () => route.path,
+  () => backToTop.value!.focus()
+);
 </script>
 
 <template>
@@ -41,7 +41,7 @@ function focusOnTargetAnchor({ target }: Event) {
   </a>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPSkipLink {
   top: 8px;
   left: 8px;
@@ -54,19 +54,17 @@ function focusOnTargetAnchor({ target }: Event) {
   color: var(--vp-c-brand);
   box-shadow: var(--vp-shadow-3);
   background-color: var(--vp-c-bg);
-}
 
-.VPSkipLink:focus {
-  height: auto;
-  width: auto;
-  clip: auto;
-  clip-path: none;
-}
-
-@media (min-width: 1280px) {
-  .VPSkipLink {
+  @media (min-width: 1280px) {
     top: 14px;
     left: 16px;
+  }
+
+  &:focus {
+    height: auto;
+    width: auto;
+    clip: auto;
+    clip-path: none;
   }
 }
 </style>

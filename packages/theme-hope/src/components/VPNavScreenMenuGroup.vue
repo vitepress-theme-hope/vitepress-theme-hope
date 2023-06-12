@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { computed, ref } from "vue";
+import { useToggle } from "@vueuse/core";
+import { computed } from "vue";
 
 import VPNavScreenMenuGroupLink from "./VPNavScreenMenuGroupLink.vue";
 import VPNavScreenMenuGroupSection from "./VPNavScreenMenuGroupSection.vue";
@@ -10,24 +11,21 @@ const props = defineProps<{
   items: any[];
 }>();
 
-const isOpen = ref(false);
+const [isOpen, toggle] = useToggle(false);
 
 const groupId = computed(
   () => `NavScreenGroup-${props.text.replace(" ", "-").toLowerCase()}`
 );
-
-function toggle() {
-  isOpen.value = !isOpen.value;
-}
 </script>
 
 <template>
   <div class="VPNavScreenMenuGroup" :class="{ open: isOpen }">
     <button
+      type="button"
       class="button"
       :aria-controls="groupId"
       :aria-expanded="isOpen"
-      @click="toggle"
+      @click="toggle()"
     >
       <span class="button-text">{{ text }}</span>
 

@@ -22,7 +22,7 @@ function unlockBodyScroll() {
   clearAllBodyScrollLocks();
 }
 
-watchPostEffect(async () => {
+watchPostEffect(() => {
   if (props.open) {
     lockBodyScroll();
     navEl.value?.focus();
@@ -63,7 +63,7 @@ watchPostEffect(async () => {
   </aside>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPSidebar {
   position: fixed;
   top: var(--vp-layout-top-height, 0px);
@@ -81,21 +81,8 @@ watchPostEffect(async () => {
   transform: translateX(-100%);
   transition: opacity 0.5s, transform 0.25s ease;
   overscroll-behavior: contain;
-}
 
-.VPSidebar.open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0);
-  transition: opacity 0.25s, transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-.dark .VPSidebar {
-  box-shadow: var(--vp-shadow-1);
-}
-
-@media (min-width: 960px) {
-  .VPSidebar {
+  @media (min-width: 960px) {
     z-index: 1;
     padding-top: var(--vp-nav-height);
     padding-bottom: 128px;
@@ -107,10 +94,8 @@ watchPostEffect(async () => {
     box-shadow: none;
     transform: translateX(0);
   }
-}
 
-@media (min-width: 1440px) {
-  .VPSidebar {
+  @media (min-width: 1440px) {
     padding-left: max(
       32px,
       calc((100% - (var(--vp-layout-max-width) - 64px)) / 2)
@@ -120,10 +105,21 @@ watchPostEffect(async () => {
         32px
     );
   }
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    transition: opacity 0.25s, transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .dark & {
+    box-shadow: var(--vp-shadow-1);
+  }
 }
 
-@media (min-width: 960px) {
-  .curtain {
+.curtain {
+  @media (min-width: 960px) {
     position: sticky;
     top: -64px;
     left: 0;
@@ -140,15 +136,15 @@ watchPostEffect(async () => {
   outline: 0;
 }
 
-.group + .group {
-  border-top: 1px solid var(--vp-c-divider);
-  padding-top: 10px;
-}
-
-@media (min-width: 960px) {
-  .group {
+.group {
+  @media (min-width: 960px) {
     padding-top: 10px;
     width: calc(var(--vp-sidebar-width) - 64px);
+  }
+
+  + & {
+    border-top: 1px solid var(--vp-c-divider);
+    padding-top: 10px;
   }
 }
 </style>

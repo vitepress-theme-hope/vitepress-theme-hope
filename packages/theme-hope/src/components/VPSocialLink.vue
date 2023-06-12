@@ -23,13 +23,13 @@ const svg = computed(() => {
     :href="link"
     :aria-label="ariaLabel ?? (typeof icon === 'string' ? icon : '')"
     target="_blank"
-    rel="noopener"
+    rel="noopener noreferrer"
     v-html="svg"
   >
   </a>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .VPSocialLink {
   display: flex;
   justify-content: center;
@@ -38,16 +38,16 @@ const svg = computed(() => {
   height: 36px;
   color: var(--vp-c-text-2);
   transition: color 0.5s;
-}
 
-.VPSocialLink:hover {
-  color: var(--vp-c-text-1);
-  transition: color 0.25s;
-}
+  &:hover {
+    color: var(--vp-c-text-1);
+    transition: color 0.25s;
+  }
 
-.VPSocialLink > :deep(svg) {
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
+  > :deep(svg) {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
 }
 </style>
